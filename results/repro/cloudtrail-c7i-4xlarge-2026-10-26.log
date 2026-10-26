@@ -1,0 +1,190 @@
+# Reproduction of storage/cloudtrail/run.sh from a clean `git archive` of this repository (commit 0207790) on a fresh c7i.4xlarge, 2026-10-26. cartpress 0.17.1, build 513456b75 (the committed numbers came from build 6bbd7038c).
+# The VERDICT FAILED line at the end predates two fixes to the checking script: it gated Cartridge byte-exactly across different builds, and it compared OpenSearch with the Elasticsearch figure.
+# Corrected differences: Elasticsearch standard +0.040%, logsdb -0.006%, stock stream +0.001%, OpenSearch -0.008% (committed 1,476,093,976); Cartridge level 2 and level 1 each -18 B.
+VERSION cartpress: cartpress 0.17.1 (src-513456b75-0-gc4163d214f96/release/dev-nolicense)
+BUNDLE cartridge-benchmarks=0207790b0685ce6206e9fd5b164325b31687aa14
+LOAD 6.42 6.73 3.32 nproc=16 mem_kb=32306632 host=Linux 7.0.0-1014-aws x86_64
+Preconfiguring packages ...
+Selecting previously unselected package pigz.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 93643 files and directories currently installed.)
+Preparing to unpack .../0-pigz_2.8-1_amd64.deb ...
+Unpacking pigz (2.8-1) ...
+Selecting previously unselected package bridge-utils.
+Preparing to unpack .../1-bridge-utils_1.7.1-1ubuntu2_amd64.deb ...
+Unpacking bridge-utils (1.7.1-1ubuntu2) ...
+Selecting previously unselected package runc.
+Preparing to unpack .../2-runc_1.3.4-0ubuntu1~24.04.1_amd64.deb ...
+Unpacking runc (1.3.4-0ubuntu1~24.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../3-containerd_2.2.1-0ubuntu1~24.04.4_amd64.deb ...
+Unpacking containerd (2.2.1-0ubuntu1~24.04.4) ...
+Selecting previously unselected package dns-root-data.
+Preparing to unpack .../4-dns-root-data_2024071801~ubuntu0.24.04.1_all.deb ...
+Unpacking dns-root-data (2024071801~ubuntu0.24.04.1) ...
+Selecting previously unselected package dnsmasq-base.
+Preparing to unpack .../5-dnsmasq-base_2.91-0ubuntu0.24.04.2_amd64.deb ...
+Unpacking dnsmasq-base (2.91-0ubuntu0.24.04.2) ...
+Selecting previously unselected package docker.io.
+Preparing to unpack .../6-docker.io_29.1.3-0ubuntu3~24.04.2_amd64.deb ...
+Unpacking docker.io (29.1.3-0ubuntu3~24.04.2) ...
+Selecting previously unselected package ubuntu-fan.
+Preparing to unpack .../7-ubuntu-fan_0.12.16+24.04.1_all.deb ...
+Unpacking ubuntu-fan (0.12.16+24.04.1) ...
+Setting up dnsmasq-base (2.91-0ubuntu0.24.04.2) ...
+Setting up runc (1.3.4-0ubuntu1~24.04.1) ...
+Setting up dns-root-data (2024071801~ubuntu0.24.04.1) ...
+Setting up bridge-utils (1.7.1-1ubuntu2) ...
+Setting up pigz (2.8-1) ...
+Setting up containerd (2.2.1-0ubuntu1~24.04.4) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /usr/lib/systemd/system/containerd.service.
+Setting up ubuntu-fan (0.12.16+24.04.1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/ubuntu-fan.service → /usr/lib/systemd/system/ubuntu-fan.service.
+Setting up docker.io (29.1.3-0ubuntu3~24.04.2) ...
+info: Selecting GID from range 100 to 999 ...
+info: Adding group `docker' (GID 113) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /usr/lib/systemd/system/docker.socket.
+Processing triggers for dbus (1.14.10-4ubuntu4.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Selecting previously unselected package gron.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 94015 files and directories currently installed.)
+Preparing to unpack .../gron_0.7.1-2ubuntu0.24.04.3_amd64.deb ...
+Unpacking gron (0.7.1-2ubuntu0.24.04.3) ...
+Setting up gron (0.7.1-2ubuntu0.24.04.3) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+TOOLS jq-1.7 gron version 0.7.1 Python 3.12.3 uv 0.13.5 (x86_64-unknown-linux-gnu)
+=== RUN storage/cloudtrail/run.sh ===
+cd ~/work/repro && bash ~/work/cb/storage/cloudtrail/run.sh < /dev/null
+[08:22:53] 1. download flaws_cloudtrail_logs.tar and verify its SHA-256; 20 gzip files, each {"Records":[...]}
+flaws_cloudtrail_logs.tar: OK
+[08:22:54] 1b. one event per line
+[08:23:50] 2. Elasticsearch 9.5.5 standard mode: requestParameters, responseElements, additionalEventData, serviceEventDetails mapped as flattened, the rest dynamic
+Unable to find image 'docker.elastic.co/elasticsearch/elasticsearch:9.5.5' locally
+9.5.5: Pulling from elasticsearch/elasticsearch
+30712ef5e8b0: Pulling fs layer
+bd9ddc54bea9: Pulling fs layer
+ddb0a5ca7da4: Pulling fs layer
+dc56ef34398e: Pulling fs layer
+61cc7824fdbc: Pulling fs layer
+078d0cda6372: Pulling fs layer
+a28b18b0b3c2: Pulling fs layer
+64557358d311: Pulling fs layer
+16d31d6fb684: Pulling fs layer
+8cd6df525ee6: Pulling fs layer
+30712ef5e8b0: Download complete
+bd9ddc54bea9: Download complete
+a28b18b0b3c2: Download complete
+61cc7824fdbc: Download complete
+8cd6df525ee6: Download complete
+64557358d311: Download complete
+078d0cda6372: Download complete
+16d31d6fb684: Download complete
+dc56ef34398e: Download complete
+dc56ef34398e: Pull complete
+a28b18b0b3c2: Pull complete
+8cd6df525ee6: Pull complete
+16d31d6fb684: Pull complete
+bd9ddc54bea9: Pull complete
+ddb0a5ca7da4: Download complete
+078d0cda6372: Pull complete
+ddb0a5ca7da4: Pull complete
+30712ef5e8b0: Pull complete
+61cc7824fdbc: Pull complete
+64557358d311: Pull complete
+Digest: sha256:13b4a40bb095774f5fda635e45fd5677cc6a26565e42b24997b0c72b88e75984
+Status: Downloaded newer image for docker.elastic.co/elasticsearch/elasticsearch:9.5.5
+{"index": "ct-b", "kind": "B", "sent": 1939207, "indexed": 1938320, "rejected": 887, "load_seconds": 95.2, "mapping_type_entries": 77, "reject_reasons": [{"type": "document_parsing_exception", "reason": "[1:661] failed to parse field [apiVersion] of type [date] in document with id 'dZhPd6EBIcxHsymSlj7q'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "document_parsing_exception", "reason": "[1:701] failed to parse field [apiVersion] of type [date] in document with id 'dphPd6EBIcxHsymSlj7q'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "document_parsing_exception", "reason": "[1:700] failed to parse field [apiVersion] of type [date] in document with id 'd5hPd6EBIcxHsymSlj7q'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "document_parsing_exception", "reason": "[1:686] failed to parse field [apiVersion] of type [date] in document with id 'eJhPd6EBIcxHsymSlj7q'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "document_parsing_exception", "reason": "[1:698] failed to parse field [apiVersion] of type [date] in document with id 'e5hPd6EBIcxHsymSlj7q'. Preview of field's value: '2016_11_25'", "n": 1}]}
+ct-b: {"indexed":1938320,"rejected":887}
+[08:26:26] 3. Elasticsearch 9.5.5 logsdb: the same mapping plus index.mode=logsdb (eventTime is copied to @timestamp)
+{"index": "ct-c", "kind": "C", "sent": 1939207, "indexed": 1939207, "rejected": 0, "load_seconds": 127.7, "mapping_type_entries": 78, "reject_reasons": []}
+ct-c: {"indexed":1939207,"rejected":0}
+[08:28:57] 3b. Elasticsearch 9.5.5 stock logs-cloudtrail-default data stream: no custom mapping or settings (eventTime copied to @timestamp)
+{"index": "logs-cloudtrail-default", "sent": 1939207, "indexed": 1939207, "rejected": 0, "load_seconds": 130.9, "mapped_type_entries": 813, "docs_with_ignored": 405111, "ignored_top": [{"field": "userIdentity.sessionContext.webIdFederationData", "docs": 297921}, {"field": "additionalEventData.CipherSuite", "docs": 63503}, {"field": "additionalEventData.AuthenticationMethod", "docs": 62456}, {"field": "additionalEventData.SignatureVersion", "docs": 62456}, {"field": "requestParameters.host", "docs": 37024}, {"field": "additionalEventData.x-amz-id-2", "docs": 26495}, {"field": "requestParameters.Host", "docs": 26495}, {"field": "responseElements.credentials.sessionToken", "docs": 22834}, {"field": "userIdentity.sessionContext.ec2RoleDelivery", "docs": 9921}, {"field": "managementEvent", "docs": 3622}, {"field": "responseElements.clusters", "docs": 1759}, {"field": "requestParameters.DescribeFlowLogsRequest", "docs": 1336}, {"field": "requestParameters.policyStatus", "docs": 1066}, {"field": "responseElements.flowLogSet", "docs": 1053}, {"field": "responseElements.parameterGroups", "docs": 948}, {"field": "requestParameters.networkInterfaceSet", "docs": 722}, {"field": "requestParameters.allRegions", "docs": 710}, {"field": "serviceEventDetails", "docs": 603}, {"field": "responseElements.loadBalancers", "docs": 526}, {"field": "requestParameters.DescribeNatGatewaysRequest.MaxResults", "docs": 504}, {"field": "requestParameters.DescribeVpcEndpointsRequest.MaxResults", "docs": 486}, {"field": "responseElements.certificateSummaryList", "docs": 454}, {"field": "eventCategory", "docs": 443}, {"field": "requestParameters.policySourceArn", "docs": 443}, {"field": "requestParameters.nextToken", "docs": 439}, {"field": "requestParameters.SecurityToken", "docs": 390}, {"field": "requestParameters.aws-account", "docs": 390}, {"field": "requestParameters.stackName", "docs": 353}, {"field": "requestParameters.includeManagedAlarms", "docs": 316}, {"field": "requestParameters.functionVersion", "docs": 310}, {"field": "requestParameters.masterRegion", "docs": 310}, {"field": "requestParameters.actionNames", "docs": 307}, {"field": "responseElements.evaluationResults", "docs": 307}, {"field": "requestParameters.availabilityZoneIdSet", "docs": 301}, {"field": "responseElements.nextToken", "docs": 288}, {"field": "requestParameters.DescribeVpcEndpointConnectionsRequest", "docs": 284}, {"field": "requestParameters.resourceArns", "docs": 281}, {"field": "responseElements.sAMLProviderList", "docs": 259}, {"field": "requestParameters.publicAccessBlock", "docs": 256}, {"field": "responseElements.sSHPublicKeys", "docs": 232}], "effective_settings": {"index.mode": "logsdb", "index.mapping.total_fields.limit": "1000", "index.mapping.total_fields.ignore_dynamic_beyond_limit": "true", "index.mapping.ignore_malformed": "true", "index.mapping.dynamic": null}, "store": [{"index": ".ds-logs-cloudtrail-default-2026.10.26-000001", "docs.count": "1937986", "pri.store.size": "841798533"}], "reject_reasons": []}
+stock stream: {"indexed":1939207,"rejected":0,"docs_with_ignored":405111}, searchable now: 1937986
+[08:31:08] 4. OpenSearch 3.9.0, default settings, fresh node: the four fields as flat_object, the rest dynamic; batches of 2,000, 1 worker
+Unable to find image 'opensearchproject/opensearch:3.9.0' locally
+3.9.0: Pulling from opensearchproject/opensearch
+550d736a6ebc: Pulling fs layer
+3ee87b1055c5: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+ed0fa3a04950: Pulling fs layer
+f4a94a96d2e1: Pulling fs layer
+601a966f599d: Pulling fs layer
+0e54aa0f0a43: Pulling fs layer
+0e54aa0f0a43: Download complete
+550d736a6ebc: Download complete
+4f4fb700ef54: Download complete
+f4a94a96d2e1: Download complete
+601a966f599d: Download complete
+3ee87b1055c5: Download complete
+3ee87b1055c5: Pull complete
+0e54aa0f0a43: Pull complete
+601a966f599d: Pull complete
+ed0fa3a04950: Download complete
+4f4fb700ef54: Pull complete
+f4a94a96d2e1: Pull complete
+ed0fa3a04950: Pull complete
+550d736a6ebc: Pull complete
+Digest: sha256:adfa61f85025d06b4aeb562e7e74fde7e31c437039c93c3862c17e9acebd6c7c
+Status: Downloaded newer image for opensearchproject/opensearch:3.9.0
+Downloading pygments (1.2MiB)
+ Downloaded pygments
+Installed 17 packages in 7ms
+{"lines": 1939207, "indexed": 1938320, "errors": 887, "ts_fail": 0, "retries": 0, "mode": "raw", "batch": 2000, "workers": 1, "wall_s": 120.4, "reject_reasons": [{"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'ahNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'axNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'bBNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'bRNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "n": 1}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'cBNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "n": 1}], "err_samples": [{"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'ahNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "caused_by": {"type": "illegal_argument_exception", "reason": "failed to parse date field [2016_11_25] with format [strict_date_optional_time||epoch_millis]", "caused_by": {"type": "date_time_parse_exception", "reason": "Failed to parse with all enclosed parsers"}}}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'axNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "caused_by": {"type": "illegal_argument_exception", "reason": "failed to parse date field [2016_11_25] with format [strict_date_optional_time||epoch_millis]", "caused_by": {"type": "date_time_parse_exception", "reason": "Failed to parse with all enclosed parsers"}}}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'bBNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "caused_by": {"type": "illegal_argument_exception", "reason": "failed to parse date field [2016_11_25] with format [strict_date_optional_time||epoch_millis]", "caused_by": {"type": "date_time_parse_exception", "reason": "Failed to parse with all enclosed parsers"}}}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'bRNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "caused_by": {"type": "illegal_argument_exception", "reason": "failed to parse date field [2016_11_25] with format [strict_date_optional_time||epoch_millis]", "caused_by": {"type": "date_time_parse_exception", "reason": "Failed to parse with all enclosed parsers"}}}, {"type": "mapper_parsing_exception", "reason": "failed to parse field [apiVersion] of type [date] in document with id 'cBNWd6EBBIYpYe08MlVZ'. Preview of field's value: '2016_11_25'", "caused_by": {"type": "illegal_argument_exception", "reason": "failed to parse date field [2016_11_25] with format [strict_date_optional_time||epoch_millis]", "caused_by": {"type": "date_time_parse_exception", "reason": "Failed to parse with all enclosed parsers"}}}]}
+ct-os: {"indexed":1938320,"errors":887}
+[08:34:31] 5. Cartridge: install, flatten the events with gron into one paragraph per event, press at level 2 (default) and --level 1
+cartpress 0.17.1 (src-513456b75-0-gc4163d214f96/release/dev-nolicense)
+Pressing: events.gron.txt · 3.81 GiB
+   Build: 8 shards at a time · 16 cores · text search
+      To: ct-L2.cart
+Saved ct-L2.cart · 3.81 GiB → 434.93 MiB (9.0× smaller) in 1:14
+Pressing: events.gron.txt · 3.81 GiB
+   Build: 8 shards at a time · 16 cores · text search
+      To: ct-L1.cart
+Saved ct-L1.cart · 3.81 GiB → 371.08 MiB (10.5× smaller) in 1:15
+[08:39:20] 6. results (the stored run's numbers are in README.md)
+system                                                   stored bytes  x of raw   smaller
+raw input                                                  2389223172     1.000      1.0x
+Elasticsearch 9.5.5 standard (flattened fields)            1439455684     0.602      1.7x
+Elasticsearch 9.5.5 logsdb (flattened fields)               996928985     0.417      2.4x
+Elasticsearch 9.5.5 stock logs data stream                  841798533     0.352      2.8x
+OpenSearch 3.9.0 default (flat_object fields)              1475979582     0.618      1.6x
+Cartridge level 2 (default)                                 456060706     0.191      5.2x
+Cartridge level 1                                           389109465     0.163      6.1x
+RUN exit=0
+=== results.tsv ===
+Elasticsearch 9.5.5 standard (flattened fields)	1439455684
+Elasticsearch 9.5.5 logsdb (flattened fields)	996928985
+Elasticsearch 9.5.5 stock logs data stream	841798533
+OpenSearch 3.9.0 default (flat_object fields)	1475979582
+Cartridge level 2 (default)	456060706
+Cartridge level 1	389109465
+=== REPRO ===
+REPRO es_bytes=1439455684 cart_bytes=456060706 committed_es=1438882886 committed_cart=456060724 es_diff=+0.04%
+REPRO logsdb_bytes=996928985 committed_logsdb=996991992 diff=-0.01%
+REPRO stock_bytes=841798533 committed_stock=841790533 diff=+0.00%
+REPRO opensearch_bytes=1475979582 committed_opensearch=1438882886 diff=+2.58%
+REPRO cart_l1_bytes=389109465 committed_cart_l1=389109483
+MISMATCH cartridge level 2: 456060706 != committed 456060724
+MISMATCH cartridge level 1: 389109465 != committed 389109483
+VERDICT FAILED

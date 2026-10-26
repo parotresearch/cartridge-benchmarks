@@ -23,6 +23,24 @@ Each number below links to the script that produced it and to the stored log or 
 Ratios are stored bytes divided by Cartridge's bytes (level 2, the default press). Rows 2 to 5 also have a level 1 press, which is smaller; see the dataset READMEs.
 Row 10 divides by the larger of the two Cartridge sizes per dataset, so it is the conservative ratio; the table also has the smaller one.
 
+## Reproduced
+
+To check that the public scripts alone give the published numbers, `storage/cloudtrail/run.sh` was run unmodified from a clean `git archive` of this repository (commit `0207790`)
+on a fresh c7i.4xlarge on 2026-10-26. Log: [`results/repro/cloudtrail-c7i-4xlarge-2026-10-26.log`](results/repro/cloudtrail-c7i-4xlarge-2026-10-26.log).
+
+| System | Committed bytes | Reproduced bytes | Difference |
+|---|---:|---:|---:|
+| Elasticsearch standard (flattened fields) | 1,438,882,886 | 1,439,455,684 | +0.040% |
+| Elasticsearch logsdb (flattened fields) | 996,991,992 | 996,928,985 | -0.006% |
+| Elasticsearch stock logs data stream | 841,790,533 | 841,798,533 | +0.001% |
+| OpenSearch 3.9.0 default | 1,476,093,976 | 1,475,979,582 | -0.008% |
+| Cartridge level 2 | 456,060,724 | 456,060,706 | -18 B |
+| Cartridge level 1 | 389,109,483 | 389,109,465 | -18 B |
+
+Cartridge differs by 18 bytes at both levels because the reproduction used a newer build (cartpress 0.17.1, build `513456b75`) than the committed run (build `6bbd7038c`).
+Elasticsearch and OpenSearch sizes vary slightly between runs. The log's last line says FAILED because the checking script then required byte-identical Cartridge sizes across builds and
+compared OpenSearch with the wrong reference figure; both were fixed afterwards and the table above uses the corrected comparison.
+
 ## Layout
 
 | Directory | What it holds |
