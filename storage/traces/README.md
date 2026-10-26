@@ -14,7 +14,7 @@ The data is a flat table of hashed IDs (trace, service, instance, interface) plu
 | 2 | **Elasticsearch 9.5.5 standard**: the stock `traces-otel@template` copied verbatim with only `index.mode=standard`, on a fresh node. Loader `load_es.py` (official Python client): 5,000-span batches, 8 workers. Refresh, count check, force-merge to 1 segment, primary store bytes |
 | 3 | **Elasticsearch 9.5.5 logsdb**: the stock OTel trace stream (`traces-otel@template`, which is logsdb mode in 9.5.5; checked), fresh node, same loader and measurement |
 | 4 | **OpenSearch 3.9.0, default settings**: `opensearch-mapping.json` (explicit and strict: `@timestamp` date, IDs and name `keyword`, `duration` long, attribute objects `flat_object`), 5,000-span batches, 8 workers. Force-merge to 1 segment, refresh, flush, settle, primary store bytes |
-| 5 | **Cartridge**: `cartpress press spans.ndjson --gron -o traces-L2.cart -y`, and the same with `--level 1` |
+| 5 | **Cartridge**: `cartpress press spans.ndjson --gron -o traces-L2.cart`, and the same with `--level 1` |
 | 6 | Prints a table of the sizes |
 
 Containers are set up as in the [Thunderbird README](../thunderbird/README.md#what-runsh-does). Each Elasticsearch pass starts from an empty data directory.

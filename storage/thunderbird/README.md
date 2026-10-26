@@ -12,7 +12,7 @@ one line per event, `- <epoch> <date> <host> <message>`. The cut is made at a li
 | 2 | **Elasticsearch 9.5.5 standard**: index `tb-standard`, `index.mode=standard`, 1 shard, 0 replicas, refresh off, `@timestamp` date + `message` text. Loader `bulk_load.py`: 20,000-line batches, 8 workers. Refresh, force-merge to 1 segment, primary store bytes |
 | 3 | **Elasticsearch 9.5.5 logsdb**: the stock `logs-thunderbird-default` data stream (`index.mode=logsdb`, checked), 0 replicas, refresh off. Same loader and measurement |
 | 4 | **OpenSearch 3.9.0, default settings**: `opensearch-mapping.json` (`@timestamp` date, `message` text), same batch and workers (`lib/load_os.py`), force-merge to 1 segment, refresh, flush, wait for the store size to settle, primary store bytes |
-| 5 | **Cartridge**: `cartpress press tb10g.clean.log -o tb-L2.cart -y` (level 2, the default) and the same with `--level 1`; the file size is the result |
+| 5 | **Cartridge**: `cartpress press tb10g.clean.log -o tb-L2.cart` (level 2, the default) and the same with `--level 1`; the file size is the result |
 | 6 | Prints a table of the five sizes |
 
 Elasticsearch runs in Docker `docker.elastic.co/elasticsearch/elasticsearch:9.5.5`: one node, security off, basic licence, 24 GB container (heap auto-sized), no telemetry.

@@ -13,7 +13,7 @@ The public CloudTrail logs of the [flaws.cloud](https://flaws.cloud) training si
 | 3 | **Elasticsearch 9.5.5 logsdb (index C)**: B plus `index.mode=logsdb`, with `eventTime` copied to `@timestamp` (logsdb requires it). Same measurement |
 | 3b | **Elasticsearch 9.5.5 stock logs data stream (index D)**: `logs-cloudtrail-default`, no custom mapping or settings, `eventTime` copied to `@timestamp`. `es_load_datastream.py` loads, merges, and reports the settings, ignored fields and size |
 | 4 | **OpenSearch 3.9.0, default settings**: `opensearch-mapping.json` (the same four fields as `flat_object`, the rest dynamic), 2,000-event batches, 1 worker, rejections counted. Force-merge to 1 segment, refresh, flush, settle, primary store bytes |
-| 5 | **Cartridge**: flatten each event with `gron --stream` into one paragraph per event (4,094,934,200 bytes, 77,848,150 lines), then `cartpress press events.gron.txt --text-segment paragraph -o ct-L2.cart -y`, and the same with `--level 1` |
+| 5 | **Cartridge**: flatten each event with `gron --stream` into one paragraph per event (4,094,934,200 bytes, 77,848,150 lines), then `cartpress press events.gron.txt --text-segment paragraph -o ct-L2.cart`, and the same with `--level 1` |
 | 6 | Prints a table of the sizes |
 
 Elasticsearch for this dataset ran with host networking, an 8 GB heap, the GeoIP downloader and disk watermark checks off (`es_up_8g_heap` in `lib/es.sh`); OpenSearch is set up as in the [Thunderbird README](../thunderbird/README.md#what-runsh-does).

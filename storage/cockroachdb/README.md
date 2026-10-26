@@ -11,7 +11,7 @@ NDJSON, one CockroachDB v22.2.6 structured log document per line, **10,506,623,7
 | 2 | **Elasticsearch 9.5.5 standard**: index `cr-standard`, `index.mode=standard`, 1 shard, 0 replicas, `@timestamp` mapped as `date` (`epoch_millis`), every other field dynamic (146 mapped fields in the stored run). Loader `load.py` puts `@timestamp` (from the line's own `timestamp`) in front of each document: 4,000-line batches, 4 threads. Refresh, force-merge to 1 segment, primary store bytes |
 | 3 | **Elasticsearch 9.5.5 logsdb**: the stock `logs-cockroach-default` data stream (created by the first bulk request; `index.mode=logsdb`, checked; 152 mapped fields in the stored run). Same loader and measurement |
 | 4 | **OpenSearch 3.9.0, default settings**: `opensearch-mapping.json` (explicit `@timestamp` date mapping, everything else dynamic), 4,000-line batches, 4 workers, force-merge to 1 segment, refresh, flush, settle, primary store bytes |
-| 5 | **Cartridge**: `cartpress press cockroach.node1.log --gron -o cr-L2.cart -y`, and the same with `--level 1`; the file size is the result |
+| 5 | **Cartridge**: `cartpress press cockroach.node1.log --gron -o cr-L2.cart`, and the same with `--level 1`; the file size is the result |
 | 6 | Prints a table of the five sizes |
 
 Elasticsearch and OpenSearch containers are set up exactly as in the [Thunderbird README](../thunderbird/README.md#what-runsh-does).
