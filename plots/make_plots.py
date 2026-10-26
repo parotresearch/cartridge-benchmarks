@@ -81,7 +81,7 @@ def load() -> dict:
         d["pick"] = {s: pick(d["rows"], s) for s, _ in SYSTEMS}
         d["raw"] = d["pick"]["Cartridge"]["bytes"] / d["pick"]["Cartridge"]["x_raw"]
     # web logs: the Cartridge size is the verified default press with its field index (the cart plus the field index), from the verify run
-    m = re.search(r"^SIZES cart_bytes=(\d+) sidecar_bytes=(\d+)", VERIFY.read_text(), re.M)
+    m = re.search(r"^SIZES cart_bytes=(\d+) \w+_bytes=(\d+)", VERIFY.read_text(), re.M)
     if not m:
         sys.exit(f"no SIZES line in {VERIFY}")
     out["Web logs"]["cart_bytes"] = int(m[1]) + int(m[2])
