@@ -59,10 +59,10 @@ def main(d: Path) -> None:
     f = lambda n: steps(d / n)  # noqa: E731
     hot_es, hot_c, hot_c0 = (
         f("hot-es.log"),
-        f("hot-cart-field-sidecar.log"),
-        f("hot-cart-no-sidecar.log"),
+        f("hot-cart-field-index.log"),
+        f("hot-cart-no-field-index.log"),
     )
-    warm_er, warm_c = f("warm-es-restore.log"), f("warm-cart-field-sidecar.log")
+    warm_er, warm_c = f("warm-es-restore.log"), f("warm-cart-field-index.log")
     cold_es, cold_c = f("cold-es-frozen.log"), f("cold-cart.log")
     cold_ids = answered(cold_es) & {
         k for k, v in cold_c.items() if v["verdict"] == "exact"
@@ -70,7 +70,7 @@ def main(d: Path) -> None:
     fa_es = first_answers(d / "warm-es-fullcopy.log") + first_answers(
         d / "warm-es-restore.log"
     )
-    fa_c = first_answers(d / "warm-cart-field-sidecar.log")
+    fa_c = first_answers(d / "warm-cart-field-index.log")
     rows = [
         (
             "Hot: all 39, local disk",
@@ -93,7 +93,7 @@ def main(d: Path) -> None:
             f"{total(cold_es, cold_ids):.0f} s",
         ),
         (
-            "Hot, Cartridge without the field sidecar",
+            "Hot, Cartridge without the field index",
             f"{total(hot_c0):.1f} s, {exact(hot_c0)} exact",
             "",
         ),

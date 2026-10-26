@@ -1,0 +1,432 @@
+LOAD 1.68 4.26 3.35 nproc=16 mem_kb=129799536 host=Linux 7.0.0-1014-aws x86_64
+VERSION cartridge: cartridge 0.17.1 (src-513456b75-0-g93e9f27093f4/release/dev-nolicense)
+VERSION cartpress: cartpress 0.17.1 (src-513456b75-0-g93e9f27093f4/release/dev-nolicense)
+VERSION python: Python 3.12.3
+BUNDLE cartridge-benchmarks=16d9d63cb81262fd543032eaf226287469a9dc3b
+BUNDLE sha256 f9a50cc69609a17204f2e6cc59869edc61bc907568ace9ff0b52f53bc3e67585 speed/http_logs/searches.json
+BUNDLE sha256 e79f5b1e6f7f22460fc6f00fb29c38fe6810ae5c1496bfa736b33a5c5bd194ed speed/http_logs/reference.py
+BUNDLE sha256 ba55eff95e7c1e261168bd36f4dea39c87b65a9220e8838194b3ae31bc7f12c1 speed/http_logs/verify_cart.py
+BUNDLE sha256 e5faaa31de095db0b83e29c0b3c6dc9c00786b3716458e18ddf3868c623f8994 speed/lib/run_searches.py
+BUNDLE sha256 466e72832618bcc38d6e2a16c1030c3e443a64df779e02b77caf5dd3ef449253 speed/lib/env.sh
+BUNDLE sha256 b9121c6937970bd89a415933290ce71c687391e309dc93e2c271261cb897201d speed/lib/size.sh
+RAW bytes=23475280341 lines=247249096
+=== REFERENCE ===
+python3 speed/http_logs/reference.py ~/cartridge-benchmarks-work/raw --out reference-answers.json --sets-dir sets --workers 7
+247249096 lines in 255.1s; computed 39 of 39; not computable: []; differ from searches.json: []
+	Command being timed: "python3 -I ~/cartridge-benchmarks-work/speed/http_logs/reference.py ~/cartridge-benchmarks-work/raw --out ~/cartridge-benchmarks-work/hlverify/reference-answers.json --sets-dir ~/cartridge-benchmarks-work/hlverify/sets --workers 7"
+	User time (seconds): 346.47
+	System time (seconds): 3.61
+	Percent of CPU this job got: 136%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:15.63
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 167928
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 114327
+	Voluntary context switches: 688
+	Involuntary context switches: 1266
+	Swaps: 0
+	File system inputs: 496
+	File system outputs: 1224
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+REFERENCE exit=0 wall=4:15.63 peak_rss_kb=167928
+REFERENCE_ANSWER a1 status=computed answer=1224876 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER a2 status=computed answer=345893 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER a3 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER a4 status=computed answer=666936 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER a5 status=computed answer=145033 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER b1 status=computed answer=178947 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER b2 status=computed answer=178947 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER b3 status=computed answer=30995 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER b4 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER c1 status=computed answer=6134 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER c2 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER c3 status=computed answer=1198 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER c4 status=computed answer=758 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER c5 status=computed answer=15933 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER e1 status=computed answer=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER e2 status=computed answer=3968 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER e3 status=computed answer=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER e4 status=computed answer=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER e5 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER f1 status=computed answer=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER f2 status=computed answer=491 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER f3 status=computed answer=668 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER f4 status=computed answer=116 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER f5 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER g1 status=computed answer=605 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER g2 status=computed answer=605 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER g3 status=computed answer=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER g4 status=computed answer=f5a3efba599eda5798c54a883b1f164c3bb22eacb21b038fa9fd4fa7c06654e9 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER g5 status=computed answer=81 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER h1 status=computed answer=224 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER h2 status=computed answer=224 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER h3 status=computed answer=202 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER h4 status=computed answer=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER h5 status=computed answer=100 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+REFERENCE_ANSWER i1 status=computed answer=42 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER i2 status=computed answer=42 reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER i3 status=computed answer=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER i4 status=computed answer=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f reason=- agrees_with_searches_json=true full_set_equals_committed=-
+REFERENCE_ANSWER i5 status=computed answer=22 reason=- agrees_with_searches_json=true full_set_equals_committed=true
+=== PRESS + FIELD DATA (functions cart_press and cart_sidecar from speed/lib/size.sh, as 10-size.sh calls them) ===
+cart_press () 
+{ 
+    need cartpress "curl -sSf https://cartridge.app/install | sh   (cartpress needs your account's pressing credit and asks you to confirm)";
+    mkdir -p "$CART_DIR";
+    local files=() w t0;
+    for w in "${WEEKS[@]}";
+    do
+        files+=("$RAW/access-$w.log");
+        [[ -s $RAW/access-$w.log ]] || die "missing raw file $RAW/access-$w.log: run 00-data.sh";
+    done;
+    rm -f "$CART_DIR/$CART_KEY" "$CART_DIR/$CART_KEY.facets";
+    t0=$SECONDS;
+    cartpress press "${files[@]}" -q --log -j 4 --index method:dimension,proto:dimension,status:dimension --store-only ts,method,status,proto -o "$CART_DIR/$CART_KEY" || die "cartpress failed";
+    [[ -s $CART_DIR/$CART_KEY ]] || die "cartpress exited 0 but wrote no cart: $CART_DIR/$CART_KEY";
+    echo "cartpress wall_s=$((SECONDS - t0))";
+    echo "RESULT name=cartridge cart_bytes=$(stat -c %s "$CART_DIR/$CART_KEY")"
+}
+cart_sidecar () 
+{ 
+    need cartridge "curl -sSf https://cartridge.app/install | sh";
+    [[ -s $CART_DIR/$CART_KEY ]] || die "no cart to build the sidecar from: $CART_DIR/$CART_KEY";
+    local src=$WORK/press-order i=0 w t0;
+    rm -rf "$src";
+    mkdir -p "$src";
+    for w in "${WEEKS[@]}";
+    do
+        i=$((i + 1));
+        ln "$RAW/access-$w.log" "$src/$i-access-$w.log";
+    done;
+    t0=$SECONDS;
+    cartridge --no-service fields build "$CART_DIR/$CART_KEY" --source "$src" --fields ip,status,method,path,proto --json || die "cartridge fields build failed";
+    [[ -s $CART_DIR/$CART_KEY.facets ]] || die "fields build exited 0 but wrote no sidecar: $CART_DIR/$CART_KEY.facets";
+    echo "fields-build wall_s=$((SECONDS - t0))";
+    cartridge --no-service fields info "$CART_DIR/$CART_KEY" --json || die "fields info failed";
+    cartridge --no-service fields verify "$CART_DIR/$CART_KEY" || die "fields verify failed";
+    echo "RESULT name=cartridge-sidecar sidecar_bytes=$(stat -c %s "$CART_DIR/$CART_KEY.facets")"
+}
+cartpress wall_s=564
+RESULT name=cartridge cart_bytes=2118597954
+PRESS ok
+choosing fields...
+reading the whole log once to prepare the fields (261 parts)...
+preparing 261 parts, 16 at a time (1 thread each, 16 cores; largest part 127.72 MiB, 120.42 GiB free memory)...
+prepared 1 of 261 parts of the log (0%), about 13 min left
+prepared 11 of 261 parts of the log (4%), about 6 min left
+prepared 28 of 261 parts of the log (10%), about 4 min left
+prepared 42 of 261 parts of the log (16%), about 3 min left
+prepared 60 of 261 parts of the log (22%), about 3 min left
+prepared 74 of 261 parts of the log (28%), about 3 min left
+prepared 86 of 261 parts of the log (32%), about 3 min left
+prepared 106 of 261 parts of the log (40%), about 2 min left
+prepared 118 of 261 parts of the log (45%), about 2 min left
+prepared 138 of 261 parts of the log (52%), about 87 s left
+prepared 151 of 261 parts of the log (57%), about 79 s left
+prepared 164 of 261 parts of the log (62%), about 72 s left
+prepared 184 of 261 parts of the log (70%), about 55 s left
+prepared 195 of 261 parts of the log (74%), about 48 s left
+prepared 205 of 261 parts of the log (78%), about 41 s left
+prepared 218 of 261 parts of the log (83%), about 32 s left
+prepared 234 of 261 parts of the log (89%), about 20 s left
+prepared 251 of 261 parts of the log (96%), about 7 s left
+prepared 261 of 261 parts of the log (100%)
+{
+  "present": true,
+  "path": "~/cartridge-benchmarks-work/carts/http_logs_attr3-v4.cart.facets",
+  "cart_bytes": 2118597954,
+  "file_bytes": 859679545,
+  "share_of_cart": 0.4057775772778831,
+  "records": 247249096,
+  "shards": 261,
+  "time_field": "ts",
+  "time_buckets": true,
+  "sub_minute_time_buckets": false,
+  "time_buckets_enable": "cartridge fields add ~/cartridge-benchmarks-work/carts/http_logs_attr3-v4.cart ts --source <path>",
+  "fields": [
+    {
+      "name": "ip",
+      "kind": "address",
+      "derivation": null,
+      "members": [],
+      "bytes": 424226767,
+      "share_of_cart": 0.20023939237694552,
+      "distinct_per_shard_mean": 12390.72796934866,
+      "distinct_per_shard_max": 27268,
+      "makes_fast": "counting by address and by address range (`ip`)"
+    },
+    {
+      "name": "status",
+      "kind": "integer",
+      "derivation": null,
+      "members": [],
+      "bytes": 47466406,
+      "share_of_cart": 0.02240463128475201,
+      "distinct_per_shard_mean": 6.923371647509579,
+      "distinct_per_shard_max": 8,
+      "makes_fast": "grouping and counting by `status`"
+    },
+    {
+      "name": "method",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 7187400,
+      "share_of_cart": 0.003392526640757815,
+      "distinct_per_shard_mean": 3.4636015325670497,
+      "distinct_per_shard_max": 6,
+      "makes_fast": "grouping and counting by `method`"
+    },
+    {
+      "name": "path",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 306499261,
+      "share_of_cart": 0.1446708000549688,
+      "distinct_per_shard_mean": 4754.628352490421,
+      "distinct_per_shard_max": 7741,
+      "makes_fast": "grouping and counting by `path`"
+    },
+    {
+      "name": "proto",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 39481490,
+      "share_of_cart": 0.018635668898602173,
+      "distinct_per_shard_mean": 3.0,
+      "distinct_per_shard_max": 3,
+      "makes_fast": "grouping and counting by `proto`"
+    },
+    {
+      "name": "_time_minute",
+      "kind": "integer",
+      "derivation": "minute of ts",
+      "members": [],
+      "bytes": 6577176,
+      "share_of_cart": 0.003104494643536317,
+      "distinct_per_shard_mean": 186.88888888888889,
+      "distinct_per_shard_max": 2640,
+      "makes_fast": "`count --by-time` in buckets of one minute or more"
+    }
+  ],
+  "word_table_ignored": false,
+  "seconds": 190.917119137,
+  "explicit": true,
+  "budget_bytes": 63557938,
+  "estimated_bytes": 958851170,
+  "skipped": [],
+  "summaries": {
+    "bytes": 23726292,
+    "spacing_min": 8192,
+    "spacing_max": 8192,
+    "parts": [
+      {
+        "name": "ip",
+        "shards_with_summaries": 0,
+        "shards_without": 261,
+        "reason_without": "13479 distinct values in this shard, more than the 256 a summary can hold",
+        "marked_stretches": 0,
+        "bytes": 0,
+        "raw_bytes": 0
+      },
+      {
+        "name": "status",
+        "shards_with_summaries": 261,
+        "shards_without": 0,
+        "reason_without": null,
+        "marked_stretches": 304136,
+        "bytes": 3881222,
+        "raw_bytes": 32989184
+      },
+      {
+        "name": "method",
+        "shards_with_summaries": 261,
+        "shards_without": 0,
+        "reason_without": null,
+        "marked_stretches": 304136,
+        "bytes": 2782985,
+        "raw_bytes": 18369896
+      },
+      {
+        "name": "path",
+        "shards_with_summaries": 0,
+        "shards_without": 261,
+        "reason_without": "6664 distinct values in this shard, more than the 256 a summary can hold",
+        "marked_stretches": 0,
+        "bytes": 0,
+        "raw_bytes": 0
+      },
+      {
+        "name": "proto",
+        "shards_with_summaries": 261,
+        "shards_without": 0,
+        "reason_without": null,
+        "marked_stretches": 304136,
+        "bytes": 3297759,
+        "raw_bytes": 21926936
+      },
+      {
+        "name": "_time_minute",
+        "shards_with_summaries": 203,
+        "shards_without": 58,
+        "reason_without": "720 distinct values in this shard, more than the 256 a summary can hold",
+        "marked_stretches": 237551,
+        "bytes": 15271050,
+        "raw_bytes": 237460904
+      }
+    ]
+  },
+  "unparsed_rows": 0
+}
+fields-build wall_s=191
+{
+  "present": true,
+  "path": "~/cartridge-benchmarks-work/carts/http_logs_attr3-v4.cart.facets",
+  "cart_bytes": 2118597954,
+  "file_bytes": 859679545,
+  "share_of_cart": 0.4057775772778831,
+  "records": 247249096,
+  "shards": 261,
+  "time_field": "ts",
+  "time_buckets": true,
+  "sub_minute_time_buckets": false,
+  "time_buckets_enable": "cartridge fields add ~/cartridge-benchmarks-work/carts/http_logs_attr3-v4.cart ts --source <path>",
+  "fields": [
+    {
+      "name": "ip",
+      "kind": "address",
+      "derivation": null,
+      "members": [],
+      "bytes": 424226767,
+      "share_of_cart": 0.20023939237694552,
+      "distinct_per_shard_mean": 12390.72796934866,
+      "distinct_per_shard_max": 27268,
+      "makes_fast": "counting by address and by address range (`ip`)"
+    },
+    {
+      "name": "status",
+      "kind": "integer",
+      "derivation": null,
+      "members": [],
+      "bytes": 47466406,
+      "share_of_cart": 0.02240463128475201,
+      "distinct_per_shard_mean": 6.923371647509579,
+      "distinct_per_shard_max": 8,
+      "makes_fast": "grouping and counting by `status`"
+    },
+    {
+      "name": "method",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 7187400,
+      "share_of_cart": 0.003392526640757815,
+      "distinct_per_shard_mean": 3.4636015325670497,
+      "distinct_per_shard_max": 6,
+      "makes_fast": "grouping and counting by `method`"
+    },
+    {
+      "name": "path",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 306499261,
+      "share_of_cart": 0.1446708000549688,
+      "distinct_per_shard_mean": 4754.628352490421,
+      "distinct_per_shard_max": 7741,
+      "makes_fast": "grouping and counting by `path`"
+    },
+    {
+      "name": "proto",
+      "kind": "text",
+      "derivation": null,
+      "members": [],
+      "bytes": 39481490,
+      "share_of_cart": 0.018635668898602173,
+      "distinct_per_shard_mean": 3.0,
+      "distinct_per_shard_max": 3,
+      "makes_fast": "grouping and counting by `proto`"
+    },
+    {
+      "name": "_time_minute",
+      "kind": "integer",
+      "derivation": "minute of ts",
+      "members": [],
+      "bytes": 6577176,
+      "share_of_cart": 0.003104494643536317,
+      "distinct_per_shard_mean": 186.88888888888889,
+      "distinct_per_shard_max": 2640,
+      "makes_fast": "`count --by-time` in buckets of one minute or more"
+    }
+  ],
+  "word_table_ignored": false
+}
+checking 261 parts of the log...
+checked 28 of 261 parts of the log (10%), about 1 s left
+Verified: ~/cartridge-benchmarks-work/carts/http_logs_attr3-v4.cart.facets: 6 fields over 261 shards, all sections intact
+RESULT name=cartridge-sidecar sidecar_bytes=859679545
+SIDECAR ok
+SIZES cart_bytes=2118597954 sidecar_bytes=859679545
+=== VERIFY ===
+CACHE dropped 07:56:02
+VERIFY a1 form=text verdict=match ms=1258 answer=1224876 reference=1224876 sha_match=1
+VERIFY a2 form=text verdict=match ms=5 answer=345893 reference=345893 sha_match=1
+VERIFY a3 form=text verdict=match ms=56 answer=100 reference=100 sha_match=1
+VERIFY a4 form=text verdict=match ms=280 answer=666936 reference=666936 sha_match=1
+VERIFY a5 form=text verdict=match ms=18 answer=145033 reference=145033 sha_match=1
+VERIFY b1 form=text verdict=match ms=57 answer=178947 reference=178947 sha_match=1
+VERIFY b2 form=text verdict=match ms=59 answer=178947 reference=178947 sha_match=1
+VERIFY b3 form=text verdict=match ms=5 answer=30995 reference=30995 sha_match=1
+VERIFY b4 form=text verdict=match ms=50 answer=100 reference=100 sha_match=1
+VERIFY c1 form=text verdict=match ms=72 answer=6134 reference=6134 sha_match=1
+VERIFY c2 form=text verdict=match ms=68 answer=100 reference=100 sha_match=1
+VERIFY c3 form=text verdict=match ms=94 answer=1198 reference=1198 sha_match=1
+VERIFY c3 form=field verdict=match ms=561 answer=1198 reference=1198 sha_match=1
+VERIFY c4 form=text verdict=match ms=25 answer=758 reference=758 sha_match=1
+VERIFY c5 form=text verdict=match ms=28 answer=15933 reference=15933 sha_match=1
+VERIFY e1 form=text verdict=match ms=3276 answer=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 reference=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 sha_match=1
+VERIFY e1 form=field verdict=match ms=353 answer=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 reference=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 sha_match=1
+VERIFY e2 form=text verdict=match ms=9 answer=3968 reference=3968 sha_match=1
+VERIFY e3 form=text verdict=match ms=717 answer=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd reference=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd sha_match=1
+VERIFY e3 form=field verdict=match ms=30 answer=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd reference=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd sha_match=1
+VERIFY e4 form=text verdict=match ms=113 answer=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 reference=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 sha_match=1
+VERIFY e4 form=field verdict=match ms=94 answer=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 reference=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 sha_match=1
+VERIFY e5 form=text verdict=match ms=44 answer=100 reference=100 sha_match=1
+VERIFY f1 form=text verdict=match ms=1582 answer=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 reference=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 sha_match=1
+VERIFY f1 form=field verdict=match ms=551 answer=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 reference=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 sha_match=1
+VERIFY f2 form=text verdict=match ms=64 answer=491 reference=491 sha_match=1
+VERIFY f3 form=text verdict=match ms=55 answer=668 reference=668 sha_match=1
+VERIFY f4 form=text verdict=match ms=6 answer=116 reference=116 sha_match=1
+VERIFY f5 form=text verdict=match ms=130 answer=100 reference=100 sha_match=1
+VERIFY g1 form=text verdict=match ms=19 answer=605 reference=605 sha_match=1
+VERIFY g2 form=text verdict=match ms=41 answer=605 reference=605 sha_match=1
+VERIFY g3 form=text verdict=match ms=315 answer=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 reference=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 sha_match=1
+VERIFY g4 form=text verdict=match ms=68 answer=f5a3efba599eda5798c54a883b1f164c3bb22eacb21b038fa9fd4fa7c06654e9 reference=f5a3efba599eda5798c54a883b1f164c3bb22eacb21b038fa9fd4fa7c06654e9 sha_match=1
+VERIFY g5 form=text verdict=match ms=99 answer=81 reference=81 sha_match=1
+VERIFY h1 form=text verdict=match ms=9 answer=224 reference=224 sha_match=1
+VERIFY h2 form=text verdict=match ms=37 answer=224 reference=224 sha_match=1
+VERIFY h3 form=text verdict=match ms=62 answer=202 reference=202 sha_match=1
+VERIFY h3 form=field verdict=match ms=116 answer=202 reference=202 sha_match=1
+VERIFY h4 form=text verdict=match ms=82 answer=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 reference=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 sha_match=1
+VERIFY h4 form=field verdict=match ms=65 answer=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 reference=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 sha_match=1
+VERIFY h5 form=text verdict=match ms=50 answer=100 reference=100 sha_match=1
+VERIFY i1 form=text verdict=match ms=10 answer=42 reference=42 sha_match=1
+VERIFY i2 form=text verdict=match ms=45 answer=42 reference=42 sha_match=1
+VERIFY i3 form=text verdict=match ms=86 answer=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e reference=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e sha_match=1
+VERIFY i3 form=field verdict=match ms=28 answer=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e reference=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e sha_match=1
+VERIFY i4 form=text verdict=match ms=54 answer=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f reference=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f sha_match=1
+VERIFY i4 form=field verdict=match ms=51 answer=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f reference=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f sha_match=1
+VERIFY i5 form=text verdict=match ms=49 answer=22 reference=22 sha_match=1
+SUMMARY {"match": 48, "mismatch": 0, "timeout": 0, "not computable": 0}
+VERDICT verify_exit=0
+VERDICT OK

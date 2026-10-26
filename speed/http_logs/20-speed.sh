@@ -97,7 +97,7 @@ arm_cold_cart() {
 
 arm=${1:?usage: $0 <setup|hot-es|hot-cart|warm-es-restore|warm-es-fullcopy|warm-cart|cold-es|cold-cart|all>}
 run_arm() {
-  local suffix=field-sidecar; [[ $SIDECAR == 1 ]] || suffix=no-sidecar
+  local suffix=field-index; [[ $SIDECAR == 1 ]] || suffix=no-field-index
   case $1 in
     hot-cart | warm-cart) LOG=$RESULTS/$1-$suffix.log ;;
     cold-es) LOG=$RESULTS/cold-es-frozen.log ;;

@@ -11,9 +11,9 @@ Everything that produced a number is a script here; the logs they produced are i
 
 | Claim | Cartridge | Elasticsearch | Result file |
 |---|---|---|---|
-| Hot: 39 searches, local disk | 11.0 s, 39 of 39 exact | 11.5 s, 34 of 39 exact | `speed/hot-cart-field-sidecar.log`, `speed/hot-es.log` |
-| Warm: first answer | 9 to 10 s | 30 to 71 s | `speed/warm-cart-field-sidecar.log`, `speed/warm-es-fullcopy.log` (30 to 47 s), `speed/warm-es-restore.log` (64 to 71 s) |
-| Warm: all 39 once local | 9.9 s | 9.6 s | `speed/warm-cart-field-sidecar.log`, `speed/warm-es-restore.log` |
+| Hot: 39 searches, local disk | 11.0 s, 39 of 39 exact | 11.5 s, 34 of 39 exact | `speed/hot-cart-field-index.log`, `speed/hot-es.log` |
+| Warm: first answer | 9 to 10 s | 30 to 71 s | `speed/warm-cart-field-index.log`, `speed/warm-es-fullcopy.log` (30 to 47 s), `speed/warm-es-restore.log` (64 to 71 s) |
+| Warm: all 39 once local | 9.9 s | 9.6 s | `speed/warm-cart-field-index.log`, `speed/warm-es-restore.log` |
 | Cold: the 35 searches both answer | 63 s† | 290 s | `speed/cold-cart.log`, `speed/cold-es-frozen.log` |
 
 † A fix for Cartridge's cold-from-S3 time is in progress, so the 63 s will change.
@@ -30,10 +30,15 @@ Stored size of the 247,249,096 lines:
 | OpenSearch 3.9.0, default settings | 19,456,920,952 | `opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log` |
 | Elasticsearch 9.5.4 logsdb, free licence | 10,567,779,983 | `es-logsdb-r7i-4xlarge-2026-10-25.log` |
 | Elasticsearch 9.5.4 logsdb, Enterprise licence (synthetic source) | 6,485,137,851 | `es-logsdb-r7i-4xlarge-2026-10-25.log` |
-| Cartridge | 3,237,744,683 | `cartpress-r7i-4xlarge-2026-10-23.log` |
-| Cartridge field sidecar (extra file, used by the faster rows above) | 859,679,538 | `field-sidecar-build-c7i-4xlarge-2026-10-24.log` |
+| Cartridge, default flags (cart) | 2,118,597,954 | `../verify/httplogs-verify-r7i-4xlarge-2026-10-26.log` |
+| Cartridge field index (extra file, used by the faster rows above) | 859,679,545 | same file |
+| **Cartridge total, cart + field index** | **2,978,277,499** | same file (0.127× the 23,475,280,341 raw bytes) |
 
-The Cartridge row is the cart alone; with the sidecar the total is 4,097,424,221 bytes.
+The published Cartridge size is the total: it includes the field index. It comes from the verification run of
+2026-10-26 (`../../../results/speed/http_logs/verify/`): the default-flag press took 564 s, the field index build
+191 s, and all 48 search runs matched the answers computed from the raw text (see below). The earlier stored
+Cartridge sizes (3,237,744,683 bytes for the cart, 859,679,538 for the field index; `size/cartpress-…` and
+`size/field-index-build-…`) are superseded by it.
 
 ## What to run
 
@@ -59,7 +64,7 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
 | File | What it does |
 |---|---|
 | `00-data.sh` | Downloads the dataset, unpacks the raw log line of each record, verifies byte counts, line count and the 403/404/500 oracle counts (224 / 1,224,876 / 6,134). Prints the SHA-256 of every download. |
-| `10-size.sh` | The size passes: Elasticsearch standard, logsdb (free and Enterprise), OpenSearch default, Cartridge press and sidecar. Each prints `RESULT ... bytes` lines. |
+| `10-size.sh` | The size passes: Elasticsearch standard, logsdb (free and Enterprise), OpenSearch default, Cartridge press and field index. Each prints `RESULT ... bytes` lines. |
 | `20-speed.sh` | The tier arms. The commands that matter (caps, cache drops, what is timed from when) are in this file; boilerplate is in `../lib`. |
 | `searches.json` | The 39 searches, 8 chains. Each carries the Elasticsearch query body and the Cartridge command side by side, the expected answer, and the kind of answer. |
 | `reference/` | The full match set of each of the 8 `lines` searches (gzipped), used to check returned lines. |
@@ -73,17 +78,17 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
 
 - **Hot.** The data is on the server's local disk, the server is running, and the machine's file cache is dropped
   before each chain. For Elasticsearch: the indices are restored from a snapshot to local disk, with no replicas.
-  For Cartridge: the cart (and its sidecar) is copied from S3 to local disk once.
+  For Cartridge: the cart (and its field index) is copied from S3 to local disk once.
 - **Warm.** The data is in S3 and the server is fresh. The clock starts when the server is up and holds nothing.
   *Elasticsearch*: either a restore of the snapshot to local disk (searches begin when it finishes: first answer
   64 to 71 s) or a fully mounted searchable snapshot that answers while it is copied (first answer 30 to 47 s);
   the claim's 30 to 71 s spans both. After the copy finishes the script checks that the bytes on disk and the
-  index store size both cover the snapshot's size. *Cartridge*: copy the cart and sidecar from S3 to local disk,
+  index store size both cover the snapshot's size. *Cartridge*: copy the cart and field index from S3 to local disk,
   then search; the first answer includes the copy. "All 39 once local" is the sum of the 39 search times when the
   data is local.
 - **Cold.** The data stays in S3 and every search reads what it needs from there. *Elasticsearch*: searchable
   snapshots in Elasticsearch's frozen tier, with a cache one twentieth the size of the data. *Cartridge*: the
-  server opens `s3://` directly; the sidecar is never read from S3.
+  server opens `s3://` directly; the field index is never read from S3.
 
 ## How exactness was checked
 
@@ -109,9 +114,11 @@ using the pattern, time window and grouping of the search's Cartridge command. I
 "Exact" means "matched `reference.py`'s answer from the raw file" only for the searches that have a computed
 entry in `reference-answers.json` and a recorded `match`; a search that `reference.py` cannot compute without
 guessing is marked "not computable" with the reason, and is not claimed exact on this basis.
-Until the verification run is recorded (see `../../results/speed/http_logs/`), the `want` values in
-`searches.json` are the earlier expected answers: the 403/404/500 totals and the `lines` match sets come from the raw
-text, the rest are Cartridge's answers on a local copy.
+The verification run of 2026-10-26 (`../../results/speed/http_logs/verify/`) did this on a fresh press with the default
+flags: `reference.py` took 4 min 16 s over the 23,475,280,341 raw bytes (247,249,096 lines), then `verify_cart.py` ran the
+39 searches (48 runs, since the nine searches that have a field-index form ran in both forms): **48 matches, 0
+mismatches**. This supersedes the earlier practice of taking the expected answers from Cartridge's own earlier run; the
+`want` values in `searches.json` that came from there agree with `reference-answers.json`.
 
 ## Fairness notes
 
@@ -131,13 +138,18 @@ text, the rest are Cartridge's answers on a local copy.
 - **Cold uses the 35 searches both systems answer.** In `cold-cart.log` three searches (e1, f1, g3) did not finish
   within 60 s, and the rest of their chains did not run. The 63 s and the 290 s sum the same 35 searches. The set
   includes Elasticsearch's `approx` answers.
-- **The field sidecar.** Cartridge's hot 11.0 s and warm 9.9 s use a field sidecar (`<cart>.facets`) built from the
-  same raw files; searches on status, client IP, method, path and protocol use it when it is next to a local
-  cart. Without it the hot run is 16.3 s (`speed/hot-cart-no-sidecar.log`), against Elasticsearch's 11.5 s. The
-  cold run never uses it. Set `SIDECAR=0` to run `20-speed.sh` without it. Warm first answers include copying it.
-- **Press flags.** The stored press runs used the internal build with one more option than the public command
-  shown in `10-size.sh`. The public command may therefore give a slightly different cart size from the stored
-  3,237,744,683 bytes.
+- **The field index.** Cartridge's hot 11.0 s and warm 9.9 s use a field index (`<cart>.facets`) built from the same raw
+  files; searches on status, client IP, method, path and protocol use it when it is next to a local cart. Without it the
+  hot run is 16.3 s (`speed/hot-cart-no-field-index.log`), against Elasticsearch's 11.5 s. The cold run never uses it.
+  Set `SIDECAR=0` to run `20-speed.sh` without it. Warm first answers include copying it. The published size
+  includes the field index.
+- **Press flags (superseded).** The earlier stored press runs used an internal build with one more option than the
+  public command shown in `10-size.sh`, and their cart sizes (3,237,744,683 bytes) are superseded by the 2026-10-26
+  verification run: default flags, cart 2,118,597,954 bytes, plus field index 859,679,545, total 2,978,277,499.
+  The stored logs are kept as they were.
+- **Expected answers (superseded).** The earlier expected answers were Cartridge's own answers on a local copy
+  (only the 403/404/500 totals and the line-search match sets came from the raw file). The 2026-10-26 run replaces
+  that: every expected answer is computed from the raw text by `reference.py` (48 of 48 runs matched).
 - **Two Elasticsearch standard sizes.** The 22.5 GB figure is from an r7i load on 2026-10-21; the 18.7 GB figure
   is a restore of the snapshot the speed runs used (loaded on a c7i on 2026-10-05, 19.1 GB stored). The cause of
   the difference is not recorded.
@@ -150,4 +162,3 @@ text, the rest are Cartridge's answers on a local copy.
 - SHA-256 of each downloaded file: not recorded when the data was first fetched. `00-data.sh` checks the published
   byte sizes, the line count and the oracle counts, and prints the SHA-256 of what it downloaded so you can pin them.
 - The cause of the difference between the two Elasticsearch standard sizes (above).
-- The exact press command line used for the stored Cartridge size (an internal build; see "Press flags").

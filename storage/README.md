@@ -27,7 +27,7 @@ Sources, in the order of the columns:
 - The "Elasticsearch standard" column is Elasticsearch in `index.mode=standard`. CloudTrail needs four fields mapped `flattened` to be searchable at all; the default dynamic mapping hits the 1,000-field limit and rejects 79.1% of events.
 - Elasticsearch logsdb (free licence) stores `_source` as is. A paid licence can synthesise it; that setup was not measured here.
 - CockroachDB: Elasticsearch standard used dynamic mapping; OpenSearch uses an explicit `@timestamp` mapping with the rest dynamic.
-- Cartridge CockroachDB numbers are from the native `--gron` press; an earlier pipe-fed run was 5.7% / 8% smaller because it reordered records, and is not used.
+- Cartridge CockroachDB numbers are from the `--gron` press (it flattens the JSON itself); an earlier pipe-fed run was 5.7% / 8% smaller because it reordered records, and is not used.
 - OpenSearch Thunderbird and CockroachDB: an earlier refresh-only measurement was 7,388,032,630 and 3,722,426,390 B; the flush and settle step made no material difference (+3.1% / +0.8%).
 
 ## Running
