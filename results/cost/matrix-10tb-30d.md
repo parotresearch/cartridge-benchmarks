@@ -14,7 +14,7 @@ Estimate only: the cost model as a calculator; measured bytes/raw are the only p
 | ES logsdb, Enterprise (synthetic source) | 6,485,137,851 | 0.276 | 2.00x | $860,364 | 7.65x | 7.65x |
 | Cartridge (log files + field data) | 3,237,744,683 | 0.138 | 1.00x | $112,538 | 1.00x | 1.00x |
 
-Sources: results/speed/cartridge-s3aws-0ed622c29-cart-v4r-press-2026-10-23.log · results/speed/http-logs-1x-logsdb-es954.md · results/speed/http-logs-1x-opensearch-default-3.9.0.md · results/speed/scoreboard-31gb-tiers-2026-10-21.md · results/speed/tiers-b2e342779-1x-build-ingest-r7i-4xlarge-2026-10-21.log
+Sources: results/speed/http_logs/size/cartpress-r7i-4xlarge-2026-10-23.log · results/speed/http_logs/size/es-hot-restore-c7i-4xlarge-2026-10-07.log · results/speed/http_logs/size/es-logsdb-r7i-4xlarge-2026-10-25.log · results/speed/http_logs/size/es-standard-and-press-r7i-4xlarge-2026-10-21.log · results/speed/http_logs/size/opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log
 
 ## CloudTrail flaws.cloud audit JSON (2.4 GB)
 
@@ -27,7 +27,7 @@ Sources: results/speed/cartridge-s3aws-0ed622c29-cart-v4r-press-2026-10-23.log �
 | Cartridge, larger output | 456,060,724 | 0.191 | 1.00x | $96,481 | 1.00x | 1.05x |
 | Cartridge, smaller output | 389,109,483 | 0.163 | 0.85x | $92,217 | 0.96x | 1.00x |
 
-Sources: results/storage/cloudtrail-flaws-6bbd7038c-es955-vs-gron.md · results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log
+Sources: results/storage/cloudtrail-es955-cartridge.md · results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log
 
 ## Thunderbird supercomputer syslog (10.7 GB)
 
@@ -39,7 +39,7 @@ Sources: results/storage/cloudtrail-flaws-6bbd7038c-es955-vs-gron.md · results/
 | Cartridge, larger output | 701,303,359 | 0.065 | 1.00x | $77,373 | 1.00x | 1.03x |
 | Cartridge, smaller output | 525,666,845 | 0.049 | 0.75x | $74,883 | 0.97x | 1.00x |
 
-Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log · results/storage/real-thunderbird10g-6bbd7038c-es955.md
+Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log · results/storage/thunderbird-es955-cartridge.md
 
 ## CockroachDB JSON logs (10.5 GB)
 
@@ -51,7 +51,7 @@ Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tb
 | Cartridge, larger output | 766,850,694 | 0.073 | 1.00x | $78,540 | 1.00x | 1.04x |
 | Cartridge, smaller output | 557,402,533 | 0.053 | 0.73x | $75,507 | 0.96x | 1.00x |
 
-Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log · results/storage/real-cockroachdb-6bbd7038c-es955.md · results/storage/real-cockroachdb-native-gron-73f8afaa2.md
+Sources: results/storage/cockroachdb-es955-cartridge.md · results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log
 
 ## Alibaba microservice traces, OTel spans (19.7 GB)
 
@@ -63,4 +63,4 @@ Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tb
 | Cartridge, larger output | 1,568,758,212 | 0.079 | 1.00x | $79,524 | 1.00x | 1.05x |
 | Cartridge, smaller output | 1,048,451,721 | 0.053 | 0.67x | $75,514 | 0.95x | 1.00x |
 
-Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log · results/storage/traces-alibaba-cg2022-989c86f54-es955.md
+Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log · results/storage/traces-es955-cartridge.md
