@@ -1,0 +1,76 @@
+{
+  "schema": "cost-coefficients/1",
+  "label": "Measured on http_logs (23.5 GB raw), AWS us-east-2; compute coefficients are reused for every dataset",
+  "systems": {
+    "elasticsearch": {
+      "index_bytes_per_raw": {
+        "value": 0.7947091303705083,
+        "unit": "index bytes / raw byte",
+        "derivation": "ES hot primary store 18656019625 B (force-merged, 0 replicas) / raw 23475280341 B",
+        "source": "Measured: http_logs (23.5 GB raw), standard Elasticsearch 9.x index, force-merged, AWS us-east-2."
+      },
+      "snapshot_bytes_per_raw": {
+        "value": 0.8122654716798894,
+        "unit": "snapshot bytes / raw byte",
+        "derivation": "ES snapshot as mounted 19068159659 B / raw 23475280341 B",
+        "source": "Measured: same run, size of the snapshot as mounted."
+      },
+      "ingest_core_s_per_raw_gb": {
+        "value": 584.3082510943804,
+        "unit": "core-s / raw GB",
+        "derivation": "Rally ingest wall 857.3 s × 16 vCPU (whole r7i.4xlarge) / 23.4753 raw GB; force-merge excluded",
+        "source": "Measured: Rally ingest of http_logs on one r7i.4xlarge."
+      },
+      "query_core_s_per_query_per_raw_gb": {
+        "value": 0.05029185455789503,
+        "unit": "core-s / (query · raw GB searched)",
+        "derivation": "hot step sum 11.511 s × 4 capped cores / 39 steps / 23.4753 raw GB; single client",
+        "source": "Measured: hot-query steps on http_logs, single client."
+      },
+      "logsdb_enterprise_retained_fraction": {
+        "value": 0.24216349108789184,
+        "unit": "stored bytes with logsdb + synthetic _source / measured stored bytes",
+        "derivation": "Elastic's published logsdb result: 162.7 GB -> 39.4 GB, a 76% reduction; retained fraction 39.4 / 162.7. Applied to the measured Elasticsearch index and snapshot sizes to give the 'Enterprise logsdb' variant: synthetic _source needs the Enterprise licence. Elastic's 76% is measured against standard index mode; applying it on top of a free-licence logsdb measurement over-credits Elasticsearch, which keeps the comparison conservative. Elastic's docs also say 'up to 60%' (retained 0.40).",
+        "source": "Published by Elastic (logsdb with synthetic _source); applied to the measured sizes. See README, 'Known limits'."
+      },
+      "frozen_s3_get_per_query_per_raw_gb": {
+        "value": 2.303131885170217,
+        "unit": "S3 requests / (query · raw GB searched)",
+        "derivation": "1622 S3 requests over 30 frozen steps / 23.4753 raw GB",
+        "source": "Measured: frozen-tier query steps on http_logs."
+      }
+    },
+    "cartridge": {
+      "files_bytes_per_raw": {
+        "value": 0.13792144911450624,
+        "unit": "Cartridge file bytes / raw byte",
+        "derivation": "Cartridge files 3237744683 B / raw 23475280341 B",
+        "source": "Measured: Cartridge build of http_logs (default setting)."
+      },
+      "field_data_bytes_per_raw": {
+        "value": 0.03662062925393714,
+        "unit": "field data bytes / raw byte",
+        "derivation": "field data 859679538 B / raw 23475280341 B",
+        "source": "Measured: field-data build of http_logs."
+      },
+      "build_core_s_per_raw_gb": {
+        "value": 404.7832384520617,
+        "unit": "core-s / raw GB",
+        "derivation": "build wall 593.9 s × 16 vCPU (whole r7i.4xlarge, 4 parallel jobs) / 23.4753 raw GB",
+        "source": "Measured: Cartridge build of http_logs on one r7i.4xlarge."
+      },
+      "field_data_core_s_per_raw_gb": {
+        "value": 281.96468386532734,
+        "unit": "core-s / raw GB",
+        "derivation": "field-data build wall 413.7 s × 16 vCPU (whole c7i.4xlarge) / 23.4753 raw GB",
+        "source": "Measured: field-data build of http_logs on one c7i.4xlarge."
+      },
+      "s3_put_per_stored_gb": {
+        "value": 119.21878893870769,
+        "unit": "S3 PUTs / stored GB",
+        "derivation": "386 multipart parts / 3.2377 GB of Cartridge files",
+        "source": "Measured: upload of the http_logs Cartridge files."
+      }
+    }
+  }
+}

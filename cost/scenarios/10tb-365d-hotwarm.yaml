@@ -1,0 +1,26 @@
+# Elasticsearch on the setup a free licence can run: hot 7 days on i8g + warm 358 days on dense-storage i3en nodes,
+# replicas kept, with ILM. Data tiers and ILM are Basic features
+# (https://www.elastic.co/pdf/subscriptions-2026-08-04.pdf); the frozen tier is not. Warm hardware: Elastic's AWS
+# warm profile aws.data.highstorage.i3en (https://www.elastic.co/docs/reference/cloud/cloud-hosted/aws-default).
+name: 10tb-365d-hotwarm
+label: "ES hot/warm on the free licence: ASSUMED 10 TB/day, 365 days searchable (7 hot + 358 warm)"
+tb_per_day: 10
+retention:
+  hot_days: 7
+  warm_days: 358
+  frozen_days: 0
+replicas: 1                # 1 replica
+queries_per_day: 100000    # 100K searches a day assumed
+query_window_days: 0.0416667   # each search covers the last hour; only moves Elasticsearch CPU sizing, which does not bind (disk does)
+query_mix: {hot: 0.9, warm: 0.1, frozen: 0.0}
+region: us-east-2
+es_instance: i8g.4xlarge   # 3,750 GB local NVMe per node
+es_warm_instance: i3en.3xlarge   # dense storage: 7500 GB NVMe, 96 GiB (Elastic's warm profile family)
+es_min_hot_nodes: 3
+target_cpu_utilization: 1.0  # build servers sized at full machine rate
+cartridge_build_instance: r7i.4xlarge   # build servers
+cartridge_query_instance: c7i.4xlarge
+cartridge_query_nodes: 4     # assumed fleet size, not sized from a measurement
+cartridge_local_days: 7      # last 7 days kept on local gp3
+cartridge_local_headroom: 0  # no free-space headroom on the Cartridge local copy
+cartridge_gets_per_query: 1000  # S3 GETs per search, charged on every search

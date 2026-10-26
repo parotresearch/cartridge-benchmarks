@@ -1,0 +1,30 @@
+{
+  "instances": {
+    "r7i.4xlarge": {
+      "vcpu": 16,
+      "mem_gib": 128,
+      "price_item": "aws.ec2.r7i.4xlarge.hour",
+      "source_url": "https://aws.amazon.com/ec2/instance-types/r7i/"
+    },
+    "c7i.4xlarge": {
+      "vcpu": 16,
+      "mem_gib": 32,
+      "price_item": "aws.ec2.c7i.4xlarge.hour",
+      "source_url": "https://aws.amazon.com/ec2/instance-types/c7i/"
+    },
+    "i8g.4xlarge": {
+      "vcpu": 16,
+      "mem_gib": 128,
+      "local_nvme_gb": 3750,
+      "price_item": "aws.ec2.i8g.4xlarge.hour",
+      "source_url": "https://aws.amazon.com/ec2/instance-types/i8g/ (16 vCPU, 128 GiB, 1 x 3750 GB NVMe)"
+    },
+    "i3en.3xlarge": {
+      "vcpu": 12,
+      "mem_gib": 96,
+      "local_nvme_gb": 7500,
+      "price_item": "aws.ec2.i3en.3xlarge.hour",
+      "source_url": "https://aws.amazon.com/ec2/instance-types/i3en/ (12 vCPU, 96 GiB, 1 x 7500 GB NVMe); Elastic's AWS warm profile is aws.data.highstorage.i3en, https://www.elastic.co/docs/reference/cloud/cloud-hosted/aws-default"
+    }
+  }
+}

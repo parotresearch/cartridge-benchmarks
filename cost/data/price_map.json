@@ -1,0 +1,85 @@
+{
+  "comment": "Model price id -> item name in prices.json. Explicit on purpose: an unmapped id or a null price fails loud. Where a choice exists it favours Elasticsearch: Elastic Serverless uses Logs Essentials (its cheapest logs SKU); S3 uses the first-50-TB rate for every GB (higher than the volume tiers, which overstates Cartridge and Elasticsearch-frozen S3 alike).",
+  "items": {
+    "aws.ec2.r7i.4xlarge.hour": "EC2 r7i.4xlarge on-demand Linux",
+    "aws.ec2.c7i.4xlarge.hour": "EC2 c7i.4xlarge on-demand Linux",
+    "aws.ec2.i8g.4xlarge.hour": "EC2 i8g.4xlarge on-demand Linux",
+    "aws.ec2.i3en.3xlarge.hour": "EC2 i3en.3xlarge on-demand Linux",
+    "aws.ebs.gp3.gb_month": "EBS gp3 storage",
+    "aws.s3.standard.gb_month": "S3 Standard storage, first 50 TB",
+    "aws.s3.get_per_1k": "S3 Standard GET and all other requests",
+    "aws.s3.put_per_1k": "S3 Standard PUT/COPY/POST/LIST requests",
+    "aws.transfer.cross_az_per_gb_direction": "Data transfer EC2 <-> EC2 across AZs, same region",
+    "elastic.self_managed.enterprise_licence.year": "Elastic self-managed Enterprise subscription, floor estimate (Vendr)"
+  },
+  "graduated": {
+    "elastic.serverless.ingest_per_gb": [
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 0-1,500 GB/month",
+        "upto": 1500
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 1,500-3,000 GB/month",
+        "upto": 3000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 3,000-6,000 GB/month",
+        "upto": 6000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 6,000-15,000 GB/month",
+        "upto": 15000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 15,000-30,000 GB/month",
+        "upto": 30000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 30,000-60,000 GB/month",
+        "upto": 60000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier 60,000-150,000 GB/month",
+        "upto": 150000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials ingest, tier over 150,000 GB/month",
+        "upto": null
+      }
+    ],
+    "elastic.serverless.retention_per_gb_month": [
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 0-10,000 GB/month",
+        "upto": 10000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 10,000-20,000 GB/month",
+        "upto": 20000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 20,000-50,000 GB/month",
+        "upto": 50000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 50,000-100,000 GB/month",
+        "upto": 100000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 100,000-250,000 GB/month",
+        "upto": 250000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 250,000-1,000,000 GB/month",
+        "upto": 1000000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier 1,000,000-2,500,000 GB/month",
+        "upto": 2500000
+      },
+      {
+        "item": "Elastic Serverless Observability Logs Essentials retention, tier over 2,500,000 GB/month",
+        "upto": null
+      }
+    ]
+  }
+}

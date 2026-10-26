@@ -1,0 +1,58 @@
+{
+  "rules": {
+    "es.hot_ram_to_data": {
+      "value": 30,
+      "unit": "GB data per GB RAM",
+      "source_url": "https://www.elastic.co/blog/benchmarking-and-sizing-your-elasticsearch-cluster-for-logs-and-metrics",
+      "quote": "The typical memory:data ratio for the hot zone used is 1:30 and for the warm zone is 1:160"
+    },
+    "es.warm_ram_to_data": {
+      "value": 160,
+      "unit": "GB data per GB RAM",
+      "source_url": "https://www.elastic.co/blog/benchmarking-and-sizing-your-elasticsearch-cluster-for-logs-and-metrics",
+      "quote": "... and for the warm zone is 1:160"
+    },
+    "es.frozen_ram_to_data": {
+      "value": 1500,
+      "unit": "GB data per GB RAM",
+      "source_url": "https://www.elastic.co/blog/introducing-elasticsearch-frozen-tier-searchbox-on-s3",
+      "quote": "a frozen tier node will jump up to 100 TB ... This amounts to a 1:1500 RAM-to-storage ratio"
+    },
+    "es.frozen_cache_fraction": {
+      "value": 0.1,
+      "unit": "fraction of mounted bytes",
+      "source_url": "https://www.elastic.co/blog/introducing-elasticsearch-frozen-tier-searchbox-on-s3",
+      "quote": "With a typical 10% local cache size"
+    },
+    "es.low_watermark": {
+      "value": 0.85,
+      "unit": "fraction of disk",
+      "source_url": "https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings",
+      "quote": "cluster.routing.allocation.disk.watermark.low ... Defaults to 85%, meaning that Elasticsearch will not allocate shards to nodes that have more than 85% disk used"
+    },
+    "es.replicas_across_azs": {
+      "value": 1,
+      "unit": "flag",
+      "source_url": "https://www.elastic.co/docs/deploy-manage/distributed-architecture/shard-allocation-relocation-recovery/shard-allocation-awareness",
+      "quote": "With allocation awareness on the zone attribute (a multi-AZ setup), Elasticsearch places copies 'ensuring (if possible) that no two copies of the same shard are in the same rack', so each replicated byte crosses an AZ boundary; AWS bills $0.01/GB in each direction (prices.json, 'Data transfer EC2 <-> EC2 across AZs, same region'). Bytes counted = raw ingest, (the JSON documents shipped are larger)"
+    },
+    "cartridge.node_disk_max_gb": {
+      "value": 65536,
+      "unit": "GB per node",
+      "source_url": "https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html",
+      "quote": "A gp3 volume can range in size from 1 GiB to 64 TiB (one gp3 volume per node; GiB taken as GB, conservative)"
+    },
+    "elastic.subscription.enterprise_features": {
+      "value": 1,
+      "unit": "flag (1 = an Enterprise subscription is needed for these features)",
+      "source_url": "https://www.elastic.co/pdf/subscriptions-2026-08-04.pdf (linked from https://www.elastic.co/subscriptions)",
+      "quote": "Subscription matrix, Data management: 'Searchable snapshots' is ticked only in the Enterprise column; 'Data tiers' and 'Index lifecycle management' are ticked under 'Free and open - Basic'. Footnote 15: 'Synthetic _source is an Enterprise feature from 8.17 onward.' The frozen tier is searchable snapshots (partially mounted), so it needs Enterprise; hot/warm with ILM does not."
+    },
+    "es.warm_instance_profile": {
+      "value": 74,
+      "unit": "disk GB per GB RAM on Elastic's warm profile (i3en)",
+      "source_url": "https://www.elastic.co/docs/reference/cloud/cloud-hosted/aws-default",
+      "quote": "Elastic's AWS hardware table lists the dense-storage warm/frozen profile aws.data.highstorage.i3en at disk:memory 74:1. Self-managed warm nodes here use EC2 i3en.3xlarge (7500 GB NVMe / 96 GiB = 78:1), the same family."
+    }
+  }
+}

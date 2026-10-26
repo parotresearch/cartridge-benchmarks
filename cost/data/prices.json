@@ -1,0 +1,214 @@
+{
+  "region": "us-east-2",
+  "currency": "USD",
+  "prices": [
+    {
+      "item": "EC2 c7i.4xlarge on-demand Linux",
+      "unit": "instance-hour",
+      "usd": 0.714,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/US%20East%20(Ohio)/Linux/index.json",
+      "accessed": "2026-10-23",
+      "notes": "16 vCPU, 32 GiB, storage: EBS only, network: Up to 12500 Megabit. Public JSON behind https://aws.amazon.com/ec2/pricing/on-demand/"
+    },
+    {
+      "item": "EC2 i3en.3xlarge on-demand Linux",
+      "unit": "instance-hour",
+      "usd": 1.356,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/US%20East%20(Ohio)/Linux/index.json",
+      "accessed": "2026-10-23",
+      "notes": "12 vCPU, 96 GiB, storage: 1 x 7500 NVMe SSD, network: Up to 25 Gigabit. Public JSON behind https://aws.amazon.com/ec2/pricing/on-demand/"
+    },
+    {
+      "item": "EC2 i8g.4xlarge on-demand Linux",
+      "unit": "instance-hour",
+      "usd": 1.3728,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/US%20East%20(Ohio)/Linux/index.json",
+      "accessed": "2026-10-23",
+      "notes": "16 vCPU, 128 GiB, storage: 1 x 3750GB, network: Up to 25 Gigabit. Public JSON behind https://aws.amazon.com/ec2/pricing/on-demand/"
+    },
+    {
+      "item": "EC2 r7i.4xlarge on-demand Linux",
+      "unit": "instance-hour",
+      "usd": 1.0584,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/US%20East%20(Ohio)/Linux/index.json",
+      "accessed": "2026-10-23",
+      "notes": "16 vCPU, 128 GiB, storage: EBS only, network: Up to 12500 Megabit. Public JSON behind https://aws.amazon.com/ec2/pricing/on-demand/"
+    },
+    {
+      "item": "EBS gp3 storage",
+      "unit": "GB-month",
+      "usd": 0.08,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ebs.json",
+      "accessed": "2026-10-23",
+      "notes": "Includes 3,000 IOPS and 125 MB/s baseline free per volume. Page: https://aws.amazon.com/ebs/pricing/"
+    },
+    {
+      "item": "S3 Standard storage, first 50 TB",
+      "unit": "GB-month",
+      "usd": 0.023,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/s3/USD/current/s3.json",
+      "accessed": "2026-10-23",
+      "notes": "Page: https://aws.amazon.com/s3/pricing/. Standard-IA and Glacier IR have 30/90-day minimum storage durations and a 128 KB minimum billable object size."
+    },
+    {
+      "item": "S3 Standard PUT/COPY/POST/LIST requests",
+      "unit": "1k requests",
+      "usd": 0.005,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/s3/USD/current/s3.json",
+      "accessed": "2026-10-23",
+      "notes": "Page: https://aws.amazon.com/s3/pricing/. Standard-IA and Glacier IR have 30/90-day minimum storage durations and a 128 KB minimum billable object size."
+    },
+    {
+      "item": "S3 Standard GET and all other requests",
+      "unit": "1k requests",
+      "usd": 0.0004,
+      "source_url": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/s3/USD/current/s3.json",
+      "accessed": "2026-10-23",
+      "notes": "Page: https://aws.amazon.com/s3/pricing/. Standard-IA and Glacier IR have 30/90-day minimum storage durations and a 128 KB minimum billable object size."
+    },
+    {
+      "item": "Data transfer EC2 <-> EC2 across AZs, same region",
+      "unit": "GB per direction",
+      "usd": 0.01,
+      "source_url": "https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer_within_the_same_AWS_Region",
+      "accessed": "2026-10-23",
+      "notes": "Charged $0.01/GB in each direction (out of one AZ, into the other). The public datatransfer.json has no intra-region row; the figure comes from the EC2 on-demand page. Same-AZ private-IP traffic is free."
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 0-1,500 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.35,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 1,500-3,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.2275,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 3,000-6,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.1575,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 6,000-15,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.105,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 15,000-30,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.0735,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 30,000-60,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.07,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier 60,000-150,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.0665,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials ingest, tier over 150,000 GB/month",
+      "unit": "GB ingested",
+      "usd": 0.0648,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-ingested_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 0-10,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.036,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 10,000-20,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.0288,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 20,000-50,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.027,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 50,000-100,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.0252,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 100,000-250,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.0234,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 250,000-1,000,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.0198,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier 1,000,000-2,500,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.018,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic Serverless Observability Logs Essentials retention, tier over 2,500,000 GB/month",
+      "unit": "GB-month retained",
+      "usd": 0.0169,
+      "source_url": "https://cloud.elastic.co/api/v1/prices/base_prices",
+      "accessed": "2026-10-23",
+      "notes": "SKU observability.logs-essentials-retained_aws-us-east-2, start 2025-11-01T00:00:00Z. Graduated tiers. Volume is measured before ES compression (normalized size at the end of the ingest pipeline). Marketing page: https://www.elastic.co/pricing/serverless-observability"
+    },
+    {
+      "item": "Elastic self-managed Enterprise subscription, floor estimate (Vendr)",
+      "unit": "cluster-year",
+      "usd": 150000,
+      "source_url": "https://www.vendr.com/marketplace/elastic",
+      "accessed": "2026-10-24",
+      "notes": "ESTIMATE, not a list price. Elastic publishes no self-managed price ('Contact sales for more pricing information about self-managed licensing', https://www.elastic.co/subscriptions). Vendr (page 'Last updated: February 2026'): 'Self-managed Enterprise subscriptions commonly start at $150,000+ annually and can exceed $500,000 for large-scale deployments.' The model uses the $150,000 floor, which favours ES."
+    }
+  ]
+}

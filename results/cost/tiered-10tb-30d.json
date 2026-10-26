@@ -1,0 +1,302 @@
+[
+ {
+  "dataset": "http_logs (1998 World Cup web logs, 23.5 GB)",
+  "cartridge_cfg": "Cartridge (log files + field data)",
+  "cartridge_usd": 112537.55044270174,
+  "setups": [
+   {
+    "setup": "OpenSearch 3.9 default, all hot",
+    "usd_year": 1961039.296,
+    "x_vs_cart": 17.42564404757023,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES standard, all hot",
+    "usd_year": 1876859.2000000002,
+    "x_vs_cart": 16.677626202247925,
+    "basis": "http_logs: model default size"
+   },
+   {
+    "setup": "ES logsdb (free), all hot",
+    "usd_year": 1095186.88,
+    "x_vs_cart": 9.731746209969373,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/warm, free licence",
+    "usd_year": 1182856.9600000002,
+    "x_vs_cart": 10.510775784143705,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen, Enterprise",
+    "usd_year": 756993.2324102591,
+    "x_vs_cart": 6.72658352196568,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
+    "usd_year": 422711.1496812582,
+    "x_vs_cart": 3.75617869785144,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
+    "usd_year": 381196.4946480814,
+    "x_vs_cart": 3.3872826727481224,
+    "basis": "Elastic-published 76% factor"
+   },
+   {
+    "setup": "Elastic Serverless (list)",
+    "usd_year": 344151.0,
+    "x_vs_cart": 3.058099262389968,
+    "basis": "billed on ingested GB: independent of stored size"
+   }
+  ],
+  "cheapest_es": {
+   "setup": "Elastic Serverless (list)",
+   "usd_year": 344151.0,
+   "x_vs_cart": 3.058099262389968
+  }
+ },
+ {
+  "dataset": "CloudTrail flaws.cloud audit JSON (2.4 GB)",
+  "cartridge_cfg": "Cartridge, larger output",
+  "cartridge_usd": 96480.98753516749,
+  "setups": [
+   {
+    "setup": "OpenSearch 3.9 default, all hot",
+    "usd_year": 1480010.176,
+    "x_vs_cart": 15.339915291191788,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES standard, all hot",
+    "usd_year": 1443932.992,
+    "x_vs_cart": 14.965984790253977,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES logsdb (free), all hot",
+    "usd_year": 878723.776,
+    "x_vs_cart": 9.107740275561582,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/warm, free licence",
+    "usd_year": 920351.2960000001,
+    "x_vs_cart": 9.539198545874445,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen, Enterprise",
+    "usd_year": 636273.6453995173,
+    "x_vs_cart": 6.594808590320393,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
+    "usd_year": 409891.3985453928,
+    "x_vs_cart": 4.248416284047535,
+    "basis": "DERIVED: free-logsdb bytes x 2.87/3.83"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
+    "usd_year": 366146.62049305235,
+    "x_vs_cart": 3.7950131922063015,
+    "basis": "Elastic-published 76% factor"
+   },
+   {
+    "setup": "Elastic Serverless (list)",
+    "usd_year": 344151.0,
+    "x_vs_cart": 3.5670343846196264,
+    "basis": "billed on ingested GB: independent of stored size"
+   }
+  ],
+  "cheapest_es": {
+   "setup": "Elastic Serverless (list)",
+   "usd_year": 344151.0,
+   "x_vs_cart": 3.5670343846196264
+  }
+ },
+ {
+  "dataset": "Alibaba microservice traces, OTel spans (19.7 GB)",
+  "cartridge_cfg": "Cartridge, larger output",
+  "cartridge_usd": 79524.19631843091,
+  "setups": [
+   {
+    "setup": "OpenSearch 3.9 default, all hot",
+    "usd_year": 1167341.2480000001,
+    "x_vs_cart": 14.679070044615484,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES standard, all hot",
+    "usd_year": 674286.4,
+    "x_vs_cart": 8.479009298000591,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES logsdb (free), all hot",
+    "usd_year": 602132.032,
+    "x_vs_cart": 7.571683335081338,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/warm, free licence",
+    "usd_year": 454879.936,
+    "x_vs_cart": 5.720019277888317,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen, Enterprise",
+    "usd_year": 409850.02454322256,
+    "x_vs_cart": 5.1537776364579715,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
+    "usd_year": 379940.8093785149,
+    "x_vs_cart": 4.777675562506225,
+    "basis": "DERIVED: free-logsdb bytes x 2.87/3.83"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
+    "usd_year": 360822.35468273883,
+    "x_vs_cart": 4.537265026080029,
+    "basis": "Elastic-published 76% factor"
+   },
+   {
+    "setup": "Elastic Serverless (list)",
+    "usd_year": 344151.0,
+    "x_vs_cart": 4.327626256315122,
+    "basis": "billed on ingested GB: independent of stored size"
+   }
+  ],
+  "cheapest_es": {
+   "setup": "Elastic Serverless (list)",
+   "usd_year": 344151.0,
+   "x_vs_cart": 4.327626256315122
+  }
+ },
+ {
+  "dataset": "Thunderbird supercomputer syslog (10.7 GB)",
+  "cartridge_cfg": "Cartridge, larger output",
+  "cartridge_usd": 77372.51314568047,
+  "setups": [
+   {
+    "setup": "OpenSearch 3.9 default, all hot",
+    "usd_year": 1636344.64,
+    "x_vs_cart": 21.148914174714943,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES standard, all hot",
+    "usd_year": 1648370.368,
+    "x_vs_cart": 21.304340533651448,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES logsdb (free), all hot",
+    "usd_year": 590106.304,
+    "x_vs_cart": 7.626820947238992,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/warm, free licence",
+    "usd_year": 1039725.5680000002,
+    "x_vs_cart": 13.437919045518889,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen, Enterprise",
+    "usd_year": 702160.9661747422,
+    "x_vs_cart": 9.07506991342884,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
+    "usd_year": 379580.33813474246,
+    "x_vs_cart": 4.905880947928516,
+    "basis": "DERIVED: free-logsdb bytes x 2.87/3.83"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
+    "usd_year": 379566.8907336415,
+    "x_vs_cart": 4.905707147174809,
+    "basis": "Elastic-published 76% factor"
+   },
+   {
+    "setup": "Elastic Serverless (list)",
+    "usd_year": 344151.0,
+    "x_vs_cart": 4.447974946245018,
+    "basis": "billed on ingested GB: independent of stored size"
+   }
+  ],
+  "cheapest_es": {
+   "setup": "Elastic Serverless (list)",
+   "usd_year": 344151.0,
+   "x_vs_cart": 4.447974946245018
+  }
+ },
+ {
+  "dataset": "CockroachDB JSON logs (10.5 GB)",
+  "cartridge_cfg": "Cartridge, larger output",
+  "cartridge_usd": 78540.21723904008,
+  "setups": [
+   {
+    "setup": "OpenSearch 3.9 default, all hot",
+    "usd_year": 878723.776,
+    "x_vs_cart": 11.188201495872763,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES standard, all hot",
+    "usd_year": 2165476.6720000003,
+    "x_vs_cart": 27.57156458339415,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES logsdb (free), all hot",
+    "usd_year": 397694.656,
+    "x_vs_cart": 5.063579780911498,
+    "basis": "measured"
+   },
+   {
+    "setup": "ES hot/warm, free licence",
+    "usd_year": 1361918.368,
+    "x_vs_cart": 17.340394715931975,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen, Enterprise",
+    "usd_year": 849402.3934510206,
+    "x_vs_cart": 10.814871963822467,
+    "basis": "ES standard size"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
+    "usd_year": 363653.79880308924,
+    "x_vs_cart": 4.630160338063432,
+    "basis": "DERIVED: free-logsdb bytes x 2.87/3.83"
+   },
+   {
+    "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
+    "usd_year": 383189.2737667415,
+    "x_vs_cart": 4.878892460922162,
+    "basis": "Elastic-published 76% factor"
+   },
+   {
+    "setup": "Elastic Serverless (list)",
+    "usd_year": 344151.0,
+    "x_vs_cart": 4.381844258879035,
+    "basis": "billed on ingested GB: independent of stored size"
+   }
+  ],
+  "cheapest_es": {
+   "setup": "Elastic Serverless (list)",
+   "usd_year": 344151.0,
+   "x_vs_cart": 4.381844258879035
+  }
+ }
+]
