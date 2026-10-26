@@ -2,7 +2,7 @@
 
 - Cartridge stores five public log datasets in 7% to 19% of their raw size, which is 1.8x to 12.6x smaller than Elasticsearch (logsdb and standard).
 - On the web-log benchmark, hot searches take the same time as Elasticsearch; with the data in S3, Cartridge answers its first search in 9 to 10 s against 30 to 71 s.
-- At 10 TB of logs a day with 30 days searchable, that is $112,538 a year on web logs against $1,095,187 to $1,961,039 for the others.
+- At 10 TB of logs a day with 30 days searchable, that is $105,283 a year on web logs against $1,095,187 to $1,961,039 for the others.
 
 ![Yearly cost at 10 TB a day, 30 days searchable, per dataset and system](plots/cost.svg)
 
@@ -75,14 +75,14 @@ Yearly cost at 10 TB a day, 30 days searchable. This is model output at AWS us-e
 
 | Web logs | Cartridge | Elasticsearch logsdb | Elasticsearch standard | OpenSearch |
 |---|---:|---:|---:|---:|
-| Dollars a year | 112,538 | 1,095,187 | 1,876,859 | 1,961,039 |
-| Times Cartridge | 1.0 | 9.7 | 16.7 | 17.4 |
+| Dollars a year | 105,283 | 1,095,187 | 1,876,859 | 1,961,039 |
+| Times Cartridge | 1.0 | 10.4 | 17.8 | 18.6 |
 
 Across the other four datasets Elasticsearch standard costs 8.5x to 27.6x as much as Cartridge and logsdb 5.1x to 9.1x.
 
 - Ratios divide by the larger of the two Cartridge sizes per dataset, so they are the conservative ones; the full table also has the smaller size.
 - Cost of the CloudTrail logsdb bar is the stock logs stream, $878,724 a year, marked † in the chart; the flattened variant is $1,023,033 (10.6x).
-- The cost model prices Cartridge's web logs at 3,237,744,683 B, an earlier and larger press; the verified default press with field index is 2,978,277,499 B, so this cost is slightly overstated.
+- The cost model prices Cartridge's web logs at the verified default press, 2,118,597,954 B of cartridge plus 859,679,545 B of field index (2,978,277,499 B in total).
 - logsdb uses the free licence. Elasticsearch's Enterprise-licence setups (synthetic source, frozen tier) are priced only where the table says so.
 
 Script → Result: [`cost/`](cost) (`cd cost && uv run cost-matrix`) → [`results/cost/matrix-10tb-30d.md`](results/cost/matrix-10tb-30d.md), [`matrix-10tb-30d.json`](results/cost/matrix-10tb-30d.json)

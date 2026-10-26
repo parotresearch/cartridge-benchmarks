@@ -140,14 +140,14 @@ def storage(data: dict) -> None:
 
 
 def cost(data: dict) -> None:
-    ratios = [d["pick"][s]["cost_vs_cart"] for d in data.values() for s, _ in SYSTEMS if s != "Cartridge"]
+    ratios = [d["pick"][s]["cost_vs_cart"] for d in data.values() for s in ("Elasticsearch logsdb", "OpenSearch")]
     fig, ax = plt.subplots(figsize=(9, 4.6))
     def money(v: float) -> str:
         return f"${v / 1e6:.2f}M" if v >= 1e6 else f"${v / 1e3:.0f}K"
     grouped(ax, data, lambda d, s: d["pick"][s]["cart_larger_usd" if s == "Cartridge" else "usd_year"], money, log=True)
     ax.set_ylim(3e4, 1.2e7)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: money(v)))
-    style(ax, f"At 10 TB a day, the others cost {min(ratios):.0f}x to {max(ratios):.0f}x more per year", "yearly cost, 30 days searchable (log scale)")
+    style(ax, f"At 10 TB a day, logsdb and OpenSearch cost {min(ratios):.0f}x to {max(ratios):.0f}x more per year", "yearly cost, 30 days searchable (log scale)")
     legend(fig, ax)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     footnote(fig, data)
