@@ -1,6 +1,6 @@
 # Cartridge benchmarks
 
-- Cartridge stores five public log datasets in 7% to 19% of their raw size, which is 2.0x to 12.6x smaller than Elasticsearch (logsdb and standard).
+- Cartridge stores five public log datasets in 7% to 19% of their raw size, which is 1.8x to 12.6x smaller than Elasticsearch (logsdb and standard).
 - On the web-log benchmark, hot searches take the same time as Elasticsearch; with the data in S3, Cartridge answers its first search in 9 to 10 s against 30 to 71 s.
 - At 10 TB of logs a day with 30 days searchable, that is $112,538 a year on web logs against $1,095,187 to $1,961,039 for the others.
 
@@ -21,16 +21,16 @@ Stored size in bytes (one shard, no replica, force-merged to one segment, primar
 | Web logs | 2,978,277,499 | 10,567,779,983 | 18,656,019,625 to 22,547,013,768 | 19,456,920,952 |
 | Thunderbird | 701,303,359 | 2,400,695,754 | 7,419,489,100 | 7,614,836,272 |
 | CockroachDB | 766,850,694 | 1,506,138,614 | 9,682,259,352 | 3,751,271,057 |
-| CloudTrail | 456,060,724 | 996,991,992 | 1,438,882,886 | 1,476,093,976 |
+| CloudTrail | 456,060,724 | 841,790,533 † | 1,438,882,886 | 1,476,093,976 |
 | Traces | 1,568,758,212 | 4,560,877,302 | 5,200,242,650 | 9,471,101,499 |
 
 Cartridge is 10.6x smaller than Elasticsearch standard on Thunderbird and 12.6x on CockroachDB, but only 3.3x on traces, the smallest gap of the five.
-Against logsdb the gaps are 3.5x (web logs), 3.4x, 2.0x, 2.2x and 2.9x (traces).
+Against logsdb the gaps are 3.5x (web logs), 3.4x, 2.0x, 1.8x (CloudTrail) and 2.9x (traces).
 
 - Ratios are stored bytes divided by Cartridge's bytes at level 2, the default press. Thunderbird, CockroachDB, CloudTrail and traces also have a level 1 press, which is smaller; see the dataset READMEs.
 - Web logs: Cartridge is 2,118,597,954 B cartridge plus 859,679,545 B field index (0.127x raw), default press flags. Elasticsearch standard was measured twice by the same method (cause of the gap not known); Cartridge is 6.3x to 7.6x smaller than it, and 6.5x smaller than OpenSearch.
 - Elasticsearch logsdb uses the free licence. On traces the logsdb column is the stock trace stream.
-- CloudTrail: Elasticsearch standard has four flattened fields. The stock logs stream is 841,790,533 B, but 20.9% of its events are partly unsearchable, so the table uses the fully searchable setups.
+- † CloudTrail: the logsdb column is Elastic's stock logs data stream, which leaves 20.9% of events partly unsearchable. The variant with four flattened fields, which is fully searchable, is 996,991,992 B (0.417x raw, 2.2x Cartridge) and $1,023,033 a year (10.6x). Elasticsearch standard uses the same four flattened fields.
 - CockroachDB: Elasticsearch used dynamic mapping where OpenSearch used an explicit timestamp mapping.
 
 Script → Result: [`speed/http_logs/10-size.sh`](speed/http_logs/10-size.sh) → [`results/speed/http_logs/size/`](results/speed/http_logs/size) (web logs; Cartridge from [`results/speed/http_logs/verify/`](results/speed/http_logs/verify)) ·
@@ -78,9 +78,11 @@ Yearly cost at 10 TB a day, 30 days searchable. This is model output at AWS us-e
 | Dollars a year | 112,538 | 1,095,187 | 1,876,859 | 1,961,039 |
 | Times Cartridge | 1.0 | 9.7 | 16.7 | 17.4 |
 
-Across the other four datasets Elasticsearch standard costs 8.5x to 27.6x as much as Cartridge and logsdb 5.1x to 10.6x.
+Across the other four datasets Elasticsearch standard costs 8.5x to 27.6x as much as Cartridge and logsdb 5.1x to 9.1x.
 
 - Ratios divide by the larger of the two Cartridge sizes per dataset, so they are the conservative ones; the full table also has the smaller size.
+- Cost of the CloudTrail logsdb bar is the stock logs stream, $878,724 a year, marked † in the chart; the flattened variant is $1,023,033 (10.6x).
+- The cost model prices Cartridge's web logs at 3,237,744,683 B, an earlier and larger press; the verified default press with field index is 2,978,277,499 B, so this cost is slightly overstated.
 - logsdb uses the free licence. Elasticsearch's Enterprise-licence setups (synthetic source, frozen tier) are priced only where the table says so.
 
 Script → Result: [`cost/`](cost) (`cd cost && uv run cost-matrix`) → [`results/cost/matrix-10tb-30d.md`](results/cost/matrix-10tb-30d.md), [`matrix-10tb-30d.json`](results/cost/matrix-10tb-30d.json)

@@ -62,11 +62,11 @@ def pick(rows: list[dict], system: str) -> dict:
         if system == "Elasticsearch standard":
             return c.startswith("ES standard")
         if system == "Elasticsearch logsdb":
-            return "logsdb" in c and "Enterprise" not in c and "stock logs data stream" not in c
+            return "logsdb" in c and "Enterprise" not in c
         return c.startswith("OpenSearch")
     hits = [r for r in rows if match(r)]
-    if len(hits) > 1:
-        hits = [r for r in hits if "cost-model default" in r["config"]] or hits[:1]
+    if len(hits) > 1:  # prefer the stock logs stream for logsdb, then the cost-model default
+        hits = [r for r in hits if "stock logs data stream" in r["config"]] or [r for r in hits if "cost-model default" in r["config"]] or hits[:1]
     if len(hits) != 1:
         sys.exit(f"expected one {system} row, found {len(hits)}: {[r['config'] for r in hits]}")
     return hits[0]
@@ -96,6 +96,12 @@ def style(ax, title: str, ylabel: str) -> None:
     ax.tick_params(length=0)
 
 
+def footnote(fig, data: dict) -> None:
+    flagged = [n for n, d in data.items() if any("partly unsearchable" in r["config"] for r in d["pick"].values())]
+    if flagged:
+        fig.text(0.01, 0.01, "† " + ", ".join(flagged) + ": Elastic's stock logs stream, which leaves some events partly unsearchable (see README)", fontsize=8, color=MUTED)
+
+
 def legend(fig, ax) -> None:
     handles = [plt.Rectangle((0, 0), 1, 1, color=c) for _, c in SYSTEMS]
     ax.legend(handles, [n for n, _ in SYSTEMS], ncol=4, loc="lower left", bbox_to_anchor=(0, 1.0), frameon=False, fontsize=9)
@@ -108,8 +114,9 @@ def grouped(ax, data: dict, value, fmt, log: bool = False) -> None:
         xs = [j + (i - 1.5) * width for j in range(len(names))]
         vals = [value(data[n], system) for n in names]
         bars = ax.bar(xs, vals, width=width * 0.9, color=color)
-        for b, v in zip(bars, vals):
-            ax.annotate(fmt(v), (b.get_x() + b.get_width() / 2, v), xytext=(0, 2), textcoords="offset points",
+        for b, v, n in zip(bars, vals, names):
+            flag = "†" if system != "Cartridge" and "partly unsearchable" in data[n]["pick"][system]["config"] else ""
+            ax.annotate(fmt(v) + flag, (b.get_x() + b.get_width() / 2, v), xytext=(0, 2), textcoords="offset points",
                         ha="center", va="bottom", fontsize=6.5, color=INK, rotation=90)
     ax.set_xticks(range(len(names)), names)
     if log:
@@ -127,7 +134,8 @@ def storage(data: dict) -> None:
     ax.set_ylim(0, 1.12)
     style(ax, f"Cartridge stores each dataset in {min(carts) * 100:.0f}% to {max(carts) * 100:.0f}% of its raw size", "stored size ÷ raw size (lower is better)")
     legend(fig, ax)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    footnote(fig, data)
     fig.savefig(OUT / "storage.svg")
 
 
@@ -141,7 +149,8 @@ def cost(data: dict) -> None:
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: money(v)))
     style(ax, f"At 10 TB a day, the others cost {min(ratios):.0f}x to {max(ratios):.0f}x more per year", "yearly cost, 30 days searchable (log scale)")
     legend(fig, ax)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    footnote(fig, data)
     fig.savefig(OUT / "cost.svg")
 
 
