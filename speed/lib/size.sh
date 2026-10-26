@@ -60,25 +60,35 @@ os_size_pass() {
 }
 
 # Cartridge: press the 7 raw week files, then build the field sidecar next to the cart. Prints the byte sizes.
+# Every step is checked: a failed command, a missing or empty output file stops the run (these functions are
+# called under `||`, where `set -e` does not apply, so the checks are explicit).
 cart_press() {
   need cartpress "curl -sSf https://cartridge.app/install | sh   (cartpress needs your account's pressing credit and asks you to confirm)"
   mkdir -p "$CART_DIR"
   local files=() w t0
-  for w in "${WEEKS[@]}"; do files+=("$RAW/access-$w.log"); done
+  for w in "${WEEKS[@]}"; do files+=("$RAW/access-$w.log"); [[ -s $RAW/access-$w.log ]] || die "missing raw file $RAW/access-$w.log: run 00-data.sh"; done
+  rm -f "$CART_DIR/$CART_KEY" "$CART_DIR/$CART_KEY.facets"
   t0=$SECONDS
-  cartpress press "${files[@]}" -q --log -j 4 --index method:dimension,proto:dimension,status:dimension -o "$CART_DIR/$CART_KEY"
+  # --store-only proto: the press indexes method, proto and status; proto is not kept by default, and the index needs it stored.
+  cartpress press "${files[@]}" -q --log -j 4 --index method:dimension,proto:dimension,status:dimension --store-only proto -o "$CART_DIR/$CART_KEY" \
+    || die "cartpress failed"
+  [[ -s $CART_DIR/$CART_KEY ]] || die "cartpress exited 0 but wrote no cart: $CART_DIR/$CART_KEY"
   echo "cartpress wall_s=$((SECONDS - t0))"
   echo "RESULT name=cartridge cart_bytes=$(stat -c %s "$CART_DIR/$CART_KEY")"
 }
 cart_sidecar() {
   need cartridge "curl -sSf https://cartridge.app/install | sh"
-  local sources=() w t0
-  for w in "${WEEKS[@]}"; do sources+=("$RAW/access-$w.log"); done   # the same files, in press order
+  [[ -s $CART_DIR/$CART_KEY ]] || die "no cart to build the sidecar from: $CART_DIR/$CART_KEY"
+  local src=$WORK/press-order i=0 w t0
+  rm -rf "$src"; mkdir -p "$src"   # the seven files, linked in press order: --source takes a directory and reads it in name order
+  for w in "${WEEKS[@]}"; do i=$((i + 1)); ln -s "$RAW/access-$w.log" "$src/$i-access-$w.log"; done
   t0=$SECONDS
-  cartridge --no-service fields build "$CART_DIR/$CART_KEY" --source "${sources[@]}" --fields ip,status,method,path,proto --json
+  cartridge --no-service fields build "$CART_DIR/$CART_KEY" --source "$src" --fields ip,status,method,path,proto --json \
+    || die "cartridge fields build failed"
+  [[ -s $CART_DIR/$CART_KEY.facets ]] || die "fields build exited 0 but wrote no sidecar: $CART_DIR/$CART_KEY.facets"
   echo "fields-build wall_s=$((SECONDS - t0))"
-  cartridge --no-service fields info "$CART_DIR/$CART_KEY" --json
-  cartridge --no-service fields verify "$CART_DIR/$CART_KEY"
+  cartridge --no-service fields info "$CART_DIR/$CART_KEY" --json || die "fields info failed"
+  cartridge --no-service fields verify "$CART_DIR/$CART_KEY" || die "fields verify failed"
   echo "RESULT name=cartridge-sidecar sidecar_bytes=$(stat -c %s "$CART_DIR/$CART_KEY.facets")"
 }
 cart_upload() {  # the cart and its sidecar, as two objects
