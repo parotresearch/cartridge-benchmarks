@@ -69,8 +69,8 @@ cart_press() {
   for w in "${WEEKS[@]}"; do files+=("$RAW/access-$w.log"); [[ -s $RAW/access-$w.log ]] || die "missing raw file $RAW/access-$w.log: run 00-data.sh"; done
   rm -f "$CART_DIR/$CART_KEY" "$CART_DIR/$CART_KEY.facets"
   t0=$SECONDS
-  # --store-only proto: the press indexes method, proto and status; proto is not kept by default, and the index needs it stored.
-  cartpress press "${files[@]}" -q --log -j 4 --index method:dimension,proto:dimension,status:dimension --store-only proto -o "$CART_DIR/$CART_KEY" \
+  # --store-only ts,method,status,proto: naming --store-only replaces the default stored set (ts, method, status), and every --index column must be stored.
+  cartpress press "${files[@]}" -q --log -j 4 --index method:dimension,proto:dimension,status:dimension --store-only ts,method,status,proto -o "$CART_DIR/$CART_KEY" \
     || die "cartpress failed"
   [[ -s $CART_DIR/$CART_KEY ]] || die "cartpress exited 0 but wrote no cart: $CART_DIR/$CART_KEY"
   echo "cartpress wall_s=$((SECONDS - t0))"
