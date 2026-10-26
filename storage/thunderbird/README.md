@@ -24,7 +24,7 @@ OpenSearch runs in `opensearchproject/opensearch:3.9.0`: 24 GB container, 12 GB 
 | raw | 10,737,418,238 | 1.000 | |
 | Elasticsearch 9.5.5 standard | 7,419,489,100 | 0.691 | [thunderbird-es955-cartridge.md](../../results/storage/thunderbird-es955-cartridge.md) |
 | Elasticsearch 9.5.5 logsdb | 2,400,695,754 | 0.224 | same file |
-| OpenSearch 3.9.0 default | 7,388,032,630 | 0.688 | [opensearch log, second pass](../../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log) (`RESULT forcemerge dataset=thunderbird`) |
+| OpenSearch 3.9.0 default | 7,614,836,272 | 0.709 | [opensearch log, flush rerun](../../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log) (`RESULT forcemerge dataset=thunderbird`) |
 | Cartridge level 2 | 701,303,359 | 0.065 | [thunderbird-es955-cartridge.md](../../results/storage/thunderbird-es955-cartridge.md) |
 | Cartridge level 1 | 525,666,845 | 0.049 | same file |
 
@@ -33,6 +33,6 @@ Level 1 came out smaller than level 2 on this data; reported as measured.
 ## Notes
 - **Hardware.** The OpenSearch number came from an AWS r7i.4xlarge (16 vCPU, 128 GB) on demand with no other load. The Elasticsearch and Cartridge numbers were measured on a c7i.4xlarge (16 vCPU, 30 GB); presses ran on a second box of that type. Stored size does not depend on the box.
 - **Elasticsearch measurement.** Primary store after `_refresh` and `_forcemerge?max_num_segments=1`. No flush or settle wait was run for the Elasticsearch numbers; the OpenSearch step adds both.
-- **OpenSearch measurement.** The stored 7,388,032,630 came from an earlier version of the OpenSearch script that merged and refreshed but did not flush or wait for the size to settle; on traces and CloudTrail that omission mattered (see those READMEs), so a rerun of `run.sh` may report a slightly lower number. This dataset was not re-measured with the flush.
+- **OpenSearch measurement.** Force-merge, refresh, flush, then wait for the size to settle. An earlier refresh-only measurement was 7,388,032,630 B; the flush made no material difference (+3.1%).
 - **Cartridge.** The stored runs used a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.
 - **Not part of this repo's claim.** The original report also holds query latencies; those are in the speed benchmarks, not here.

@@ -22,16 +22,16 @@ Elasticsearch and OpenSearch containers are set up exactly as in the [Thunderbir
 | raw | 10,506,623,721 | 1.000 | |
 | Elasticsearch 9.5.5 standard | 9,682,259,352 | 0.922 | [cockroachdb-es955-cartridge.md](../../results/storage/cockroachdb-es955-cartridge.md) |
 | Elasticsearch 9.5.5 logsdb | 1,506,138,614 | 0.143 | same file |
-| OpenSearch 3.9.0 default | 3,722,426,390 | 0.354 | [opensearch log, second pass](../../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log) (`RESULT forcemerge dataset=cockroachdb`) |
+| OpenSearch 3.9.0 default | 3,751,271,057 | 0.357 | [opensearch log, flush rerun](../../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log) (`RESULT forcemerge dataset=cockroachdb`) |
 | Cartridge level 2, `--gron` | 766,850,694 | 0.073 | same cockroachdb file, "Rerun with native `cartpress press --gron`" |
 | Cartridge level 1, `--gron` | 557,402,533 | 0.053 | same section |
 
 ## Fairness notes
-- **Mappings differ between systems.** Elasticsearch standard used dynamic mapping apart from `@timestamp`; OpenSearch uses an explicit `@timestamp` mapping and dynamic for the rest. Both index the same documents (16,520,377 each, 0 rejections). The standard-mode Elasticsearch index is 9.68 GB while OpenSearch with a near-identical mapping is 3.72 GB; the difference is not diagnosed here.
+- **Mappings differ between systems.** Elasticsearch standard used dynamic mapping apart from `@timestamp`; OpenSearch uses an explicit `@timestamp` mapping and dynamic for the rest. Both index the same documents (16,520,377 each, 0 rejections). The standard-mode Elasticsearch index is 9.68 GB while OpenSearch with a near-identical mapping is 3.75 GB; the difference is not diagnosed here.
 - **Cartridge numbers are from the native `--gron` press**, which reads the file in place and in order. An earlier run fed Cartridge through a `gron` pipe that moved the 10,241 largest lines to the end and measured 725,298,523 (level 2) and 515,851,031 (level 1) bytes; reordering made it 5.7% / 8% smaller, so those are not used. Both are in the results file.
 - **The Elasticsearch free licence stores `_source` as is** in logsdb mode; a paid licence can synthesise it. No paid configuration was measured here.
 
 ## Notes
 - **Hardware.** The OpenSearch number came from an AWS r7i.4xlarge (16 vCPU, 128 GB) on demand with no other load. The Elasticsearch and Cartridge numbers were measured on a c7i.4xlarge (16 vCPU, 30 GB). Stored size does not depend on the box.
-- **Elasticsearch measurement.** Primary store after `_refresh` and `_forcemerge?max_num_segments=1`; no flush or settle wait. The stored OpenSearch number came from an earlier version of the OpenSearch script without the flush and settle; a rerun of `run.sh` may report a slightly lower number. Not re-measured.
+- **Elasticsearch measurement.** Primary store after `_refresh` and `_forcemerge?max_num_segments=1`; no flush or settle wait. For OpenSearch, an earlier refresh-only measurement was 3,722,426,390 B; the flush made no material difference (+0.8%).
 - **Cartridge.** The stored runs used a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.

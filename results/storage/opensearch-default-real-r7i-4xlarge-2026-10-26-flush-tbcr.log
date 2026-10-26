@@ -1,0 +1,17 @@
+# OpenSearch 3.9.0 default, one r7i.4xlarge (16 vCPU, 128 GB), 2026-10-26, Thunderbird and CockroachDB rerun with flush and settle. Lines kept: START, SOURCE, INPUT, INDEX_SETTINGS, RESULT ingest/forcemerge/pass, VERDICT, END. Context, node-name and memory-peak lines are omitted, and the instance_type field is removed from RESULT lines (always r7i.4xlarge).
+START 2026-10-26T06:29:25Z system=opensearch-default opensearch=3.9.0 image=opensearchproject/opensearch:3.9.0 os_mem=24g os_heap=12g shards=1 replicas=0 resume=no loader_sha256=7dae49b47fcb3d2fa6de22523f4ed97f36169c3c3eb7826bb98b0652a858fc55 datasets=thunderbird cockroachdb
+SOURCE dataset=thunderbird file=Thunderbird.tar.gz bytes=2016100298 sha256=228f8589b7cd569b727c5da654c647aa538dd3dd95541e675a40523c5fff37cf
+INPUT dataset=thunderbird bytes=10737418238 lines=69612888 expected_bytes=10737418238 expected_lines=69612888 bytes_match=yes
+INDEX_SETTINGS dataset=thunderbird [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":"-1"}]
+RESULT ingest system=opensearch-default dataset=thunderbird docs=69612888 sent=69612888 rejected=0 bytes=10737418238 wall_s=291.2 vcpus=16 loader={"lines":69612888,"indexed":69612888,"errors":0,"ts_fail":0,"retries":0,"mode":"tb","batch":20000,"workers":8,"wall_s":291.0,"reject_reasons":[]} loader_max_rss_kb=71132
+RESULT forcemerge system=opensearch-default dataset=thunderbird wall_s=263.0 store_bytes=7614836272 segments_bytes=7614835894 es_standard_store_bytes=7419489100 vcpus=16
+RESULT pass dataset=thunderbird docs=69612888 rejected=0 store_bytes=7614836272
+VERDICT dataset=thunderbird OK
+SOURCE dataset=cockroachdb file=cockroachdb.tar.gz bytes=554664494 sha256=9b6913ae481e387090dc3fbc37e3b699dc634496af982962ca4bd946b482470d
+INPUT dataset=cockroachdb bytes=10506623721 lines=16520377 expected_bytes=10506623721 expected_lines=16520377 bytes_match=yes
+INDEX_SETTINGS dataset=cockroachdb [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=cockroachdb docs=16520377 sent=16520377 rejected=0 bytes=10506623721 wall_s=197.0 vcpus=16 loader={"lines":16520377,"indexed":16520377,"errors":0,"ts_fail":0,"retries":0,"mode":"cr","batch":4000,"workers":4,"wall_s":196.9,"reject_reasons":[]} loader_max_rss_kb=147728
+RESULT forcemerge system=opensearch-default dataset=cockroachdb wall_s=202.5 store_bytes=3751271057 segments_bytes=3751270680 es_standard_store_bytes=9682259352 vcpus=16
+RESULT pass dataset=cockroachdb docs=16520377 rejected=0 store_bytes=3751271057
+VERDICT dataset=cockroachdb OK
+END 2026-10-26T06:49:13Z failed=none

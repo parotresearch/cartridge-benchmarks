@@ -9,8 +9,8 @@ Hardware for the runs: one AWS r7i.4xlarge (16 vCPU, 128 GB), on demand, no othe
 
 | dataset | raw bytes | Elasticsearch standard | Elasticsearch logsdb | OpenSearch default | Cartridge level 2 | Cartridge level 1 |
 |---|---:|---:|---:|---:|---:|---:|
-| [Thunderbird syslog](thunderbird/README.md) | 10,737,418,238 | 7,419,489,100 | 2,400,695,754 | 7,388,032,630 | 701,303,359 | 525,666,845 |
-| [CockroachDB JSON logs](cockroachdb/README.md) | 10,506,623,721 | 9,682,259,352 | 1,506,138,614 | 3,722,426,390 | 766,850,694 | 557,402,533 |
+| [Thunderbird syslog](thunderbird/README.md) | 10,737,418,238 | 7,419,489,100 | 2,400,695,754 | 7,614,836,272 | 701,303,359 | 525,666,845 |
+| [CockroachDB JSON logs](cockroachdb/README.md) | 10,506,623,721 | 9,682,259,352 | 1,506,138,614 | 3,751,271,057 | 766,850,694 | 557,402,533 |
 | [CloudTrail (flaws.cloud)](cloudtrail/README.md) | 2,389,223,172 | 1,438,882,886 | 996,991,992 (flattened) / 841,790,533 (stock stream, 20.9% of events partly unsearchable) | 1,476,093,976 | 456,060,724 | 389,109,483 |
 | [Alibaba traces as OTel spans](traces/README.md) | 19,744,374,361 | 5,200,242,650 | 4,560,877,302 | 9,471,101,499 | 1,568,758,212 | 1,048,451,721 |
 
@@ -28,7 +28,7 @@ Sources, in the order of the columns:
 - Elasticsearch logsdb (free licence) stores `_source` as is. A paid licence can synthesise it; that setup was not measured here.
 - CockroachDB: Elasticsearch standard used dynamic mapping; OpenSearch uses an explicit `@timestamp` mapping with the rest dynamic.
 - Cartridge CockroachDB numbers are from the native `--gron` press; an earlier pipe-fed run was 5.7% / 8% smaller because it reordered records, and is not used.
-- The OpenSearch Thunderbird and CockroachDB sizes come from an earlier version of the OpenSearch script that did not flush and wait for the size to settle; on the other two datasets that step mattered, so a rerun may be slightly lower. See the dataset READMEs.
+- OpenSearch Thunderbird and CockroachDB: an earlier refresh-only measurement was 7,388,032,630 and 3,722,426,390 B; the flush and settle step made no material difference (+3.1% / +0.8%).
 
 ## Running
 ```
