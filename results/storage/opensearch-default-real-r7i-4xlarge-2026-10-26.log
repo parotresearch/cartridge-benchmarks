@@ -1,0 +1,48 @@
+# OpenSearch 3.9.0 default, one r7i.4xlarge (16 vCPU, 128 GB), 2026-10-26. Lines kept: START, SOURCE, INPUT, INDEX_SETTINGS, RESULT ingest/forcemerge/pass, VERDICT, END. Context, node-name and memory-peak lines are omitted, and the instance_type field is removed from RESULT lines (always r7i.4xlarge).
+START 2026-10-26T03:12:54Z system=opensearch-default opensearch=3.9.0 image=opensearchproject/opensearch:3.9.0 os_mem=24g os_heap=12g shards=1 replicas=0 resume=no loader_sha256=7dae49b47fcb3d2fa6de22523f4ed97f36169c3c3eb7826bb98b0652a858fc55 datasets=thunderbird cockroachdb cloudtrail traces
+SOURCE dataset=thunderbird file=Thunderbird.tar.gz bytes=2016100298 sha256=228f8589b7cd569b727c5da654c647aa538dd3dd95541e675a40523c5fff37cf
+INPUT dataset=thunderbird bytes=10737418238 lines=69612888 expected_bytes=10737418238 expected_lines=69612888 bytes_match=yes
+INDEX_SETTINGS dataset=thunderbird [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":"-1"}]
+RESULT ingest system=opensearch-default dataset=thunderbird docs=69612888 sent=69612888 rejected=0 bytes=10737418238 wall_s=269.8 vcpus=16 loader={"lines":69612888,"indexed":69612888,"errors":0,"ts_fail":0,"retries":0,"mode":"tb","batch":20000,"workers":8,"wall_s":269.6,"reject_reasons":[]} loader_max_rss_kb=71260
+VERDICT dataset=thunderbird FAILED reason=tb-os has 25 segments after the force-merge
+SOURCE dataset=cockroachdb file=cockroachdb.tar.gz bytes=554664494 sha256=9b6913ae481e387090dc3fbc37e3b699dc634496af982962ca4bd946b482470d
+INPUT dataset=cockroachdb bytes=10506623721 lines=16520377 expected_bytes=10506623721 expected_lines=16520377 bytes_match=yes
+INDEX_SETTINGS dataset=cockroachdb [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=cockroachdb docs=16520377 sent=16520377 rejected=0 bytes=10506623721 wall_s=186.5 vcpus=16 loader={"lines":16520377,"indexed":16520377,"errors":0,"ts_fail":0,"retries":0,"mode":"cr","batch":4000,"workers":4,"wall_s":186.4,"reject_reasons":[]} loader_max_rss_kb=147764
+VERDICT dataset=cockroachdb FAILED reason=cr-os has 18 segments after the force-merge
+SOURCE dataset=cloudtrail url=https://summitroute.com/downloads/flaws_cloudtrail_logs.tar bytes=251688960 sha256=f26c2b8da56bb00d695a57f00f86208117582b9216bb52424d68e718ca2a96aa
+SOURCE dataset=cloudtrail gz_files=20 gz_bytes=251670186 stored_run_gz_bytes=251670186
+INPUT dataset=cloudtrail bytes=2389223172 lines=1939207 expected_bytes=2389223172 expected_lines=1939207 bytes_match=yes
+INDEX_SETTINGS dataset=cloudtrail [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=cloudtrail docs=1938320 sent=1939207 rejected=887 bytes=2389223172 wall_s=119.1 vcpus=16 loader={"lines":1939207,"indexed":1938320,"errors":887,"ts_fail":0,"retries":0,"mode":"raw","batch":2000,"workers":1,"wall_s":118.9,"reject_reasons":[{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id 'pq5BdqEB7NebKt-BJCio'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id 'p65BdqEB7NebKt-BJCio'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id 'qK5BdqEB7NebKt-BJCio'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id 'qa5BdqEB7NebKt-BJCip'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id 'rK5BdqEB7NebKt-BJCip'. Preview of field's value: '2016_11_25'","n":1}]} loader_max_rss_kb=40500
+RESULT forcemerge system=opensearch-default dataset=cloudtrail wall_s=24.5 store_bytes=2555585148 es_standard_store_bytes=1438882886 vcpus=16
+RESULT pass dataset=cloudtrail docs=1938320 rejected=887 store_bytes=2555585148
+VERDICT dataset=cloudtrail OK
+SOURCE dataset=traces file=CallGraph_0.tar.gz bytes=223061338 sha256=df1fff9628d9e993440b2826912aa37e71d37cbddf9b9249389b2b71afbad2f9
+SOURCE dataset=traces file=CallGraph_1.tar.gz bytes=219905853 sha256=09c1b0939b0537c6705291df13fc269230f5ff0b1e7963e13b3e5200c1b76176
+SOURCE dataset=traces file=CallGraph_2.tar.gz bytes=217835530 sha256=aa8e56392d8b74eb8fbccd7fdf6172b45ae081072f2902150c784cf09bd3cc11
+SOURCE dataset=traces file=CallGraph_3.tar.gz bytes=216653803 sha256=2c2b3af818090e735e5f455a668eb539d932ca31d8e6e33fb0534a42bb1a22ed
+SOURCE dataset=traces ndjson_sha256=2d979fbeae1a709fc6138e23b7a824b40524b3e092649988e795c9ccdc41a5b5 expected=2d979fbeae1a709fc6138e23b7a824b40524b3e092649988e795c9ccdc41a5b5
+INPUT dataset=traces bytes=19744374361 lines=51982824 expected_bytes=19744374361 expected_lines=51982824 bytes_match=yes
+INDEX_SETTINGS dataset=traces [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=traces docs=51982824 sent=51982824 rejected=0 bytes=19744374361 wall_s=319.5 vcpus=16 loader={"lines":51982824,"indexed":51982824,"errors":0,"ts_fail":0,"retries":0,"mode":"raw","batch":5000,"workers":8,"wall_s":319.3,"reject_reasons":[]} loader_max_rss_kb=68156
+VERDICT dataset=traces FAILED reason=traces-os has 27 segments after the force-merge
+END 2026-10-26T03:46:28Z failed=thunderbird cockroachdb traces
+START 2026-10-26T03:50:42Z system=opensearch-default opensearch=3.9.0 image=opensearchproject/opensearch:3.9.0 os_mem=24g os_heap=12g shards=1 replicas=0 resume=resume loader_sha256=7dae49b47fcb3d2fa6de22523f4ed97f36169c3c3eb7826bb98b0652a858fc55 datasets=thunderbird cockroachdb cloudtrail traces
+INDEX_SETTINGS dataset=thunderbird [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":"-1"}]
+RESULT ingest system=opensearch-default dataset=thunderbird docs=69612888 sent=69612888 rejected=0 bytes=10737418238 wall_s=279.0 vcpus=16 loader={"lines":69612888,"indexed":69612888,"errors":0,"ts_fail":0,"retries":0,"mode":"tb","batch":20000,"workers":8,"wall_s":278.8,"reject_reasons":[]} loader_max_rss_kb=71244
+RESULT forcemerge system=opensearch-default dataset=thunderbird wall_s=195.6 store_bytes=7388032630 es_standard_store_bytes=7419489100 vcpus=16
+RESULT pass dataset=thunderbird docs=69612888 rejected=0 store_bytes=7388032630
+VERDICT dataset=thunderbird OK
+INDEX_SETTINGS dataset=cockroachdb [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=cockroachdb docs=16520377 sent=16520377 rejected=0 bytes=10506623721 wall_s=183.6 vcpus=16 loader={"lines":16520377,"indexed":16520377,"errors":0,"ts_fail":0,"retries":0,"mode":"cr","batch":4000,"workers":4,"wall_s":183.5,"reject_reasons":[]} loader_max_rss_kb=147928
+RESULT forcemerge system=opensearch-default dataset=cockroachdb wall_s=114.2 store_bytes=3722426390 es_standard_store_bytes=9682259352 vcpus=16
+RESULT pass dataset=cockroachdb docs=16520377 rejected=0 store_bytes=3722426390
+VERDICT dataset=cockroachdb OK
+RESUME dataset=cloudtrail already OK, not re-measured
+INDEX_SETTINGS dataset=traces [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=traces docs=51982824 sent=51982824 rejected=0 bytes=19744374361 wall_s=318.1 vcpus=16 loader={"lines":51982824,"indexed":51982824,"errors":0,"ts_fail":0,"retries":0,"mode":"raw","batch":5000,"workers":8,"wall_s":317.9,"reject_reasons":[]} loader_max_rss_kb=68204
+RESULT forcemerge system=opensearch-default dataset=traces wall_s=357.6 store_bytes=18609233123 es_standard_store_bytes=5200242650 vcpus=16
+RESULT pass dataset=traces docs=51982824 rejected=0 store_bytes=18609233123
+VERDICT dataset=traces OK
+END 2026-10-26T04:17:59Z failed=none

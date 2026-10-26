@@ -1,0 +1,22 @@
+# OpenSearch 3.9.0 default, one r7i.4xlarge (16 vCPU, 128 GB), 2026-10-26. Lines kept: START, SOURCE, INPUT, INDEX_SETTINGS, RESULT ingest/forcemerge/pass, VERDICT, END. Context, node-name and memory-peak lines are omitted, and the instance_type field is removed from RESULT lines (always r7i.4xlarge).
+START 2026-10-26T04:22:43Z system=opensearch-default opensearch=3.9.0 image=opensearchproject/opensearch:3.9.0 os_mem=24g os_heap=12g shards=1 replicas=0 resume=no loader_sha256=7dae49b47fcb3d2fa6de22523f4ed97f36169c3c3eb7826bb98b0652a858fc55 datasets=cloudtrail traces
+SOURCE dataset=cloudtrail url=https://summitroute.com/downloads/flaws_cloudtrail_logs.tar bytes=251688960 sha256=f26c2b8da56bb00d695a57f00f86208117582b9216bb52424d68e718ca2a96aa
+SOURCE dataset=cloudtrail gz_files=20 gz_bytes=251670186 stored_run_gz_bytes=251670186
+INPUT dataset=cloudtrail bytes=2389223172 lines=1939207 expected_bytes=2389223172 expected_lines=1939207 bytes_match=yes
+INDEX_SETTINGS dataset=cloudtrail [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=cloudtrail docs=1938320 sent=1939207 rejected=887 bytes=2389223172 wall_s=133.5 vcpus=16 loader={"lines":1939207,"indexed":1938320,"errors":887,"ts_fail":0,"retries":0,"mode":"raw","batch":2000,"workers":1,"wall_s":133.3,"reject_reasons":[{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id '81FzdqEBJaqYZ7qTzoUq'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id '9FFzdqEBJaqYZ7qTzoUq'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id '9VFzdqEBJaqYZ7qTzoUq'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id '9lFzdqEBJaqYZ7qTzoUq'. Preview of field's value: '2016_11_25'","n":1},{"type":"mapper_parsing_exception","reason":"failed to parse field [apiVersion] of type [date] in document with id '-VFzdqEBJaqYZ7qTzoUq'. Preview of field's value: '2016_11_25'","n":1}]} loader_max_rss_kb=40468
+RESULT forcemerge system=opensearch-default dataset=cloudtrail wall_s=28.4 store_bytes=1476093976 segments_bytes=1476093604 es_standard_store_bytes=1438882886 vcpus=16
+RESULT pass dataset=cloudtrail docs=1938320 rejected=887 store_bytes=1476093976
+VERDICT dataset=cloudtrail OK
+SOURCE dataset=traces file=CallGraph_0.tar.gz bytes=223061338 sha256=df1fff9628d9e993440b2826912aa37e71d37cbddf9b9249389b2b71afbad2f9
+SOURCE dataset=traces file=CallGraph_1.tar.gz bytes=219905853 sha256=09c1b0939b0537c6705291df13fc269230f5ff0b1e7963e13b3e5200c1b76176
+SOURCE dataset=traces file=CallGraph_2.tar.gz bytes=217835530 sha256=aa8e56392d8b74eb8fbccd7fdf6172b45ae081072f2902150c784cf09bd3cc11
+SOURCE dataset=traces file=CallGraph_3.tar.gz bytes=216653803 sha256=2c2b3af818090e735e5f455a668eb539d932ca31d8e6e33fb0534a42bb1a22ed
+SOURCE dataset=traces ndjson_sha256=2d979fbeae1a709fc6138e23b7a824b40524b3e092649988e795c9ccdc41a5b5 expected=2d979fbeae1a709fc6138e23b7a824b40524b3e092649988e795c9ccdc41a5b5
+INPUT dataset=traces bytes=19744374361 lines=51982824 expected_bytes=19744374361 expected_lines=51982824 bytes_match=yes
+INDEX_SETTINGS dataset=traces [{"codec":"default","source_mode":null,"sort_field":[],"derived_source":"false","shards":"1","replicas":"0","refresh_interval":null}]
+RESULT ingest system=opensearch-default dataset=traces docs=51982824 sent=51982824 rejected=0 bytes=19744374361 wall_s=354.9 vcpus=16 loader={"lines":51982824,"indexed":51982824,"errors":0,"ts_fail":0,"retries":0,"mode":"raw","batch":5000,"workers":8,"wall_s":354.7,"reject_reasons":[]} loader_max_rss_kb=68460
+RESULT forcemerge system=opensearch-default dataset=traces wall_s=414.8 store_bytes=9471101499 segments_bytes=9471101121 es_standard_store_bytes=5200242650 vcpus=16
+RESULT pass dataset=traces docs=51982824 rejected=0 store_bytes=9471101499
+VERDICT dataset=traces OK
+END 2026-10-26T04:44:25Z failed=none
