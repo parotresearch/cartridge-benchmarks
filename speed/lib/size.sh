@@ -80,8 +80,8 @@ cart_sidecar() {
   need cartridge "curl -sSf https://cartridge.app/install | sh"
   [[ -s $CART_DIR/$CART_KEY ]] || die "no cart to build the sidecar from: $CART_DIR/$CART_KEY"
   local src=$WORK/press-order i=0 w t0
-  rm -rf "$src"; mkdir -p "$src"   # the seven files, linked in press order: --source takes a directory and reads it in name order
-  for w in "${WEEKS[@]}"; do i=$((i + 1)); ln -s "$RAW/access-$w.log" "$src/$i-access-$w.log"; done
+  rm -rf "$src"; mkdir -p "$src"   # the seven files, hard-linked in press order: --source takes a directory and reads it in name order
+  for w in "${WEEKS[@]}"; do i=$((i + 1)); ln "$RAW/access-$w.log" "$src/$i-access-$w.log"; done
   t0=$SECONDS
   cartridge --no-service fields build "$CART_DIR/$CART_KEY" --source "$src" --fields ip,status,method,path,proto --json \
     || die "cartridge fields build failed"
