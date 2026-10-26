@@ -1,0 +1,25 @@
+{
+  "tier": "hot",
+  "docs": 247249096,
+  "hot_primary_bytes": 18994389027,
+  "hot_total_bytes": 18994389027,
+  "restore_wall_s": 210,
+  "green_wall_s": 210,
+  "heap_max_bytes": 8589934592,
+  "es_nodes": 1,
+  "es_replicas": 0,
+  "nodes_heap": "nodes=1 heaps=elasticsearch:8589934592",
+  "query_cache": "off",
+  "recovery_rate": "90mb",
+  "repository_readonly": true,
+  "es_version": "9.5.4",
+  "indices": 7,
+  "dataset": "1x",
+  "non_default": [
+    "restored from the S3 snapshot of the force-merged hot indices (one segment per shard), not re-loaded",
+    "index.number_of_replicas=0: single node (ES best case)",
+    "index.queries.cache.enabled=false (node query cache off for cold numbers)",
+    "xpack.security.enabled=false: one throwaway node, port bound to 127.0.0.1",
+    "heap not set: auto-sized by ES from the 16g container"
+  ]
+}

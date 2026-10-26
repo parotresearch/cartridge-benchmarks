@@ -1,0 +1,8 @@
+{
+  "index_patterns": ["logs-history-*"],
+  "priority": 500,
+  "_meta": {
+    "description": "Shadows the built-in data-stream template `logs` (pattern logs-*-*, priority 100) for the Rally http_logs indices. Deliberately empty: settings and mappings come only from Rally's index.json, so the benchmark uses Elastic's own track configuration. No data_stream block, so these are plain indices."
+  },
+  "template": {}
+}

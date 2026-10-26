@@ -1,0 +1,159 @@
+WARM_SNAPSHOT total_bytes=19068159659 indices=7 source=GET_/_snapshot/s3-aws/frozen1-history-merged/_status:indices.*.stats.total.size_in_bytes
+START 2026-10-21T05:47:55Z dataset=1x tier=warm es_replicas=0 es_nodes=1 es_query_cache=off warm_mode=restore es_warm_recovery_rate=1gb es_warm_concurrent_recoveries=2 warm_local_cap_s=1800 topn_shard_cap=10000 rightsize=0 stage_cap_s=3600 cap_s=60 cpus=4 mem=16g es_version=9.5.4 sha=b2e342779 granule=exact rss_cap=default query_form=text strict=1 sessions_file=investigations-tiers.json systems="es" es_tier=warm session_tier=s3 configs="A" chains="spike404 client fivexx top500 endpoint probe forbidden newip" equal_budget_bytes=1073741824
+VERSION cartridge 0.17.1 (src-b2e342779-0-g9b8d32abb4b7/release/dev-nolicense) profile: cartridge=release (the timed reader) 
+CTX volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=1.41 load5=1.50 top_procs="java:149,containerd:1.0,dockerd:0.4"
+CONFOUND volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=1.41 load5=1.50 top_procs="java:149,containerd:1.0,dockerd:0.4" cache_state="es_request_cache=off_per_request es_query_cache=off cart_result_cache=off page_cache=dropped_per_chain es2_page_cache=na" flags="cpus=4 mem=16g granule=exact es_tier=warm session_tier=s3 warm_mode=restore es_replicas=0 es_warm_recovery_rate=1gb extra_cart_env=none rss_cap=default"
+ES_SETUP {"tier":"warm","mode":"restore","recovery_rate":"1gb","node_concurrent_recoveries":"2","snapshot":"frozen1-history-merged","base_path":"es-snapshots","repository_readonly":true,"query_cache":"off","es_version":"9.5.4","indices":7}
+ES_JVM heap_max_bytes=8589934592 nodes=1 heaps=elasticsearch:8589934592
+ES_QUERY_CACHE setting=index.queries.cache.enabled value=false node_stats={"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0}
+CART cart=s3://$BUCKET/http_logs_attr3-v4-bf127dddb.cart carts=1 cart_bytes=3237744680 etag=b23a6250eb25a5457431ad6619839da3-386
+DOCKER Docker version 29.1.3 build 29.1.3-0ubuntu3~24.04.2 image=ubuntu:24.04
+SESSIONS (the 39 searches and their expected answers: see speed/http_logs/searches.json)
+WARM_CHECK A spike404 es mode=restore ok=1 when=before_chain docs=247249096 check_ms=329 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070234624,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A spike404 es start rc=0 ms=64785 warm_mode=restore container_id=f4995ddace19 started_at=2026-10-21T05:47:59.687878824Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=3.03 load5=1.97 top_procs="java:158,containerd:1.0,containerd-shim:0.5"
+S A spike404 es step=a1 ms=787 verdict=exact answer=1224876 want=1224876 out_sha=6112e35aaa2da8bb1b8b362ec479887180c8b489af8ba588871285dd835b09b6 out_lines=46 s3_bytes=0 s3_requests=0 io_bytes=479555584 cache_bytes=0 after_timeout=0 cap_s=60
+S A spike404 es step=a1 cache_after={"tier":"warm","shared_cache":"none"}
+S A spike404 es step=a2 ms=147 verdict=exact answer=345893 want=345893 out_sha=3cf2fe2fb9e3b8e5c2c2e8fcc92fa2b6b3d17632015f548d32d885dd2614e89b out_lines=19 s3_bytes=0 s3_requests=0 io_bytes=2420736 cache_bytes=0 after_timeout=0 cap_s=60
+S A spike404 es step=a2 cache_after={"tier":"warm","shared_cache":"none"}
+S A spike404 es step=a3 ms=242 verdict=exact answer=100 want=100 out_sha=50b77e6fdd4a2cda9b610913cdd9b2de9a9bebff3802f7b952719314006da16f out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=8716288 cache_bytes=0 after_timeout=0 cap_s=60
+S A spike404 es step=a3 cache_after={"tier":"warm","shared_cache":"none"}
+S A spike404 es step=a4 ms=111 verdict=exact answer=666936 want=666936 out_sha=dc970913447c9a43c11dabaef97e1061fdccaf6f8f3f5837eefd6e2285d173ff out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=3801088 cache_bytes=0 after_timeout=0 cap_s=60
+S A spike404 es step=a4 cache_after={"tier":"warm","shared_cache":"none"}
+S A spike404 es step=a5 ms=53 verdict=exact answer=145033 want=145033 out_sha=71d4b341f8e559200265e3b42526bba9a05130f89f14fff30b1fc7cff67f43d8 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=0 cache_bytes=0 after_timeout=0 cap_s=60
+S A spike404 es step=a5 cache_after={"tier":"warm","shared_cache":"none"}
+S A spike404 es end total_ms=1857 timeouts=0 failures=0 aborted=0
+S A spike404 es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A spike404 es mode=restore t_start_ms=23648 t_searchable_ms=64785 t_first_answer_ms=65661 t_local_ms=64785 t_chain_done_ms=66730 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A client es mode=restore ok=1 when=before_chain docs=247249096 check_ms=328 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070181376,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A client es start rc=0 ms=66578 warm_mode=restore container_id=effbf4c3110c started_at=2026-10-21T05:49:07.905017749Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.82 load5=2.11 top_procs="java:151,containerd:0.9,containerd-shim:0.5"
+S A client es step=b1 ms=51 verdict=exact answer=178947 want=178947 out_sha=935ee9a35ec7d4d468237abdfcabeafac39aa2135ef5aacf28eb48ca25810126 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=3514368 cache_bytes=0 after_timeout=0 cap_s=60
+S A client es step=b1 cache_after={"tier":"warm","shared_cache":"none"}
+S A client es step=b2 ms=1060 verdict=exact answer=178947 want=178947 out_sha=28b1b7efbb9d993141cf63b94d7db4c4f37056e86d09c65c4b2acdf06d342932 out_lines=46 s3_bytes=0 s3_requests=0 io_bytes=489443328 cache_bytes=0 after_timeout=0 cap_s=60
+S A client es step=b2 cache_after={"tier":"warm","shared_cache":"none"}
+S A client es step=b3 ms=97 verdict=exact answer=30995 want=30995 out_sha=eb3b589f2bd86590c09c4ab2f3959a4885a2b92128121ff4ae7ed1fa54aed69d out_lines=15 s3_bytes=0 s3_requests=0 io_bytes=2805760 cache_bytes=0 after_timeout=0 cap_s=60
+S A client es step=b3 cache_after={"tier":"warm","shared_cache":"none"}
+S A client es step=b4 ms=268 verdict=exact answer=100 want=100 out_sha=feb94573e1fba3aa51849cc2bc06b37f70d47dc9ce92fc4c1d511963f02ab244 out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=2453504 cache_bytes=0 after_timeout=0 cap_s=60
+S A client es step=b4 cache_after={"tier":"warm","shared_cache":"none"}
+S A client es end total_ms=1901 timeouts=0 failures=0 aborted=0
+S A client es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A client es mode=restore t_start_ms=24535 t_searchable_ms=66578 t_first_answer_ms=66721 t_local_ms=66578 t_chain_done_ms=68571 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A fivexx es mode=restore ok=1 when=before_chain docs=247249096 check_ms=326 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070230528,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A fivexx es start rc=0 ms=69650 warm_mode=restore container_id=2a44105739bb started_at=2026-10-21T05:50:18.082310232Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.06 load5=2.03 top_procs="java:146,containerd:0.9,containerd-shim:0.5"
+S A fivexx es step=c1 ms=970 verdict=exact answer=6134 want=6134 out_sha=8aad78e03fa6c17117c43310b3cff666f81b62e56ad966f0166dcc12eff235a6 out_lines=46 s3_bytes=0 s3_requests=0 io_bytes=310276096 cache_bytes=0 after_timeout=0 cap_s=60
+S A fivexx es step=c1 cache_after={"tier":"warm","shared_cache":"none"}
+S A fivexx es step=c2 ms=324 verdict=exact answer=100 want=100 out_sha=6df264b2720a86c418dc638a38d5f23ee289abf4e548f660a32e5908cfcd6ee4 out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=4448256 cache_bytes=0 after_timeout=0 cap_s=60
+S A fivexx es step=c2 cache_after={"tier":"warm","shared_cache":"none"}
+S A fivexx es step=c3 ms=26 verdict=exact answer=1198 want=1198 out_sha=561024a5b8884717a00968551d900c57d769d23abc169f713f8e2db81f2e0cfd out_lines=18 s3_bytes=0 s3_requests=0 io_bytes=733184 cache_bytes=0 after_timeout=0 cap_s=60
+S A fivexx es step=c3 cache_after={"tier":"warm","shared_cache":"none"}
+S A fivexx es step=c4 ms=22 verdict=exact answer=758 want=758 out_sha=7f94a9a5e0d7a7cc15f6760cdfa3a1b88750fd89f70d82e459af4b588597ade3 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=294912 cache_bytes=0 after_timeout=0 cap_s=60
+S A fivexx es step=c4 cache_after={"tier":"warm","shared_cache":"none"}
+S A fivexx es step=c5 ms=428 verdict=exact answer=15933 want=15933 out_sha=0cf9ef1ecd38c6d76c0858a1f9a8a45aba55cf3db1335e39e3adc75920b8eef9 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=148414464 cache_bytes=0 after_timeout=0 cap_s=60
+S A fivexx es step=c5 cache_after={"tier":"warm","shared_cache":"none"}
+S A fivexx es end total_ms=2265 timeouts=0 failures=0 aborted=0
+S A fivexx es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A fivexx es mode=restore t_start_ms=24474 t_searchable_ms=69650 t_first_answer_ms=70703 t_local_ms=69650 t_chain_done_ms=71997 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A top500 es mode=restore ok=1 when=before_chain docs=247249096 check_ms=329 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070242816,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A top500 es start rc=0 ms=64244 warm_mode=restore container_id=57083396fadd started_at=2026-10-21T05:51:31.607625584Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.20 load5=2.06 top_procs="java:158,containerd:0.8,containerd-shim:0.5"
+S A top500 es step=e1 ms=900 verdict=approx answer=93fa038a3f65268aadd5250c132edfcfbc16b922e7176704a6dfc3683b1f65c7 want=1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72 out_sha=93fa038a3f65268aadd5250c132edfcfbc16b922e7176704a6dfc3683b1f65c7 out_lines=9 s3_bytes=0 s3_requests=0 io_bytes=243720192 cache_bytes=0 after_timeout=0 cap_s=60
+S A top500 es step=e1 cache_after={"tier":"warm","shared_cache":"none"}
+S A top500 es step=e2 ms=23 verdict=exact answer=3968 want=3968 out_sha=d97273a1f5f9a2d912d14085df9d7aa6b244a7ac3ba6f7e12e9b1acf8b62a952 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=2416640 cache_bytes=0 after_timeout=0 cap_s=60
+S A top500 es step=e2 cache_after={"tier":"warm","shared_cache":"none"}
+S A top500 es step=e3 ms=89 verdict=exact answer=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd want=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd out_sha=33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd out_lines=6 s3_bytes=0 s3_requests=0 io_bytes=19050496 cache_bytes=0 after_timeout=0 cap_s=60
+S A top500 es step=e3 cache_after={"tier":"warm","shared_cache":"none"}
+S A top500 es step=e3 topn_rung shard_size=default ms=89 exact=1 accuracy=6/6
+S A top500 es step=e4 ms=132 verdict=approx answer=45278a300a4ccc206c559970eae1259b3ec69cccf400cd205a0c328ea2980f95 want=3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07 out_sha=45278a300a4ccc206c559970eae1259b3ec69cccf400cd205a0c328ea2980f95 out_lines=5 s3_bytes=0 s3_requests=0 io_bytes=42373120 cache_bytes=0 after_timeout=0 cap_s=60
+S A top500 es step=e4 cache_after={"tier":"warm","shared_cache":"none"}
+S A top500 es step=e5 ms=162 verdict=exact answer=100 want=100 out_sha=3b8260ec43e79658e9247f349bed7e489d5af9ee54ea51748db471fda0749189 out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=1073152 cache_bytes=0 after_timeout=0 cap_s=60
+S A top500 es step=e5 cache_after={"tier":"warm","shared_cache":"none"}
+S A top500 es end total_ms=1843 timeouts=0 failures=0 aborted=0
+S A top500 es step=e1 topn_rung shard_size=default ms=900 exact=0 accuracy=4/9
+S A top500 es step=e1 topn_rung shard_size=46 ms=129 exact=0 accuracy=8/9 verdict=MISMATCH
+S A top500 es step=e1 topn_rung shard_size=92 ms=25 exact=0 accuracy=8/9 verdict=MISMATCH
+S A top500 es step=e1 topn_rung shard_size=184 ms=22 exact=0 accuracy=8/9 verdict=MISMATCH
+S A top500 es step=e1 topn_rung shard_size=368 ms=19 exact=1 accuracy=9/9 verdict=exact
+S A top500 es step=e1 topn_ladder exact_shard_size=368 rungs=4 cap=10000
+S A top500 es step=e4 topn_rung shard_size=default ms=132 exact=0 accuracy=0/5
+S A top500 es step=e4 topn_rung shard_size=34 ms=11 exact=0 accuracy=0/5 verdict=MISMATCH
+S A top500 es step=e4 topn_rung shard_size=68 ms=10 exact=0 accuracy=2/5 verdict=MISMATCH
+S A top500 es step=e4 topn_rung shard_size=136 ms=11 exact=0 accuracy=2/5 verdict=MISMATCH
+S A top500 es step=e4 topn_rung shard_size=272 ms=11 exact=0 accuracy=3/5 verdict=MISMATCH
+S A top500 es step=e4 topn_rung shard_size=544 ms=11 exact=1 accuracy=5/5 verdict=exact
+S A top500 es step=e4 topn_ladder exact_shard_size=544 rungs=5 cap=10000
+S A top500 es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A top500 es mode=restore t_start_ms=23392 t_searchable_ms=64244 t_first_answer_ms=65239 t_local_ms=64244 t_chain_done_ms=66181 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A endpoint es mode=restore ok=1 when=before_chain docs=247249096 check_ms=326 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070226432,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A endpoint es start rc=0 ms=66624 warm_mode=restore container_id=4fc0045f0165 started_at=2026-10-21T05:52:39.938687333Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.14 load5=2.07 top_procs="java:156,containerd:0.8,containerd-shim:0.5"
+S A endpoint es step=f1 ms=815 verdict=approx answer=16fd03be1716ece1b3f5af4f1688e6da7cdcd0691371a0fc5e9452795da0cd69 want=4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828 out_sha=16fd03be1716ece1b3f5af4f1688e6da7cdcd0691371a0fc5e9452795da0cd69 out_lines=10 s3_bytes=0 s3_requests=0 io_bytes=232120320 cache_bytes=0 after_timeout=0 cap_s=60
+S A endpoint es step=f1 cache_after={"tier":"warm","shared_cache":"none"}
+S A endpoint es step=f2 ms=305 verdict=exact answer=491 want=491 out_sha=d595b2bf4262f3ddec9132dc29a090a04b6df82bb8c76cccd92d789f45ed641b out_lines=36 s3_bytes=0 s3_requests=0 io_bytes=70676480 cache_bytes=0 after_timeout=0 cap_s=60
+S A endpoint es step=f2 cache_after={"tier":"warm","shared_cache":"none"}
+S A endpoint es step=f3 ms=9 verdict=exact answer=668 want=668 out_sha=45372028596b2ae08a68bb41e85d8a65289b8c611605e26954af26209784df5f out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=0 cache_bytes=0 after_timeout=0 cap_s=60
+S A endpoint es step=f3 cache_after={"tier":"warm","shared_cache":"none"}
+S A endpoint es step=f4 ms=28 verdict=exact answer=116 want=116 out_sha=ec5a8d6f15e5989020324e2199f29432986767aeef24d7e29d2de61f0e39af5e out_lines=19 s3_bytes=0 s3_requests=0 io_bytes=1593344 cache_bytes=0 after_timeout=0 cap_s=60
+S A endpoint es step=f4 cache_after={"tier":"warm","shared_cache":"none"}
+S A endpoint es step=f5 ms=136 verdict=exact answer=100 want=100 out_sha=3315ab3789280909e40e6d734b829495cc8125d8555cd4cc10465abb90370ac4 out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=3031040 cache_bytes=0 after_timeout=0 cap_s=60
+S A endpoint es step=f5 cache_after={"tier":"warm","shared_cache":"none"}
+S A endpoint es end total_ms=1797 timeouts=0 failures=0 aborted=0
+S A endpoint es step=f1 topn_rung shard_size=default ms=815 exact=0 accuracy=5/10
+S A endpoint es step=f1 topn_rung shard_size=50 ms=40 exact=0 accuracy=7/10 verdict=MISMATCH
+S A endpoint es step=f1 topn_rung shard_size=100 ms=18 exact=0 accuracy=9/10 verdict=MISMATCH
+S A endpoint es step=f1 topn_rung shard_size=200 ms=19 exact=1 accuracy=10/10 verdict=exact
+S A endpoint es step=f1 topn_ladder exact_shard_size=200 rungs=3 cap=10000
+S A endpoint es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A endpoint es mode=restore t_start_ms=24494 t_searchable_ms=66624 t_first_answer_ms=67531 t_local_ms=66624 t_chain_done_ms=68512 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A probe es mode=restore ok=1 when=before_chain docs=247249096 check_ms=341 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070222336,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A probe es start rc=0 ms=64716 warm_mode=restore container_id=142a9f1e9338 started_at=2026-10-21T05:53:50.23875101Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.58 load5=2.26 top_procs="java:154,containerd:0.8,containerd-shim:0.5"
+S A probe es step=g1 ms=352 verdict=exact answer=605 want=605 out_sha=8f8188e2910a4296657b6660e10750d5a75d6a3b6651ffefbdd23582172b179a out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=3452928 cache_bytes=0 after_timeout=0 cap_s=60
+S A probe es step=g1 cache_after={"tier":"warm","shared_cache":"none"}
+S A probe es step=g2 ms=268 verdict=exact answer=605 want=605 out_sha=c5abec9827583a1a9bed97df77983ef196337006d8e413bc1efb9e32cdcb427c out_lines=36 s3_bytes=0 s3_requests=0 io_bytes=42639360 cache_bytes=0 after_timeout=0 cap_s=60
+S A probe es step=g2 cache_after={"tier":"warm","shared_cache":"none"}
+S A probe es step=g3 ms=127 verdict=exact answer=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 want=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 out_sha=79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7 out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=28540928 cache_bytes=0 after_timeout=0 cap_s=60
+S A probe es step=g3 cache_after={"tier":"warm","shared_cache":"none"}
+S A probe es step=g3 topn_rung shard_size=default ms=127 exact=1 accuracy=2/2
+S A probe es step=g4 ms=235 verdict=approx answer=d7e7f06b9b40f32759a3aed3ab76fc6e7490f9d621c89884bdbfc9c82c05b0e5 want=f5a3efba599eda5798c54a883b1f164c3bb22eacb21b038fa9fd4fa7c06654e9 out_sha=d7e7f06b9b40f32759a3aed3ab76fc6e7490f9d621c89884bdbfc9c82c05b0e5 out_lines=9 s3_bytes=0 s3_requests=0 io_bytes=41406464 cache_bytes=0 after_timeout=0 cap_s=60
+S A probe es step=g4 cache_after={"tier":"warm","shared_cache":"none"}
+S A probe es step=g5 ms=526 verdict=exact answer=81 want=81 out_sha=59cc3373dd4d6722ef3b2248e6b4dd1b9346c65db322af4fb93765d1651f75d8 out_lines=82 s3_bytes=0 s3_requests=0 io_bytes=103505920 cache_bytes=0 after_timeout=0 cap_s=60
+S A probe es step=g5 cache_after={"tier":"warm","shared_cache":"none"}
+S A probe es end total_ms=2024 timeouts=0 failures=0 aborted=0
+S A probe es step=g4 topn_rung shard_size=default ms=235 exact=0 accuracy=6/9
+S A probe es step=g4 topn_rung shard_size=46 ms=36 exact=0 accuracy=7/9 verdict=MISMATCH
+S A probe es step=g4 topn_rung shard_size=92 ms=34 exact=1 accuracy=9/9 verdict=exact
+S A probe es step=g4 topn_ladder exact_shard_size=92 rungs=2 cap=10000
+S A probe es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A probe es mode=restore t_start_ms=23668 t_searchable_ms=64716 t_first_answer_ms=65161 t_local_ms=64716 t_chain_done_ms=66832 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A forbidden es mode=restore ok=1 when=before_chain docs=247249096 check_ms=331 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070226432,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A forbidden es start rc=0 ms=64764 warm_mode=restore container_id=434d3968fd37 started_at=2026-10-21T05:54:58.829722683Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.57 load5=2.38 top_procs="java:165,containerd:0.7,containerd-shim:0.5"
+S A forbidden es step=h1 ms=68 verdict=exact answer=224 want=224 out_sha=7d95d2923118bf3cdf3f5d4600b1df557deb75d0ca2ef0f8d3718c3691c86455 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=3207168 cache_bytes=0 after_timeout=0 cap_s=60
+S A forbidden es step=h1 cache_after={"tier":"warm","shared_cache":"none"}
+S A forbidden es step=h2 ms=151 verdict=exact answer=224 want=224 out_sha=479629f9c93f723f62723109ab79d288f49bb4962a3a12ed7bb037ec35bf2a18 out_lines=8 s3_bytes=0 s3_requests=0 io_bytes=3641344 cache_bytes=0 after_timeout=0 cap_s=60
+S A forbidden es step=h2 cache_after={"tier":"warm","shared_cache":"none"}
+S A forbidden es step=h3 ms=38 verdict=exact answer=202 want=202 out_sha=5e115b211bfcfb6bbe3ecb81350bd37b7099764ba9b87358f86455e5208481c1 out_lines=3 s3_bytes=0 s3_requests=0 io_bytes=253952 cache_bytes=0 after_timeout=0 cap_s=60
+S A forbidden es step=h3 cache_after={"tier":"warm","shared_cache":"none"}
+S A forbidden es step=h4 ms=103 verdict=approx answer=55f4c0d18188cbfb276e24a6ebfa211093c03d02c2d3adfb561c6b607b55b1ca want=eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2 out_sha=55f4c0d18188cbfb276e24a6ebfa211093c03d02c2d3adfb561c6b607b55b1ca out_lines=9 s3_bytes=0 s3_requests=0 io_bytes=3117056 cache_bytes=0 after_timeout=0 cap_s=60
+S A forbidden es step=h4 cache_after={"tier":"warm","shared_cache":"none"}
+S A forbidden es step=h5 ms=103 verdict=exact answer=100 want=100 out_sha=5739b2f705eca2cb28751f2662d2c5ec9b6c1a9f1a2df5eb0bb0877a2212a3cb out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=638976 cache_bytes=0 after_timeout=0 cap_s=60
+S A forbidden es step=h5 cache_after={"tier":"warm","shared_cache":"none"}
+S A forbidden es end total_ms=971 timeouts=0 failures=0 aborted=0
+S A forbidden es step=h4 topn_rung shard_size=default ms=103 exact=0 accuracy=6/9
+S A forbidden es step=h4 topn_rung shard_size=46 ms=12 exact=1 accuracy=9/9 verdict=exact
+S A forbidden es step=h4 topn_ladder exact_shard_size=46 rungs=1 cap=10000
+S A forbidden es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A forbidden es mode=restore t_start_ms=24664 t_searchable_ms=64764 t_first_answer_ms=64927 t_local_ms=64764 t_chain_done_ms=65830 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+WARM_CHECK A newip es mode=restore ok=1 when=before_chain docs=247249096 check_ms=319 excluded_from_warm_times=1 evidence={"ok":true,"snap_bytes":19068159659,"du_bytes":19070226432,"store_bytes":19068159659,"dataset_bytes":19068159659,"short":[]}
+S A newip es start rc=0 ms=64211 warm_mode=restore container_id=fb2a9b0d7457 started_at=2026-10-21T05:56:06.289784117Z volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2c region=us-east-2 load1=2.70 load5=2.44 top_procs="java:157,containerd:0.7,containerd-shim:0.5"
+S A newip es step=i1 ms=53 verdict=exact answer=42 want=42 out_sha=084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0 out_lines=1 s3_bytes=0 s3_requests=0 io_bytes=3739648 cache_bytes=0 after_timeout=0 cap_s=60
+S A newip es step=i1 cache_after={"tier":"warm","shared_cache":"none"}
+S A newip es step=i2 ms=164 verdict=exact answer=42 want=42 out_sha=9234a16e99513c47a0939d1aea23278634e32545ba91185fdb72514773cc59ea out_lines=4 s3_bytes=0 s3_requests=0 io_bytes=3727360 cache_bytes=0 after_timeout=0 cap_s=60
+S A newip es step=i2 cache_after={"tier":"warm","shared_cache":"none"}
+S A newip es step=i3 ms=34 verdict=exact answer=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e want=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e out_sha=c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e out_lines=2 s3_bytes=0 s3_requests=0 io_bytes=1867776 cache_bytes=0 after_timeout=0 cap_s=60
+S A newip es step=i3 cache_after={"tier":"warm","shared_cache":"none"}
+S A newip es step=i3 topn_rung shard_size=default ms=34 exact=1 accuracy=2/2
+S A newip es step=i4 ms=58 verdict=exact answer=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f want=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f out_sha=3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f out_lines=9 s3_bytes=0 s3_requests=0 io_bytes=3301376 cache_bytes=0 after_timeout=0 cap_s=60
+S A newip es step=i4 cache_after={"tier":"warm","shared_cache":"none"}
+S A newip es step=i4 topn_rung shard_size=default ms=58 exact=1 accuracy=9/9
+S A newip es step=i5 ms=124 verdict=exact answer=22 want=22 out_sha=349f5d6076b9cc80d3076d719328072976b800eda5b96e368e706afd0360b05e out_lines=23 s3_bytes=0 s3_requests=0 io_bytes=2211840 cache_bytes=0 after_timeout=0 cap_s=60
+S A newip es step=i5 cache_after={"tier":"warm","shared_cache":"none"}
+S A newip es end total_ms=972 timeouts=0 failures=0 aborted=0
+S A newip es query_cache {"hit_count":0,"miss_count":0,"cache_count":0,"memory_size_in_bytes":0} setting=off
+WARM A newip es mode=restore t_start_ms=23686 t_searchable_ms=64211 t_first_answer_ms=64356 t_local_ms=64211 t_chain_done_ms=65275 bytes_local=19068159659 recovery_rate=1gb ttfa_rule=after-restore
+END 2026-10-21T05:57:12Z

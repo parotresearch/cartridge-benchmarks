@@ -1,0 +1,72 @@
+{
+  "settings": {
+    {# non-serverless-index-settings-marker-start #}{%- if build_flavor != "serverless" or serverless_operator == true -%}
+    "index.number_of_shards": {{ number_of_shards | default(5) }},
+    "index.number_of_replicas": {{ number_of_replicas | default(0) }},
+    "index.requests.cache.enable": false
+    {%- endif -%}{# non-serverless-index-settings-marker-end #}
+    {%- if enable_logsdb %},
+    "index.mode": "logsdb",
+    {% if synthetic_source_keep %}
+    "index.mapping.synthetic_source_keep": "{{synthetic_source_keep}}",
+    {% endif %}
+    {% if use_doc_values_skipper | default(true)  %}
+    "index.mapping.use_doc_values_skipper" : "true",
+    {% endif %}
+    "index.sort.field": ["@timestamp"],
+    "index.sort.order":["desc"]
+    {%- endif %}
+    {% if source_mode %}
+    ,"mapping.source.mode": {{ source_mode | tojson }}
+    {% endif %}
+  },
+  "mappings": {
+    "dynamic": "strict",
+    {%- if enable_logsdb %}
+    {%- else %}
+    "_source": {
+      "enabled": {{ source_enabled | default(true) | tojson }}
+    },
+    {%- endif %}
+    "properties": {
+      "@timestamp": {
+        {%- if ingest_pipeline_name is defined and ingest_pipeline_name == "grok" %}
+        "format": "strict_date_optional_time",
+        {%- else %}
+        "format": "epoch_second",
+        {%- endif %}
+        "type": "date"
+      },
+      "message": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "clientip": {
+        "type": "ip"
+      },
+      "request": {
+        "type": "match_only_text",
+        "fields": {
+          "raw": {
+            "ignore_above": 256,
+            "type": "keyword"
+          }
+        }
+      },
+      "status": {
+        "type": "integer"
+      },
+      "size": {
+        "type": "integer"
+      },
+      "geoip" : {
+        "properties" : {
+          "country_name": { "type": "keyword" },
+          "city_name": { "type": "keyword" },
+          "location" : { "type" : "geo_point" }
+        }
+      }
+    }
+  }
+}

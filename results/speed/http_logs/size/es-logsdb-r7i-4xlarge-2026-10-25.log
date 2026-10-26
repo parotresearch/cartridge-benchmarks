@@ -1,0 +1,54 @@
+START 2026-10-25T22:12:57Z esrally=2.13.0 es=9.5.4 es_mem=24g track_params=cluster_health:yellow,enable_logsdb:true
+QUIET waited_s=2 load1=0.83
+CTX system=es-logsdb-basic volume="gp3 200GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge lifecycle=on-demand az=us-east-2a region=us-east-2 load1=0.83 load5=0.89 top_procs="java:305,containerd:1.8,dockerd:0.5"
+INDEX_MODE pass=basic [{"mode":"logsdb","src":"STORED"}]
+RESULT ingest system=es-logsdb-basic docs=247249096 bytes=33365244237 wall_s=781.7 vcpus=16 instance_type=r7i.4xlarge max_rss_kb=17920644 rally_max_rss_kb=61328
+RALLY pass=basic |                                                 Min Throughput | index-append | 405985           | docs/s |
+RALLY pass=basic |                                                Mean Throughput | index-append | 422350           | docs/s |
+RALLY pass=basic |                                              Median Throughput | index-append | 419875           | docs/s |
+RALLY pass=basic |                                                 Max Throughput | index-append | 435133           | docs/s |
+RESULT premerge system=es-logsdb-basic store_bytes=14330660024
+CTX system=es-logsdb-basic-forcemerge volume="gp3 200GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge lifecycle=on-demand az=us-east-2a region=us-east-2 load1=3.34 load5=10.97 top_procs="java:698,docker-proxy:1.7,jbd2/nvme0n1p1-8:0.7"
+RESULT forcemerge pass=basic index=logs-history-181998 wall_s=10
+RESULT forcemerge pass=basic index=logs-history-191998 wall_s=30
+RESULT forcemerge pass=basic index=logs-history-201998 wall_s=40
+RESULT forcemerge pass=basic index=logs-history-211998 wall_s=55
+RESULT forcemerge pass=basic index=logs-history-221998 wall_s=36
+RESULT forcemerge pass=basic index=logs-history-231998 wall_s=40
+RESULT forcemerge pass=basic index=logs-history-241998 wall_s=285
+RESULT forcemerge system=es-logsdb-basic indices=7 wall_s=496.6 store_bytes=10567779983 vcpus=16 instance_type=r7i.4xlarge
+INDEX {"pass":"basic","index":"logs-history-211998","docs.count":"17647279","pri.store.size":"725210450"}
+INDEX {"pass":"basic","index":"logs-history-201998","docs.count":"13053463","pri.store.size":"534230539"}
+INDEX {"pass":"basic","index":"logs-history-221998","docs.count":"10716760","pri.store.size":"440677732"}
+INDEX {"pass":"basic","index":"logs-history-231998","docs.count":"11961342","pri.store.size":"496760866"}
+INDEX {"pass":"basic","index":"logs-history-241998","docs.count":"181463624","pri.store.size":"7861763720"}
+INDEX {"pass":"basic","index":"logs-history-191998","docs.count":"9697882","pri.store.size":"397418525"}
+INDEX {"pass":"basic","index":"logs-history-181998","docs.count":"2708746","pri.store.size":"111718151"}
+PEAK_RSS system=es-logsdb-basic bytes=25771573248 source=cgroup_memory.peak includes_page_cache=1 container_limit_bytes=25769803776 jvm_vmhwm_bytes=18350739456
+QUIET waited_s=71 load1=0.82
+CTX system=es-logsdb-trial volume="gp3 200GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge lifecycle=on-demand az=us-east-2a region=us-east-2 load1=0.82 load5=2.85 top_procs="java:60.5,jbd2/nvme0n1p1-8:0.5,containerd:0.5"
+INDEX_MODE pass=trial [{"mode":"logsdb","src":"SYNTHETIC"}]
+RESULT ingest system=es-logsdb-trial docs=247249096 bytes=33365244237 wall_s=611.3 vcpus=16 instance_type=r7i.4xlarge max_rss_kb=17494188 rally_max_rss_kb=57260
+RALLY pass=trial |                                                 Min Throughput | index-append | 467118           | docs/s |
+RALLY pass=trial |                                                Mean Throughput | index-append | 476825           | docs/s |
+RALLY pass=trial |                                              Median Throughput | index-append | 474863           | docs/s |
+RALLY pass=trial |                                                 Max Throughput | index-append | 486470           | docs/s |
+RESULT premerge system=es-logsdb-trial store_bytes=9589392268
+CTX system=es-logsdb-trial-forcemerge volume="gp3 200GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge lifecycle=on-demand az=us-east-2a region=us-east-2 load1=8.52 load5=12.69 top_procs="java:764,docker-proxy:1.9,jbd2/nvme0n1p1-8:0.7"
+RESULT forcemerge pass=trial index=logs-history-181998 wall_s=5
+RESULT forcemerge pass=trial index=logs-history-191998 wall_s=15
+RESULT forcemerge pass=trial index=logs-history-201998 wall_s=15
+RESULT forcemerge pass=trial index=logs-history-211998 wall_s=20
+RESULT forcemerge pass=trial index=logs-history-221998 wall_s=10
+RESULT forcemerge pass=trial index=logs-history-231998 wall_s=10
+RESULT forcemerge pass=trial index=logs-history-241998 wall_s=110
+RESULT forcemerge system=es-logsdb-trial indices=7 wall_s=185.7 store_bytes=6485137851 vcpus=16 instance_type=r7i.4xlarge
+INDEX {"pass":"trial","index":"logs-history-211998","docs.count":"17647279","pri.store.size":"440863621"}
+INDEX {"pass":"trial","index":"logs-history-201998","docs.count":"13053463","pri.store.size":"326505713"}
+INDEX {"pass":"trial","index":"logs-history-221998","docs.count":"10716760","pri.store.size":"264460951"}
+INDEX {"pass":"trial","index":"logs-history-231998","docs.count":"11961342","pri.store.size":"297323624"}
+INDEX {"pass":"trial","index":"logs-history-241998","docs.count":"181463624","pri.store.size":"4846827391"}
+INDEX {"pass":"trial","index":"logs-history-191998","docs.count":"9697882","pri.store.size":"241360857"}
+INDEX {"pass":"trial","index":"logs-history-181998","docs.count":"2708746","pri.store.size":"67795694"}
+PEAK_RSS system=es-logsdb-trial bytes=25772134400 source=cgroup_memory.peak includes_page_cache=1 container_limit_bytes=25769803776 jvm_vmhwm_bytes=17914048512
+END 2026-10-25T22:49:18Z

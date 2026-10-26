@@ -1,0 +1,1732 @@
+{
+  "description": "The 39 investigation searches on the 1998 World Cup web logs, in 8 chains of related searches. Each search is given as an Elasticsearch query body and as the Cartridge command line side by side. {TARGET} is the cart file, directory or s3:// URL under test; {LINE_CAP} is 100. want is the expected answer (a count, or for topn the sha256 of the canonical top-N text); see README.md for how it is checked.",
+  "line_cap": 100,
+  "chains": [
+    {
+      "id": "spike404",
+      "searches": [
+        {
+          "id": "a1",
+          "title": "404s per day, all history",
+          "kind": "histdays",
+          "want": 1224876,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 404
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "\" 404 ",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "a2",
+          "title": "404s per hour on the peak day, 1998-06-10",
+          "kind": "histhours",
+          "want": 345893,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 404
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T00:00:00Z",
+                        "lt": "1998-06-11T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_hour": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "fixed_interval": "1h",
+                  "time_zone": "-05:00",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "\" 404 ",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-06-10T00:00:00Z",
+            "--until",
+            "1998-06-10T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "a3",
+          "title": "the peak hour's 404 lines (any 100)",
+          "kind": "lines",
+          "want": 51633,
+          "full_set": "inv-1c-404-peak-hour.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 404
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T16:00:00Z",
+                        "lt": "1998-06-10T17:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "\" 404 ",
+            "--since",
+            "1998-06-10T16:00:00Z",
+            "--until",
+            "1998-06-10T16:59:59Z",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "a4",
+          "title": "404s of one path (/images/comp_bg2_hm.gif), all history",
+          "kind": "int",
+          "want": 666936,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "GET /images/comp_bg2_hm.gif HTTP/1.0"
+                    }
+                  },
+                  {
+                    "term": {
+                      "status": 404
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"GET /images/comp_bg2_hm.gif HTTP/1.0\" 404",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "a5",
+          "title": "that path's requests, all statuses, on 1998-06-10",
+          "kind": "int",
+          "want": 145033,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "GET /images/comp_bg2_hm.gif HTTP/1.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T00:00:00Z",
+                        "lt": "1998-06-11T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"GET /images/comp_bg2_hm.gif HTTP/1.0\"",
+            "--since",
+            "1998-06-10T00:00:00Z",
+            "--until",
+            "1998-06-10T23:59:59Z",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "client",
+      "searches": [
+        {
+          "id": "b1",
+          "title": "requests from 130.1.0.0, all history",
+          "kind": "int",
+          "want": 178947,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "130.1.0.0"
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "130.1.0.0",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "its requests per day",
+          "kind": "histdays",
+          "want": 178947,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "130.1.0.0"
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "130.1.0.0",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "its requests per hour on its peak day, 1998-06-10",
+          "kind": "histhours",
+          "want": 30995,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "clientip": "130.1.0.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T00:00:00Z",
+                        "lt": "1998-06-11T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_hour": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "fixed_interval": "1h",
+                  "time_zone": "-05:00",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "130.1.0.0",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-06-10T00:00:00Z",
+            "--until",
+            "1998-06-10T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "its lines that day (any 100)",
+          "kind": "lines",
+          "want": 30995,
+          "full_set": "inv-2d-client-peak-day.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "clientip": "130.1.0.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T00:00:00Z",
+                        "lt": "1998-06-11T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-10T00:00:00Z",
+            "--until",
+            "1998-06-10T23:59:59Z",
+            "130.1.0.0",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fivexx",
+      "searches": [
+        {
+          "id": "c1",
+          "title": "500s per day, all history",
+          "kind": "histdays",
+          "want": 6134,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 500
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "\" 500 ",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "c2",
+          "title": "the peak day's 500 lines, 1998-06-14 (any 100)",
+          "kind": "lines",
+          "want": 1198,
+          "full_set": "inv-3b-500-peak-day.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-14T00:00:00Z",
+                        "lt": "1998-06-15T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-14T00:00:00Z",
+            "--until",
+            "1998-06-14T23:59:59Z",
+            "\" 500 ",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "c3",
+          "title": "500s per hour that day",
+          "kind": "histhours",
+          "want": 1198,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-14T00:00:00Z",
+                        "lt": "1998-06-15T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_hour": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "fixed_interval": "1h",
+                  "time_zone": "-05:00",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "\" 500 ",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-06-14T00:00:00Z",
+            "--until",
+            "1998-06-14T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "status=500",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-06-14T00:00:00Z",
+            "--until",
+            "1998-06-14T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "c4",
+          "title": "500s of one path (POST /cgi-bin/trivia/Trivia.pl) over 06-08..06-14",
+          "kind": "int",
+          "want": 758,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "POST /cgi-bin/trivia/Trivia.pl HTTP/1.0"
+                    }
+                  },
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-08T00:00:00Z",
+                        "lt": "1998-06-15T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"POST /cgi-bin/trivia/Trivia.pl HTTP/1.0\" 500",
+            "--since",
+            "1998-06-08T00:00:00Z",
+            "--until",
+            "1998-06-14T23:59:59Z",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "c5",
+          "title": "that path's requests, all statuses, that week",
+          "kind": "int",
+          "want": 15933,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "POST /cgi-bin/trivia/Trivia.pl HTTP/1.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-08T00:00:00Z",
+                        "lt": "1998-06-15T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"POST /cgi-bin/trivia/Trivia.pl HTTP/1.0\"",
+            "--since",
+            "1998-06-08T00:00:00Z",
+            "--until",
+            "1998-06-14T23:59:59Z",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "top500",
+      "searches": [
+        {
+          "id": "e1",
+          "title": "top 9 client IPs by 500 responses, all history",
+          "kind": "topn",
+          "want": "1969d46b45544344a9439bd322614d42a9be046f183d4fd704233ffa4a098b72",
+          "top": 9,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 500
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "clientip",
+                  "size": 9,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 500 ",
+            "--group-by",
+            "ip",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "status=500",
+            "--group-by",
+            "ip",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "e2",
+          "title": "all requests from 156.220.9.0 (third; the top two IPs also occur inside other IPs), all history",
+          "kind": "int",
+          "want": 3968,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "156.220.9.0"
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "156.220.9.0",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "e3",
+          "title": "its requests by status, all history (all 6 statuses)",
+          "kind": "topn",
+          "want": "33216895514b4aa326ee34709d93e884e1bf811c25ec55dc37d1d5f1652150bd",
+          "top": 6,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "156.220.9.0"
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "status",
+                  "size": 6,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "156.220.9.0",
+            "--group-by",
+            "status",
+            "--top",
+            "6",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "ip=156.220.9.0",
+            "--group-by",
+            "status",
+            "--top",
+            "6",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "e4",
+          "title": "its top 5 requests, all history",
+          "kind": "topn",
+          "want": "3c4da72efbbd626d11189ad8432641f903cd450d8284fd462652aed10331ed07",
+          "top": 5,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "156.220.9.0"
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "request.raw",
+                  "size": 5,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "156.220.9.0",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "5",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "ip=156.220.9.0",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "5",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "e5",
+          "title": "its lines on its peak day, 1998-06-04 (any 100)",
+          "kind": "lines",
+          "want": 2079,
+          "full_set": "inv-e5-156.220.9.0-0604.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "clientip": "156.220.9.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-04T00:00:00Z",
+                        "lt": "1998-06-05T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-04T00:00:00Z",
+            "--until",
+            "1998-06-04T23:59:59Z",
+            "156.220.9.0",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "endpoint",
+      "searches": [
+        {
+          "id": "f1",
+          "title": "top 10 requests answered 500, all history",
+          "kind": "topn",
+          "want": "4c7802b3e257735261cf92121e821e6ea905e64523a694701d37b57e0ccf7828",
+          "top": 10,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 500
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "request.raw",
+                  "size": 10,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 500 ",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "10",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "status=500",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "10",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "f2",
+          "title": "500s of GET /english/playing/download/ HTTP/1.0 per day, all history",
+          "kind": "histdays",
+          "want": 491,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "GET /english/playing/download/ HTTP/1.0"
+                    }
+                  },
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"GET /english/playing/download/ HTTP/1.0\" 500 ",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "f3",
+          "title": "that endpoint's requests, all statuses, all history",
+          "kind": "int",
+          "want": 668,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "request.raw": "GET /english/playing/download/ HTTP/1.0"
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"GET /english/playing/download/ HTTP/1.0\"",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "f4",
+          "title": "its 500s per hour on its peak day, 1998-06-11",
+          "kind": "histhours",
+          "want": 116,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "GET /english/playing/download/ HTTP/1.0"
+                    }
+                  },
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-11T00:00:00Z",
+                        "lt": "1998-06-12T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_hour": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "fixed_interval": "1h",
+                  "time_zone": "-05:00",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\"GET /english/playing/download/ HTTP/1.0\" 500 ",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-06-11T00:00:00Z",
+            "--until",
+            "1998-06-11T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "f5",
+          "title": "its 500 lines that day (any 100)",
+          "kind": "lines",
+          "want": 116,
+          "full_set": "inv-f5-download-500-0611.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "request.raw": "GET /english/playing/download/ HTTP/1.0"
+                    }
+                  },
+                  {
+                    "term": {
+                      "status": 500
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-11T00:00:00Z",
+                        "lt": "1998-06-12T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-11T00:00:00Z",
+            "--until",
+            "1998-06-11T23:59:59Z",
+            "\"GET /english/playing/download/ HTTP/1.0\" 500 ",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "probe",
+      "searches": [
+        {
+          "id": "g1",
+          "title": "requests containing _vti_bin anywhere, all history",
+          "kind": "int",
+          "want": 605,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "wildcard": {
+                "request.raw": {
+                  "value": "*_vti_bin*"
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "_vti_bin",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "g2",
+          "title": "those requests per day",
+          "kind": "histdays",
+          "want": 605,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "wildcard": {
+                "request.raw": {
+                  "value": "*_vti_bin*"
+                }
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "_vti_bin",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "g3",
+          "title": "those requests by status (both statuses)",
+          "kind": "topn",
+          "want": "79b17e8b12dca0ff22fcb0f184a7376c94d7f2948e119657663547075d9d50d7",
+          "top": 2,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "wildcard": {
+                "request.raw": {
+                  "value": "*_vti_bin*"
+                }
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "status",
+                  "size": 2,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "_vti_bin",
+            "--group-by",
+            "status",
+            "--top",
+            "2",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "g4",
+          "title": "top 9 probing client IPs",
+          "kind": "topn",
+          "want": "f5a3efba599eda5798c54a883b1f164c3bb22eacb21b038fa9fd4fa7c06654e9",
+          "top": 9,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "wildcard": {
+                "request.raw": {
+                  "value": "*_vti_bin*"
+                }
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "clientip",
+                  "size": 9,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "_vti_bin",
+            "--group-by",
+            "ip",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "g5",
+          "title": "the probe lines on the peak day, 1998-06-10",
+          "kind": "lines",
+          "want": 81,
+          "full_set": "inv-g5-vti-bin-0610.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "wildcard": {
+                      "request.raw": {
+                        "value": "*_vti_bin*"
+                      }
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-10T00:00:00Z",
+                        "lt": "1998-06-11T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-10T00:00:00Z",
+            "--until",
+            "1998-06-10T23:59:59Z",
+            "_vti_bin",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forbidden",
+      "searches": [
+        {
+          "id": "h1",
+          "title": "403s, all history",
+          "kind": "int",
+          "want": 224,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 403
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 403 ",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "h2",
+          "title": "403s per day, all history",
+          "kind": "histdays",
+          "want": 224,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 403
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 403 ",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "h3",
+          "title": "403s per hour on the peak day, 1998-05-12",
+          "kind": "histhours",
+          "want": 202,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 403
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-05-12T00:00:00Z",
+                        "lt": "1998-05-13T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "aggs": {
+              "per_hour": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "fixed_interval": "1h",
+                  "time_zone": "-05:00",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 403 ",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-05-12T00:00:00Z",
+            "--until",
+            "1998-05-12T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "status=403",
+            "--by-time",
+            "--bucket",
+            "1h",
+            "--since",
+            "1998-05-12T00:00:00Z",
+            "--until",
+            "1998-05-12T23:59:59Z",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "h4",
+          "title": "top 9 requests answered 403, all history",
+          "kind": "topn",
+          "want": "eb6ab2724235a52871c69b5f81047555bfca6d153e459cad786f0df4cca76ef2",
+          "top": 9,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "status": 403
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "request.raw",
+                  "size": 9,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "\" 403 ",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "status=403",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "h5",
+          "title": "the 403 lines on the peak day (any 100)",
+          "kind": "lines",
+          "want": 202,
+          "full_set": "inv-h5-403-0512.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "status": 403
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-05-12T00:00:00Z",
+                        "lt": "1998-05-13T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-05-12T00:00:00Z",
+            "--until",
+            "1998-05-12T23:59:59Z",
+            "\" 403 ",
+            "{TARGET}"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "newip",
+      "searches": [
+        {
+          "id": "i1",
+          "title": "has 228.135.0.0 ever appeared? its requests, all history",
+          "kind": "int",
+          "want": 42,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "228.135.0.0"
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "228.135.0.0",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "i2",
+          "title": "its requests per day",
+          "kind": "histdays",
+          "want": 42,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "228.135.0.0"
+              }
+            },
+            "aggs": {
+              "per_day": {
+                "date_histogram": {
+                  "field": "@timestamp",
+                  "calendar_interval": "1d",
+                  "min_doc_count": 1
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "228.135.0.0",
+            "--by-time",
+            "--bucket",
+            "1d",
+            "--ndjson",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "i3",
+          "title": "its requests by status (both statuses)",
+          "kind": "topn",
+          "want": "c076eb30988534a80a561ed181ad9bbf2206c39fc33ac5598a33ce42ccb68c5e",
+          "top": 2,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "228.135.0.0"
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "status",
+                  "size": 2,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "228.135.0.0",
+            "--group-by",
+            "status",
+            "--top",
+            "2",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "ip=228.135.0.0",
+            "--group-by",
+            "status",
+            "--top",
+            "2",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "i4",
+          "title": "its top 9 requests",
+          "kind": "topn",
+          "want": "3869c86b803f97392a5971a588eb35d20a97879e60b66112bddbbab188b2b13f",
+          "top": 9,
+          "es": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "term": {
+                "clientip": "228.135.0.0"
+              }
+            },
+            "aggs": {
+              "top": {
+                "terms": {
+                  "field": "request.raw",
+                  "size": 9,
+                  "order": [
+                    {
+                      "_count": "desc"
+                    },
+                    {
+                      "_key": "asc"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "cart": [
+            "count",
+            "-F",
+            "228.135.0.0",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ],
+          "cart_facets": [
+            "count",
+            "--filter",
+            "ip=228.135.0.0",
+            "--group-by",
+            "method,path,proto",
+            "--top",
+            "9",
+            "--budget",
+            "600",
+            "--json",
+            "{TARGET}"
+          ]
+        },
+        {
+          "id": "i5",
+          "title": "its lines on its busiest day, 1998-06-11",
+          "kind": "lines",
+          "want": 22,
+          "full_set": "inv-i5-228.135.0.0-0611.txt",
+          "es": {
+            "size": 100,
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "clientip": "228.135.0.0"
+                    }
+                  },
+                  {
+                    "range": {
+                      "@timestamp": {
+                        "gte": "1998-06-11T00:00:00Z",
+                        "lt": "1998-06-12T00:00:00Z",
+                        "format": "strict_date_optional_time"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cart": [
+            "grep",
+            "-L",
+            "-m",
+            "{LINE_CAP}",
+            "-F",
+            "--since",
+            "1998-06-11T00:00:00Z",
+            "--until",
+            "1998-06-11T23:59:59Z",
+            "228.135.0.0",
+            "{TARGET}"
+          ]
+        }
+      ]
+    }
+  ]
+}

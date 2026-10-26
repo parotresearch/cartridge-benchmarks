@@ -1,0 +1,5 @@
+START 2026-10-23T23:58:02Z sha=0ed622c29 dataset=1x volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge lifecycle=on-demand az=us-east-2a region=us-east-2 load1=1.72 load5=3.11 top_procs="kworker/u64:1-events_power_efficient:0.3,kworker/u64:2-events_unbound:0.2,kworker/u64:5-events_power_efficient:0.2"
+VERSION cartpress 0.17.1 (src-0ed622c29-0-gb803109c39db/release/dev-nolicense) profile: cartpress=fastdev-install (press only) 
+CMD cartpress press access-181998.log access-191998.log access-201998.log access-211998.log access-221998.log access-231998.log access-241998.log -q --log --store-all -j 4 --index method:dimension,proto:dimension,status:dimension -o http_logs_attr3-v4-0ed622c29.cart cap=1800s
+RESULT press cart=http_logs_attr3-v4-0ed622c29.cart press_s=593.9 input_bytes=23475280341 docs=247249096 cart_bytes=3237744683 max_rss_kb=32253932
+RESULT uploaded=s3://$BUCKET/http_logs_attr3-v4-0ed622c29.cart size=3237744683 etag=bf22eca9cbf69403d328d5a34b53083f-386

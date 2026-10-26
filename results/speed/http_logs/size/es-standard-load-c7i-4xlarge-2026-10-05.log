@@ -1,0 +1,28 @@
+RALLY_START 2026-10-05T21:09:27Z esrally=2.13.0 volume="gp3 200GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge az=us-east-2a region=us-east-2 load1=6.53 load5=3.35 top_procs="rustc:454,java:64.5,containerd:7.7"
+   Building markupsafe==2.0.1
+   Building zstandard==0.21.0
+      Built markupsafe==2.0.1
+      Built zstandard==0.21.0
+Installed 82 packages in 39ms
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+[INFO] Race id is [8d9b2f65-73f3-4052-a833-f684d1178ef8]
+
+----------------------------------
+[INFO] SUCCESS (took 1618 seconds)
+----------------------------------
+RESULT rally_wall_s=1653
+RESULT forcemerge index=logs-history-181998 wall_s=20
+RESULT forcemerge index=logs-history-191998 wall_s=60
+RESULT forcemerge index=logs-history-201998 wall_s=70
+RESULT forcemerge index=logs-history-211998 wall_s=90
+RESULT forcemerge index=logs-history-221998 wall_s=60
+RESULT forcemerge index=logs-history-231998 wall_s=61
+RESULT forcemerge index=logs-history-241998 wall_s=430
+RESULT docs=247249096 segments_per_shard=1 store_bytes=19068159659

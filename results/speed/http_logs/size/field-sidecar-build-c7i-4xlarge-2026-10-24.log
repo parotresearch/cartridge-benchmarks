@@ -1,0 +1,25 @@
+START 2026-10-24T00:09:33Z sha=0ed622c29 dataset=1x cart=s3://$BUCKET/http_logs_attr3-v4-0ed622c29.cart facets_key=s3://$BUCKET/http_logs_attr3-v4-0ed622c29.cart.0ed622c29.facets fields=ip,status,method,path,proto cap_s=5400 instance_type=c7i.4xlarge
+VERSION cartridge 0.17.1 (src-0ed622c29-0-g785320c9bebd/release/dev-nolicense) profile: cartridge=release (the timed reader) 
+extracted access-181998.log
+extracted access-191998.log
+extracted access-201998.log
+extracted access-221998.log
+extracted access-211998.log
+extracted access-231998.log
+extracted access-241998.log
+00:14:36 [remote] oracle counts verified (403/404/500)
+CART path=~/bench/facets-build/http_logs_attr3-v4-0ed622c29.cart bytes=3237744683 etag=bf22eca9cbf69403d328d5a34b53083f-386
+QUIET waited_s=71 load1=0.80
+CTX page_cache=dropped volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=c7i.4xlarge lifecycle=on-demand az=us-east-2c region=us-east-2 load1=0.73 load5=1.62 top_procs="kworker/u64:0-events_power_efficient:0.3,kworker/u64:1-events_power_efficient:0.1,kworker/u64:5-events_power_efficient:0.0"
+CMD cartridge --no-service fields build ~/bench/facets-build/http_logs_attr3-v4-0ed622c29.cart --source ~/bench/raw/access-181998.log --source ~/bench/raw/access-191998.log --source ~/bench/raw/access-201998.log --source ~/bench/raw/access-211998.log --source ~/bench/raw/access-221998.log --source ~/bench/raw/access-231998.log --source ~/bench/raw/access-241998.log --fields ip,status,method,path,proto --json cap=5400s
+INFO_JSON {"present":true,"path":"~/bench/facets-build/http_logs_attr3-v4-0ed622c29.cart.facets","cart_bytes":3237744683,"file_bytes":859679538,"share_of_cart":0.26551801397862107,"records":247249096,"shards":261,"time_field":"ts","time_buckets":true,"sub_minute_time_buckets":false,"time_buckets_enable":"cartridge fields add ~/bench/facets-build/http_logs_attr3-v4-0ed622c29.cart ts --source <path>","fields":[{"name":"ip","kind":"address","derivation":null,"members":[],"bytes":424226767,"share_of_cart":0.13102539222052673,"distinct_per_shard_mean":12390.72796934866,"distinct_per_shard_max":27268,"makes_fast":"counting by address and by address range (`ip`)"},{"name":"status","kind":"integer","derivation":null,"members":[],"bytes":47466406,"share_of_cart":0.014660330151795357,"distinct_per_shard_mean":6.923371647509579,"distinct_per_shard_max":8,"makes_fast":"grouping and counting by `status`"},{"name":"method","kind":"text","derivation":null,"members":[],"bytes":7187400,"share_of_cart":0.00221987855859603,"distinct_per_shard_mean":3.4636015325670497,"distinct_per_shard_max":6,"makes_fast":"grouping and counting by `method`"},{"name":"path","kind":"text","derivation":null,"members":[],"bytes":306499261,"share_of_cart":0.09466443188349451,"distinct_per_shard_mean":4754.628352490421,"distinct_per_shard_max":7741,"makes_fast":"grouping and counting by `path`"},{"name":"proto","kind":"text","derivation":null,"members":[],"bytes":39481490,"share_of_cart":0.01219413322097331,"distinct_per_shard_mean":3.0,"distinct_per_shard_max":3,"makes_fast":"grouping and counting by `proto`"},{"name":"_time_minute","kind":"integer","derivation":"minute of ts","members":[],"bytes":6577176,"share_of_cart":0.002031406625276512,"distinct_per_shard_mean":186.88888888888889,"distinct_per_shard_max":2640,"makes_fast":"`count --by-time` in buckets of one minute or more"}],"word_table_ignored":false}
+FIELD name=ip kind=address bytes=424226767 share_of_cart=0.13102539222052673 distinct_per_shard_mean=12390.72796934866 distinct_per_shard_max=27268
+FIELD name=status kind=integer bytes=47466406 share_of_cart=0.014660330151795357 distinct_per_shard_mean=6.923371647509579 distinct_per_shard_max=8
+FIELD name=method kind=text bytes=7187400 share_of_cart=0.00221987855859603 distinct_per_shard_mean=3.4636015325670497 distinct_per_shard_max=6
+FIELD name=path kind=text bytes=306499261 share_of_cart=0.09466443188349451 distinct_per_shard_mean=4754.628352490421 distinct_per_shard_max=7741
+FIELD name=proto kind=text bytes=39481490 share_of_cart=0.01219413322097331 distinct_per_shard_mean=3.0 distinct_per_shard_max=3
+FIELD name=_time_minute kind=integer bytes=6577176 share_of_cart=0.002031406625276512 distinct_per_shard_mean=186.88888888888889 distinct_per_shard_max=2640
+VERIFY ok checking 261 parts of the log... checked 27 of 261 parts of the log (10%), about 1 s left Verified: ~/bench/facets-build/http_logs_attr3-v4-0ed622c29.cart.facets: 6 fields over 261 shards, all sections intact 
+RESULT facets_build outcome=ok wall_s=413.7 max_rss_kb=9420372 peak_rss_bytes=9646460928 cart_bytes=3237744683 facets_bytes=859679538 share_of_cart=0.2655 fields=ip,status,method,path,proto instance_type=c7i.4xlarge vcpus=16
+RESULT uploaded=s3://$BUCKET/http_logs_attr3-v4-0ed622c29.cart.0ed622c29.facets size=859679538 etag=e63d47685c77c81df44f7e012fde6d56
+END 2026-10-24T00:23:03Z

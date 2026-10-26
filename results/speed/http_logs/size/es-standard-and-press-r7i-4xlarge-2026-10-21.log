@@ -1,0 +1,27 @@
+START 2026-10-21T05:35:48Z sha=b2e342779 esrally=2.13.0 es=9.5.4 es_mem=24g press_flags="-q --log --store-all -j 4 --index method:dimension,proto:dimension,status:dimension"
+VERSION cartpress 0.17.1 (src-b2e342779-0-g1a59c77269f6/release/dev-nolicense) profile: cartpress=fastdev-install (press only) 
+QUIET waited_s=140 load1=0.99
+CTX system=cartpress volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge az=us-east-2b region=us-east-2 load1=0.91 load5=3.16 top_procs="kworker/u64:5-events_power_efficient:0.3,kworker/u64:4-writeback:0.3,kworker/u64:2-events_power_efficient:0.2"
+CMD cartpress press access-181998.log access-191998.log access-201998.log access-211998.log access-221998.log access-231998.log access-241998.log -q --log --store-all -j 4 --index method:dimension,proto:dimension,status:dimension -o http_logs_attr3-4x-k0.cart cap=1800s
+RESULT press cart=http_logs_attr3-4x-k0.cart press_s=641.2 input_bytes=23475280341 docs=247249096 cart_bytes=3237744656 max_rss_kb=33110080
+RESULT uploaded=s3://$BUCKET/carts-4x/http_logs_attr3-4x-k0.cart size=3237744656 etag=a936920b77ea94ba7abbf235aec60c6d-386
+RESULT ingest system=cartpress docs=247249096 bytes=23475280341 wall_s=641.2 vcpus=16 instance_type=r7i.4xlarge max_rss_kb=33110080
+PEAK_RSS system=cart bytes=33904721920 source=/usr/bin/time_-v_max_rss instance_type=r7i.4xlarge
+QUIET waited_s=106 load1=0.98
+CTX system=es volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge az=us-east-2b region=us-east-2 load1=0.98 load5=7.02 top_procs="java:44.9,containerd:1.0,dockerd:0.2"
+RESULT ingest system=es docs=247249096 bytes=33365244237 wall_s=857.3 vcpus=16 instance_type=r7i.4xlarge max_rss_kb=18925508 rally_max_rss_kb=61324
+RALLY |                                                 Min Throughput | index-append | 470771           | docs/s |
+RALLY |                                                Mean Throughput | index-append | 482727           | docs/s |
+RALLY |                                              Median Throughput | index-append | 482945           | docs/s |
+RALLY |                                                 Max Throughput | index-append | 488350           | docs/s |
+CTX system=es-forcemerge volume="gp3 250GB 16000 iops 1000 MB/s" instance_type=r7i.4xlarge az=us-east-2b region=us-east-2 load1=0.84 load5=6.86 top_procs="java:537,docker-proxy:1.4,containerd:0.5"
+RESULT forcemerge index=logs-history-181998 wall_s=15
+RESULT forcemerge index=logs-history-191998 wall_s=35
+RESULT forcemerge index=logs-history-201998 wall_s=65
+RESULT forcemerge index=logs-history-211998 wall_s=85
+RESULT forcemerge index=logs-history-221998 wall_s=55
+RESULT forcemerge index=logs-history-231998 wall_s=61
+RESULT forcemerge index=logs-history-241998 wall_s=461
+RESULT forcemerge system=es indices=7 wall_s=777.4 store_bytes=22547013768 vcpus=16 instance_type=r7i.4xlarge
+PEAK_RSS system=es bytes=25773019136 source=cgroup_memory.peak phase=start+load+forcemerge includes_page_cache=1 container_limit_bytes=25769803776 jvm_vmhwm_bytes=19379720192 instance_type=r7i.4xlarge
+END 2026-10-21T06:18:56Z
