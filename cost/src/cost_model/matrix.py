@@ -51,7 +51,7 @@ DATASETS = {
         "raw": 10_737_418_238,
         "rows": [
             ("ES standard", "es", 7_419_489_100, "results/storage/real-thunderbird10g-6bbd7038c-es955.md"),
-            ("OpenSearch 3.9.0 default", "es", 7_388_032_630, "results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log"),
+            ("OpenSearch 3.9.0 default", "es", 7_614_836_272, "results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log"),
             ("ES logsdb, free licence", "es", 2_400_695_754, "results/storage/real-thunderbird10g-6bbd7038c-es955.md"),
             ("Cartridge, larger output", "cart_no_field_data", 701_303_359, "results/storage/real-thunderbird10g-6bbd7038c-es955.md"),
             ("Cartridge, smaller output", "cart_no_field_data", 525_666_845, "results/storage/real-thunderbird10g-6bbd7038c-es955.md"),
@@ -62,7 +62,7 @@ DATASETS = {
         "raw": 10_506_623_721,
         "rows": [
             ("ES standard", "es", 9_682_259_352, "results/storage/real-cockroachdb-6bbd7038c-es955.md"),
-            ("OpenSearch 3.9.0 default", "es", 3_722_426_390, "results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log"),
+            ("OpenSearch 3.9.0 default", "es", 3_751_271_057, "results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log"),
             ("ES logsdb, free licence", "es", 1_506_138_614, "results/storage/real-cockroachdb-6bbd7038c-es955.md"),
             ("Cartridge, larger output", "cart_no_field_data", 766_850_694, "results/storage/real-cockroachdb-native-gron-73f8afaa2.md"),
             ("Cartridge, smaller output", "cart_no_field_data", 557_402_533, "results/storage/real-cockroachdb-native-gron-73f8afaa2.md"),

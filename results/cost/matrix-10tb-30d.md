@@ -34,24 +34,24 @@ Sources: results/storage/cloudtrail-flaws-6bbd7038c-es955-vs-gron.md · results/
 | config | stored B | x raw | size vs Cartridge | $/yr | cost vs Cartridge | cost vs best Cartridge |
 |---|---|---|---|---|---|---|
 | ES standard | 7,419,489,100 | 0.691 | 10.58x | $1,648,370 | 21.30x | 22.01x |
-| OpenSearch 3.9.0 default | 7,388,032,630 | 0.688 | 10.53x | $1,636,345 | 21.15x | 21.85x |
+| OpenSearch 3.9.0 default | 7,614,836,272 | 0.709 | 10.86x | $1,684,448 | 21.77x | 22.49x |
 | ES logsdb, free licence | 2,400,695,754 | 0.224 | 3.42x | $590,106 | 7.63x | 7.88x |
 | Cartridge, larger output | 701,303,359 | 0.065 | 1.00x | $77,373 | 1.00x | 1.03x |
 | Cartridge, smaller output | 525,666,845 | 0.049 | 0.75x | $74,883 | 0.97x | 1.00x |
 
-Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log · results/storage/real-thunderbird10g-6bbd7038c-es955.md
+Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log · results/storage/real-thunderbird10g-6bbd7038c-es955.md
 
 ## CockroachDB JSON logs (10.5 GB)
 
 | config | stored B | x raw | size vs Cartridge | $/yr | cost vs Cartridge | cost vs best Cartridge |
 |---|---|---|---|---|---|---|
 | ES standard | 9,682,259,352 | 0.922 | 12.63x | $2,165,477 | 27.57x | 28.68x |
-| OpenSearch 3.9.0 default | 3,722,426,390 | 0.354 | 4.85x | $878,724 | 11.19x | 11.64x |
+| OpenSearch 3.9.0 default | 3,751,271,057 | 0.357 | 4.89x | $890,750 | 11.34x | 11.80x |
 | ES logsdb, free licence | 1,506,138,614 | 0.143 | 1.96x | $397,695 | 5.06x | 5.27x |
 | Cartridge, larger output | 766,850,694 | 0.073 | 1.00x | $78,540 | 1.00x | 1.04x |
 | Cartridge, smaller output | 557,402,533 | 0.053 | 0.73x | $75,507 | 0.96x | 1.00x |
 
-Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log · results/storage/real-cockroachdb-6bbd7038c-es955.md · results/storage/real-cockroachdb-native-gron-73f8afaa2.md
+Sources: results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log · results/storage/real-cockroachdb-6bbd7038c-es955.md · results/storage/real-cockroachdb-native-gron-73f8afaa2.md
 
 ## Alibaba microservice traces, OTel spans (19.7 GB)
 

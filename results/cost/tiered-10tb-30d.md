@@ -54,7 +54,7 @@ Cartridge: Cartridge, larger output = $77,373/yr
 
 | setup | $/yr | x vs Cartridge | size basis |
 |---|---|---|---|
-| OpenSearch 3.9 default, all hot | $1,636,345 | 21.1x | measured |
+| OpenSearch 3.9 default, all hot | $1,684,448 | 21.8x | measured |
 | ES standard, all hot | $1,648,370 | 21.3x | measured |
 | ES logsdb (free), all hot | $590,106 | 7.6x | measured |
 | ES hot/warm, free licence | $1,039,726 | 13.4x | ES standard size |
@@ -69,7 +69,7 @@ Cartridge: Cartridge, larger output = $78,540/yr
 
 | setup | $/yr | x vs Cartridge | size basis |
 |---|---|---|---|
-| OpenSearch 3.9 default, all hot | $878,724 | 11.2x | measured |
+| OpenSearch 3.9 default, all hot | $890,750 | 11.3x | measured |
 | ES standard, all hot | $2,165,477 | 27.6x | measured |
 | ES logsdb (free), all hot | $397,695 | 5.1x | measured |
 | ES hot/warm, free licence | $1,361,918 | 17.3x | ES standard size |

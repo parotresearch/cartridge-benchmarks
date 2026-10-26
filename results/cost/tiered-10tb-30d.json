@@ -186,8 +186,8 @@
   "setups": [
    {
     "setup": "OpenSearch 3.9 default, all hot",
-    "usd_year": 1636344.64,
-    "x_vs_cart": 21.148914174714943,
+    "usd_year": 1684447.552,
+    "x_vs_cart": 21.770619610460965,
     "basis": "measured"
    },
    {
@@ -246,8 +246,8 @@
   "setups": [
    {
     "setup": "OpenSearch 3.9 default, all hot",
-    "usd_year": 878723.776,
-    "x_vs_cart": 11.188201495872763,
+    "usd_year": 890749.5040000001,
+    "x_vs_cart": 11.341317038746796,
     "basis": "measured"
    },
    {
