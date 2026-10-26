@@ -18,8 +18,8 @@ Sources, in the order of the columns:
 
 | dataset | Elasticsearch and Cartridge | OpenSearch |
 |---|---|---|
-| Thunderbird | [thunderbird-es955-cartridge.md](../results/storage/thunderbird-es955-cartridge.md) | [opensearch log](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log) |
-| CockroachDB | [cockroachdb-es955-cartridge.md](../results/storage/cockroachdb-es955-cartridge.md) | [opensearch log](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26.log) |
+| Thunderbird | [thunderbird-es955-cartridge.md](../results/storage/thunderbird-es955-cartridge.md) | [opensearch log, flush rerun](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log) |
+| CockroachDB | [cockroachdb-es955-cartridge.md](../results/storage/cockroachdb-es955-cartridge.md) | [opensearch log, flush rerun](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush-tbcr.log) |
 | CloudTrail | [cloudtrail-es955-cartridge.md](../results/storage/cloudtrail-es955-cartridge.md) | [opensearch log, flush rerun](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log) |
 | Traces | [traces-es955-cartridge.md](../results/storage/traces-es955-cartridge.md) | [opensearch log, flush rerun](../results/storage/opensearch-default-real-r7i-4xlarge-2026-10-26-flush.log) |
 
