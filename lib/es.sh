@@ -30,7 +30,14 @@ es_wait() {  # wait until the node answers with cluster status yellow or better
 
 es_check_node() {
   [[ $(es GET / | jq -r .version.number) == "$ES_VERSION" ]] || die "node reports a version other than $ES_VERSION"
-  [[ $(es GET /_license | jq -r .license.type) == basic ]] || die "the run is on the free basic licence"
+  # A fresh node can report yellow health before its licence is installed; /_license is 404 until then.
+  local _ lic=
+  for _ in $(seq 60); do
+    lic=$(curl -fsS "$ES_URL/_license" 2>/dev/null | jq -r '.license.type // empty') && [[ -n $lic ]] && break
+    sleep 1
+  done
+  [[ -n $lic ]] || die "GET /_license returned no licence within 60 s"
+  [[ $lic == basic ]] || die "expected the free basic licence, node reports '$lic'"
 }
 
 # es_up: a fresh node. 24 GB container (the JVM heap is auto-sized to half of it), all CPUs, one node, security off, empty data directory.
