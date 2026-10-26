@@ -64,6 +64,8 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
 | `searches.json` | The 39 searches, 8 chains. Each carries the Elasticsearch query body and the Cartridge command side by side, the expected answer, and the kind of answer. |
 | `reference/` | The full match set of each of the 8 `lines` searches (gzipped), used to check returned lines. |
 | `rally-track/`, `es-index-template.json` | The Rally track and index template used to load Elasticsearch. |
+| `reference.py` | Computes the expected answer of every search from the raw text (see below). |
+| `verify_cart.py` | Runs the 39 searches once on a local cart and compares each answer with `reference-answers.json`. |
 | `../lib/run_searches.py` | Runs one chain, times each search, reduces each answer to a canonical text and judges it. |
 | `../lib/summarize.py` | Reads the stored logs and prints the claims table. |
 
@@ -98,11 +100,18 @@ canonical text per kind of answer and compares it:
 Both systems' canonical texts for every search that both answered are byte-identical (`out_sha` in the logs;
 `summarize.py` reports any mismatch and finds none).
 
-**Where the expected answers come from.** The totals for status 403, 404 and 500 and the full match sets for the
-`lines` searches come from the raw text (`00-data.sh` prints the oracle counts). The other expected answers are the
-answers of Cartridge on the local copy of the data. They are not recomputed from the raw file by a separate
-program, so "exact" for those searches means "equal to Cartridge's local answer, and equal to Elasticsearch's
-answer where Elasticsearch is also exact".
+**Where the expected answers come from.** `reference.py` reads the raw log text (one streaming pass, standard library
+only, no Cartridge or Elasticsearch involved) and computes the answer to each search from the lines themselves,
+using the pattern, time window and grouping of the search's Cartridge command. It writes `reference-answers.json`
+(one entry per search: the answer, the sha256 of the canonical text, and for `lines` searches the full match set).
+`verify_cart.py` runs the 39 searches on a local cart and compares each with that file.
+
+"Exact" means "matched `reference.py`'s answer from the raw file" only for the searches that have a computed
+entry in `reference-answers.json` and a recorded `match`; a search that `reference.py` cannot compute without
+guessing is marked "not computable" with the reason, and is not claimed exact on this basis.
+Until the verification run is recorded (see `../../results/speed/http_logs/`), the `want` values in
+`searches.json` are the earlier expected answers: the 403/404/500 totals and the `lines` match sets come from the raw
+text, the rest are Cartridge's answers on a local copy.
 
 ## Fairness notes
 
