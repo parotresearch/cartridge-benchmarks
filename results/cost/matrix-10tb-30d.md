@@ -7,14 +7,14 @@ Estimate only: the cost model as a calculator; measured bytes/raw are the only p
 
 | config | stored B | x raw | size vs Cartridge | $/yr | cost vs Cartridge | cost vs best Cartridge |
 |---|---|---|---|---|---|---|
-| ES standard (merged, ingest 2026-10-21) | 22,547,013,768 | 0.960 | 6.96x | $2,249,657 | 19.99x | 19.99x |
-| ES standard (merged, hot restore 2026-10-07; cost-model default) | 18,656,019,625 | 0.795 | 5.76x | $1,876,859 | 16.68x | 16.68x |
-| OpenSearch 3.9.0 default | 19,456,920,952 | 0.829 | 6.01x | $1,961,039 | 17.43x | 17.43x |
-| ES logsdb, free licence | 10,567,779,983 | 0.450 | 3.26x | $1,095,187 | 9.73x | 9.73x |
-| ES logsdb, Enterprise (synthetic source) | 6,485,137,851 | 0.276 | 2.00x | $860,364 | 7.65x | 7.65x |
-| Cartridge (log files + field data) | 3,237,744,683 | 0.138 | 1.00x | $112,538 | 1.00x | 1.00x |
+| ES standard (merged, ingest 2026-10-21) | 22,547,013,768 | 0.960 | 10.64x | $2,249,657 | 21.37x | 21.37x |
+| ES standard (merged, hot restore 2026-10-07; cost-model default) | 18,656,019,625 | 0.795 | 8.81x | $1,876,859 | 17.83x | 17.83x |
+| OpenSearch 3.9.0 default | 19,456,920,952 | 0.829 | 9.18x | $1,961,039 | 18.63x | 18.63x |
+| ES logsdb, free licence | 10,567,779,983 | 0.450 | 4.99x | $1,095,187 | 10.40x | 10.40x |
+| ES logsdb, Enterprise (synthetic source) | 6,485,137,851 | 0.276 | 3.06x | $860,364 | 8.17x | 8.17x |
+| Cartridge (log files + field data) | 2,118,597,954 | 0.090 | 1.00x | $105,283 | 1.00x | 1.00x |
 
-Sources: results/speed/http_logs/size/cartpress-r7i-4xlarge-2026-10-23.log · results/speed/http_logs/size/es-hot-restore-c7i-4xlarge-2026-10-07.log · results/speed/http_logs/size/es-logsdb-r7i-4xlarge-2026-10-25.log · results/speed/http_logs/size/es-standard-and-press-r7i-4xlarge-2026-10-21.log · results/speed/http_logs/size/opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log
+Sources: results/speed/http_logs/size/es-hot-restore-c7i-4xlarge-2026-10-07.log · results/speed/http_logs/size/es-logsdb-r7i-4xlarge-2026-10-25.log · results/speed/http_logs/size/es-standard-and-press-r7i-4xlarge-2026-10-21.log · results/speed/http_logs/size/opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log · results/speed/http_logs/verify/httplogs-verify-r7i-4xlarge-2026-10-26.log
 
 ## CloudTrail flaws.cloud audit JSON (2.4 GB)
 

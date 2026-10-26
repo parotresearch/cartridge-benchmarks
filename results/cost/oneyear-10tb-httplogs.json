@@ -7,7 +7,7 @@
   "ES hot/frozen, Enterprise": 756992.8051599088,
   "ES hot/frozen + logsdb, Enterprise": 381196.391183645,
   "Elastic Serverless (list)": 344151.0,
-  "Cartridge (field data)": 112537.55044270174
+  "Cartridge (field data)": 105282.81348712578
  },
  "365d": {
   "ES standard, all hot": 21971850.688,
@@ -17,6 +17,6 @@
   "ES hot/frozen, Enterprise": 2385891.6042751344,
   "ES hot/frozen + logsdb, Enterprise": 767503.5509054636,
   "Elastic Serverless (list)": 1067691.0,
-  "Cartridge (field data)": 273919.1561021645
+  "Cartridge (field data)": 222585.58199830676
  }
 }

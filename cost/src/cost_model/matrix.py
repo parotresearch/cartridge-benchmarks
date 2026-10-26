@@ -31,7 +31,7 @@ DATASETS = {
             ("OpenSearch 3.9.0 default", "es", 19_456_920_952, "results/speed/http_logs/size/opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log"),
             ("ES logsdb, free licence", "es", 10_567_779_983, "results/speed/http_logs/size/es-logsdb-r7i-4xlarge-2026-10-25.log"),
             ("ES logsdb, Enterprise (synthetic source)", "es_ent", 6_485_137_851, "results/speed/http_logs/size/es-logsdb-r7i-4xlarge-2026-10-25.log"),
-            ("Cartridge (log files + field data)", "cart", 3_237_744_683, "results/speed/http_logs/size/cartpress-r7i-4xlarge-2026-10-23.log"),
+            ("Cartridge (log files + field data)", "cart", 2_118_597_954, "results/speed/http_logs/verify/httplogs-verify-r7i-4xlarge-2026-10-26.log"),
         ],
         "standard": 22_547_013_768,
     },

@@ -5,18 +5,18 @@ Estimate only: the cost model as a calculator (matrix.price_row / system_totals;
 
 ## http_logs (1998 World Cup web logs, 23.5 GB)
 
-Cartridge: Cartridge (log files + field data) = $112,538/yr
+Cartridge: Cartridge (log files + field data) = $105,283/yr
 
 | setup | $/yr | x vs Cartridge | size basis |
 |---|---|---|---|
-| OpenSearch 3.9 default, all hot | $1,961,039 | 17.4x | measured |
-| ES standard, all hot | $1,876,859 | 16.7x | http_logs: model default size |
-| ES logsdb (free), all hot | $1,095,187 | 9.7x | measured |
-| ES hot/warm, free licence | $1,182,857 | 10.5x | ES standard size |
-| ES hot/frozen, Enterprise | $756,993 | 6.7x | ES standard size |
-| ES hot/frozen + logsdb, Enterprise (our logsdb size) | $422,711 | 3.8x | measured |
-| ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size) | $381,196 | 3.4x | Elastic-published 76% factor |
-| Elastic Serverless (list) | $344,151 | 3.1x | billed on ingested GB: independent of stored size |
+| OpenSearch 3.9 default, all hot | $1,961,039 | 18.6x | measured |
+| ES standard, all hot | $1,876,859 | 17.8x | http_logs: model default size |
+| ES logsdb (free), all hot | $1,095,187 | 10.4x | measured |
+| ES hot/warm, free licence | $1,182,857 | 11.2x | ES standard size |
+| ES hot/frozen, Enterprise | $756,993 | 7.2x | ES standard size |
+| ES hot/frozen + logsdb, Enterprise (our logsdb size) | $422,711 | 4.0x | measured |
+| ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size) | $381,196 | 3.6x | Elastic-published 76% factor |
+| Elastic Serverless (list) | $344,151 | 3.3x | billed on ingested GB: independent of stored size |
 
 ## CloudTrail flaws.cloud audit JSON (2.4 GB)
 
@@ -82,7 +82,7 @@ Cartridge: Cartridge, larger output = $78,540/yr
 
 | dataset | cheapest setup | $/yr | x vs Cartridge |
 |---|---|---|---|
-| http_logs (1998 World Cup web logs, 23.5 GB) | Elastic Serverless (list) | $344,151 | 3.1x |
+| http_logs (1998 World Cup web logs, 23.5 GB) | Elastic Serverless (list) | $344,151 | 3.3x |
 | CloudTrail flaws.cloud audit JSON (2.4 GB) | Elastic Serverless (list) | $344,151 | 3.6x |
 | Alibaba microservice traces, OTel spans (19.7 GB) | Elastic Serverless (list) | $344,151 | 4.3x |
 | Thunderbird supercomputer syslog (10.7 GB) | Elastic Serverless (list) | $344,151 | 4.4x |

@@ -42,16 +42,16 @@
     },
     "cartridge": {
       "files_bytes_per_raw": {
-        "value": 0.13792144911450624,
+        "value": 0.09024803636955213,
         "unit": "Cartridge file bytes / raw byte",
-        "derivation": "Cartridge files 3237744683 B / raw 23475280341 B",
-        "source": "Measured: Cartridge build of http_logs (default setting)."
+        "derivation": "Cartridge files 2118597954 B / raw 23475280341 B",
+        "source": "Measured: verified default build of http_logs (sizes line of the verification run)."
       },
       "field_data_bytes_per_raw": {
-        "value": 0.03662062925393714,
+        "value": 0.03662062955212314,
         "unit": "field data bytes / raw byte",
-        "derivation": "field data 859679538 B / raw 23475280341 B",
-        "source": "Measured: field-data build of http_logs."
+        "derivation": "field data 859679545 B / raw 23475280341 B",
+        "source": "Measured: same verification run, field-data build of http_logs."
       },
       "build_core_s_per_raw_gb": {
         "value": 404.7832384520617,

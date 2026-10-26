@@ -2,61 +2,61 @@
  {
   "dataset": "http_logs (1998 World Cup web logs, 23.5 GB)",
   "cartridge_cfg": "Cartridge (log files + field data)",
-  "cartridge_usd": 112537.55044270174,
+  "cartridge_usd": 105282.81348712578,
   "setups": [
    {
     "setup": "OpenSearch 3.9 default, all hot",
     "usd_year": 1961039.296,
-    "x_vs_cart": 17.42564404757023,
+    "x_vs_cart": 18.626395240091114,
     "basis": "measured"
    },
    {
     "setup": "ES standard, all hot",
     "usd_year": 1876859.2000000002,
-    "x_vs_cart": 16.677626202247925,
+    "x_vs_cart": 17.82683362873378,
     "basis": "http_logs: model default size"
    },
    {
     "setup": "ES logsdb (free), all hot",
     "usd_year": 1095186.88,
-    "x_vs_cart": 9.731746209969373,
+    "x_vs_cart": 10.402332951844242,
     "basis": "measured"
    },
    {
     "setup": "ES hot/warm, free licence",
     "usd_year": 1182856.9600000002,
-    "x_vs_cart": 10.510775784143705,
+    "x_vs_cart": 11.235043221414696,
     "basis": "ES standard size"
    },
    {
     "setup": "ES hot/frozen, Enterprise",
     "usd_year": 756993.2324102591,
-    "x_vs_cart": 6.72658352196568,
+    "x_vs_cart": 7.190093115272094,
     "basis": "ES standard size"
    },
    {
     "setup": "ES hot/frozen + logsdb, Enterprise (our logsdb size)",
     "usd_year": 422711.1496812582,
-    "x_vs_cart": 3.75617869785144,
+    "x_vs_cart": 4.015006207380165,
     "basis": "measured"
    },
    {
     "setup": "ES hot/frozen + logsdb, Enterprise (Elastic's published 76% on ES standard size)",
     "usd_year": 381196.4946480814,
-    "x_vs_cart": 3.3872826727481224,
+    "x_vs_cart": 3.6206906143773883,
     "basis": "Elastic-published 76% factor"
    },
    {
     "setup": "Elastic Serverless (list)",
     "usd_year": 344151.0,
-    "x_vs_cart": 3.058099262389968,
+    "x_vs_cart": 3.2688241185925713,
     "basis": "billed on ingested GB: independent of stored size"
    }
   ],
   "cheapest_es": {
    "setup": "Elastic Serverless (list)",
    "usd_year": 344151.0,
-   "x_vs_cart": 3.058099262389968
+   "x_vs_cart": 3.2688241185925713
   }
  },
  {

@@ -6,25 +6,25 @@ Estimated cost per year; × is that system's cost divided by Cartridge's at the 
 
 | system | $/yr, 30 days | × | $/yr, 365 days | × |
 |---|--:|--:|--:|--:|
-| ES standard, all hot | $1,876,859 | 16.7× | $21,971,851 | 80.2× |
-| OpenSearch 3.9 default, all hot | $1,961,039 | 17.4× | $22,909,857 | 83.6× |
-| ES logsdb, free licence, all hot | $1,095,187 | 9.7× | $12,471,526 | 45.5× |
-| ES hot/warm, free licence | $1,182,857 | 10.5× | $11,101,455 | 40.5× |
-| ES hot/frozen, Enterprise | $756,993 | 6.7× | $2,385,892 | 8.7× |
-| ES hot/frozen + logsdb, Enterprise | $381,196 | 3.4× | $767,504 | 2.8× |
-| Elastic Serverless (list) | $344,151 | 3.1× | $1,067,691 | 3.9× |
-| Cartridge (field data) | $112,538 | 1.0× | $273,919 | 1.0× |
+| ES standard, all hot | $1,876,859 | 17.8× | $21,971,851 | 98.7× |
+| OpenSearch 3.9 default, all hot | $1,961,039 | 18.6× | $22,909,857 | 102.9× |
+| ES logsdb, free licence, all hot | $1,095,187 | 10.4× | $12,471,526 | 56.0× |
+| ES hot/warm, free licence | $1,182,857 | 11.2× | $11,101,455 | 49.9× |
+| ES hot/frozen, Enterprise | $756,993 | 7.2× | $2,385,892 | 10.7× |
+| ES hot/frozen + logsdb, Enterprise | $381,196 | 3.6× | $767,504 | 3.4× |
+| Elastic Serverless (list) | $344,151 | 3.3× | $1,067,691 | 4.8× |
+| Cartridge (field data) | $105,283 | 1.0× | $222,586 | 1.0× |
 
 ## Cartridge line items at 365 days
 
 | item | $/yr |
 |---|--:|
-| S3 storage (Cartridge files + field data, every tier) (637,079 GB) | $175,834 |
+| S3 storage (Cartridge files + field data, every tier) (463,071 GB) | $127,807 |
 | build nodes (5 nodes) | $46,358 |
 | query nodes (4 nodes) | $25,019 |
 | S3 GET requests (36,500,000 1k requests) | $14,600 |
-| EBS gp3 local copy (12,218 GB) | $11,729 |
-| S3 PUT requests (upload) (75,952 1k requests) | $380 |
+| EBS gp3 local copy (8,881 GB) | $8,526 |
+| S3 PUT requests (upload) (55,207 1k requests) | $276 |
 
 ## Assumptions
 
