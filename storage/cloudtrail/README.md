@@ -42,4 +42,4 @@ An index A (default dynamic mapping) was also measured in the original run: 188,
 
 ## Notes
 - **Hardware.** The OpenSearch number came from an AWS r7i.4xlarge (16 vCPU, 128 GB) on demand with no other load. The Elasticsearch and Cartridge numbers were measured on a c7i.4xlarge (16 vCPU, 30 GB). Stored size does not depend on the box.
-- **Cartridge.** The stored runs used a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm; `run.sh` asks once up front and passes `-y` to the presses. Install: `curl -sSf https://cartridge.app/install | sh`.
+- **Cartridge.** The stored runs used a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Each press asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.

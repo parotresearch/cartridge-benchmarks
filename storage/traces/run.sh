@@ -4,7 +4,6 @@
 #
 # Hardware used for the numbers in README.md: one AWS r7i.4xlarge (16 vCPU, 128 GB RAM), on demand, Ubuntu 24.04, no other load.
 # Needs: Docker (run through sudo), curl, jq, python3, uv, ~250 GB of free disk. Network access to aliyuncs.com, Docker Hub and cartridge.app.
-# A press spends Cartridge pressing credit (25 GB free) and asks you to confirm; PRESS_YES=1 answers yes.
 #
 # Usage: storage/traces/run.sh        (work files go to ./work-traces, override with WORK=...)
 set -euo pipefail
@@ -24,7 +23,6 @@ source "$LIB/cartridge.sh"
 source "$LIB/report.sh"
 
 need docker curl jq python3 uv tar sha256sum
-press_confirm
 mkdir -p "${WORK:=$PWD/work-traces}"; cd "$WORK"
 report_init
 
@@ -87,8 +85,9 @@ os_stop
 
 log "5. Cartridge: install, then press the span NDJSON with --gron at the default level (2) and at --level 1"
 cartridge_install
-cartpress press spans.ndjson --gron -o traces-L2.cart -y
-cartpress press spans.ndjson --gron -o traces-L1.cart -y --level 1
+# Each press asks for confirmation and uses Cartridge pressing credit (25 GB free).
+cartpress press spans.ndjson --gron -o traces-L2.cart
+cartpress press spans.ndjson --gron -o traces-L1.cart --level 1
 report_row "Cartridge level 2 (default)" "$(stat -c %s traces-L2.cart)"
 report_row "Cartridge level 1" "$(stat -c %s traces-L1.cart)"
 

@@ -4,7 +4,6 @@
 # (The stored Elasticsearch and Cartridge sizes for this dataset were measured on a c7i.4xlarge, 16 vCPU / 30 GB; only the OpenSearch size came from the r7i.4xlarge. Stored size does not depend on the box.)
 # Hardware used for the numbers in README.md: one AWS r7i.4xlarge (16 vCPU, 128 GB RAM), on demand, Ubuntu 24.04, no other load.
 # Needs: Docker (run through sudo), curl, jq, python3, uv, ~150 GB of free disk. Network access to Zenodo, Docker Hub and cartridge.app.
-# A press spends Cartridge pressing credit (25 GB free) and asks you to confirm; PRESS_YES=1 answers yes.
 #
 # Usage: storage/cockroachdb/run.sh        (work files go to ./work-cockroachdb, override with WORK=...)
 set -euo pipefail
@@ -24,7 +23,6 @@ source "$LIB/cartridge.sh"
 source "$LIB/report.sh"
 
 need docker curl jq python3 uv tar
-press_confirm
 mkdir -p "${WORK:=$PWD/work-cockroachdb}"; cd "$WORK"
 report_init
 
@@ -70,8 +68,9 @@ os_stop
 
 log "5. Cartridge: install, then press the NDJSON with --gron at the default level (2) and at --level 1, one after the other"
 cartridge_install
-cartpress press "$F" --gron -o cr-L2.cart -y
-cartpress press "$F" --gron -o cr-L1.cart -y --level 1
+# Each press asks for confirmation and uses Cartridge pressing credit (25 GB free).
+cartpress press "$F" --gron -o cr-L2.cart
+cartpress press "$F" --gron -o cr-L1.cart --level 1
 report_row "Cartridge level 2 (default)" "$(stat -c %s cr-L2.cart)"
 report_row "Cartridge level 1" "$(stat -c %s cr-L1.cart)"
 

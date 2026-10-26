@@ -5,7 +5,6 @@
 #
 # Hardware used for the numbers in README.md: one AWS r7i.4xlarge (16 vCPU, 128 GB RAM), on demand, Ubuntu 24.04, no other load.
 # Needs: Docker (run through sudo), curl, jq, gron, python3, uv, ~100 GB of free disk. Network access to summitroute.com, Docker Hub and cartridge.app.
-# A press spends Cartridge pressing credit (25 GB free) and asks you to confirm; PRESS_YES=1 answers yes.
 #
 # Usage: storage/cloudtrail/run.sh        (work files go to ./work-cloudtrail, override with WORK=...)
 set -euo pipefail
@@ -25,7 +24,6 @@ source "$LIB/cartridge.sh"
 source "$LIB/report.sh"
 
 need docker curl jq gron python3 uv tar zcat awk sed
-press_confirm
 mkdir -p "${WORK:=$PWD/work-cloudtrail}"; cd "$WORK"
 report_init
 
@@ -82,10 +80,11 @@ os_stop
 
 log "5. Cartridge: install, flatten the events with gron into one paragraph per event, press at level 2 (default) and --level 1"
 cartridge_install
+# Each press asks for confirmation and uses Cartridge pressing credit (25 GB free).
 export LC_ALL=C
 gron --stream events.ndjson | tail -n +2 | awk '/^json\[[0-9]+\] = \{\};$/ && NR>1 {print ""} {print}' | sed -E 's/^json\[[0-9]+\]/json/' > events.gron.txt
-cartpress press events.gron.txt --text-segment paragraph -o ct-L2.cart -y
-cartpress press events.gron.txt --text-segment paragraph -o ct-L1.cart -y --level 1
+cartpress press events.gron.txt --text-segment paragraph -o ct-L2.cart
+cartpress press events.gron.txt --text-segment paragraph -o ct-L1.cart --level 1
 report_row "Cartridge level 2 (default)" "$(stat -c %s ct-L2.cart)"
 report_row "Cartridge level 1" "$(stat -c %s ct-L1.cart)"
 
