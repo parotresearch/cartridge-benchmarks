@@ -35,5 +35,5 @@ Sources, in the order of the columns:
 storage/<dataset>/run.sh          # thunderbird, cockroachdb, cloudtrail or traces
 ```
 Needs a Linux box with Docker (run through `sudo`), `curl`, `jq`, `python3`, `uv` (and `gron` for CloudTrail), 150 to 250 GB of free disk and several hours.
-The Cartridge step installs the public CLI with `curl -sSf https://cartridge.app/install | sh` and runs `cartpress press`. A press uses your pressing credit (25 GB free) and asks you to confirm;
-Each press asks you to confirm. The stored runs used a keyless internal build of the same release.
+The Cartridge step installs the public CLI with `curl -sSf https://cartridge.app/install | sh` and runs `cartpress press`. A press uses your pressing credit (25 GB free) and asks you to confirm.
+The stored runs used a keyless internal build of the same release.
