@@ -151,7 +151,7 @@ cd cost && uv run cost-matrix
 uv run --script plots/make_plots.py
 ```
 
-Cartridge: `curl -sSf https://cartridge.app/install | sh` installs `cartridge` and `cartpress` (Download the public release at [cartridge.app](https://cartridge.app)). A press uses your account's pressing credit (the first 25 GB are free) and asks you to confirm.
+Cartridge: `curl -sSf https://cartridge.app/install | sh` installs `cartridge` and `cartpress` (or download them from [cartridge.app](https://cartridge.app)). A press uses your account's pressing credit (the first 25 GB are free) and asks you to confirm.
 The stored runs used the same release built without the licence check, so they drew no pressing credit; a press with the public command can give slightly different sizes (see [`speed/http_logs/README.md`](speed/http_logs/README.md)).
 
 ## Fairness
