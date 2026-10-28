@@ -55,8 +55,8 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
   to 2 so containers can). We used c7i.4xlarge (16 vCPU, 32 GiB, gp3 volume at 16,000 IOPS and 1,000 MB/s) for the
   speed runs and r7i.4xlarge for loading and pressing.
 - Cartridge: `curl -sSf https://cartridge.app/install | sh`, which installs `cartridge` and `cartpress`.
-  **Pressing uses your account's pressing credit and asks you to confirm.** Our runs used a keyless internal build
-  of the same release.
+  **Pressing uses your account's pressing credit and asks you to confirm.** Our runs used the same release built
+  without the licence check, so they drew no pressing credit. Download the public release at [cartridge.app](https://cartridge.app).
 - Nothing here is meant to run on a laptop. The scripts start Docker containers, move about 100 GB and take hours.
 
 ## The scripts
@@ -143,8 +143,8 @@ mismatches**. This supersedes the earlier practice of taking the expected answer
   hot run is 16.3 s (`speed/hot-cart-no-field-index.log`), against Elasticsearch's 11.5 s. The cold run never uses it.
   Set `SIDECAR=0` to run `20-speed.sh` without it. Warm first answers include copying it. The published size
   includes the field index.
-- **Press flags (superseded).** The earlier stored press runs used an internal build with one more option than the
-  public command shown in `10-size.sh`, and their cart sizes (3,237,744,683 bytes) are superseded by the 2026-10-26
+- **Press flags (superseded).** The earlier stored press runs used one more press option than the
+  command shown in `10-size.sh`, and their cart sizes (3,237,744,683 bytes) are superseded by the 2026-10-26
   verification run: default flags, cart 2,118,597,954 bytes, plus field index 859,679,545, total 2,978,277,499.
   The stored logs are kept as they were.
 - **Expected answers (superseded).** The earlier expected answers were Cartridge's own answers on a local copy

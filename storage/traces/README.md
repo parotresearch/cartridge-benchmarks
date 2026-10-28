@@ -41,4 +41,4 @@ Measured once on 2026-10-26 on one AWS r7i.4xlarge (16 vCPU, 128 GB), on demand,
 - Cartridge check: trace `T_21882887847` (line 1,000,001) has 3 spans in the NDJSON; both Cartridge levels and both Elasticsearch passes count 3.
 
 ## Notes
-- **Cartridge.** The stored runs used cartpress 0.17.1 as a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.
+- **Cartridge.** The stored runs used cartpress 0.17.1 built without the licence check, so they drew no pressing credit. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.

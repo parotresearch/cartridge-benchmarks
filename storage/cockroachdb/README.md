@@ -34,4 +34,4 @@ Elasticsearch and OpenSearch containers are set up exactly as in the [Thunderbir
 ## Notes
 - **Hardware.** The OpenSearch number came from an AWS r7i.4xlarge (16 vCPU, 128 GB) on demand with no other load. The Elasticsearch and Cartridge numbers were measured on a c7i.4xlarge (16 vCPU, 30 GB). Stored size does not depend on the box.
 - **Elasticsearch measurement.** Primary store after `_refresh` and `_forcemerge?max_num_segments=1`; no flush or settle wait. For OpenSearch, an earlier refresh-only measurement was 3,722,426,390 B; the flush made no material difference (+0.8%).
-- **Cartridge.** The stored runs used a keyless internal build of the same release. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.
+- **Cartridge.** The stored runs used the same release built without the licence check, so they drew no pressing credit. A press with the public `cartpress` uses your pressing credit (25 GB free) and asks you to confirm. Install: `curl -sSf https://cartridge.app/install | sh`.
