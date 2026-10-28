@@ -1,6 +1,6 @@
 # Alibaba microservice traces: Cartridge vs Elasticsearch 9.5.5 (size and load time)
 
-Measured once, 2026-10-26, one r7i.4xlarge (16 vCPU), gp3 400 GB, on demand. Cartridge: cartpress 0.17.1 (internal build without a licence key).
+Measured once, 2026-10-26, one r7i.4xlarge (16 vCPU), gp3 400 GB, on demand. Cartridge: cartpress 0.17.1 (built without the licence check).
 
 **Data:** Alibaba cluster-trace-microservices-v2022 CallGraph, chunks 0–3 (anonymous download, SHA-256 in `storage/traces/run.sh`), converted by
 `storage/traces/alibaba_callgraph_to_otel.py` to OTel span NDJSON in the layout Elasticsearch's stock `traces-otel@template` maps:
