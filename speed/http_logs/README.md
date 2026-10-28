@@ -1,44 +1,71 @@
 # http_logs: stored size and search speed
 
-The 1998 World Cup web logs (the `http_logs` dataset of the Rally benchmark suite): 247,249,096 log lines,
-23,475,280,341 bytes of raw text. This directory reproduces two sets of claims about it: how much space each
-system needs, and how fast 39 investigation searches run on three storage tiers.
+The 1998 World Cup web logs (the `http_logs` dataset of the Rally benchmark suite): 247,249,096 log lines, 23.5 GB
+of raw text (23,475,280,341 bytes).
 
-Everything that produced a number is a script here; the logs they produced are in
-[`../../results/speed/http_logs`](../../results/speed/http_logs) (names and what they back are in the tables below).
+This directory reproduces two sets of claims:
+
+- how much space each system needs;
+- how fast 39 investigation searches run on three storage tiers.
+
+Everything that produced a number is a script here. The logs they produced are in
+[`../../results/speed/http_logs`](../../results/speed/http_logs); the tables below name each one.
 
 ## Claims and where they come from
 
-| Claim | Cartridge | Elasticsearch | Result file |
-|---|---|---|---|
-| Hot: 39 searches, local disk | 11.0 s, 39 of 39 exact | 11.5 s, 34 of 39 exact | `speed/hot-cart-field-index.log`, `speed/hot-es.log` |
-| Warm: first answer | 9 to 10 s | 30 to 71 s | `speed/warm-cart-field-index.log`, `speed/warm-es-fullcopy.log` (30 to 47 s), `speed/warm-es-restore.log` (64 to 71 s) |
-| Warm: all 39 once local | 9.9 s | 9.6 s | `speed/warm-cart-field-index.log`, `speed/warm-es-restore.log` |
-| Cold: the 35 searches both answer | 63 s† | 290 s | `speed/cold-cart.log`, `speed/cold-es-frozen.log` |
+| Claim | Cartridge | Elasticsearch |
+|---|---|---|
+| Hot: 39 searches, local disk | 11.0 s, 39 of 39 exact | 11.5 s, 34 of 39 exact |
+| Warm: first answer | 9–10 s | 30–71 s |
+| Warm: all 39 once local | 9.9 s | 9.6 s |
+| Cold: the 35 searches both answer | 63 s† | 290 s |
 
 † A fix for Cartridge's cold-from-S3 time is in progress, so the 63 s will change.
 
-`uv run ../lib/summarize.py ../../results/speed/http_logs/speed` re-derives every number in this table from the
+Result files, all under `speed/`:
+
+| Claim | Cartridge log | Elasticsearch log |
+|---|---|---|
+| Hot | `hot-cart-field-index.log` | `hot-es.log` |
+| Warm: first answer | `warm-cart-field-index.log` | `warm-es-fullcopy.log` (30–47 s), `warm-es-restore.log` (64–71 s) |
+| Warm: all 39 once local | `warm-cart-field-index.log` | `warm-es-restore.log` |
+| Cold | `cold-cart.log` | `cold-es-frozen.log` |
+
+`uv run ../lib/summarize.py ../../results/speed/http_logs/speed` re-derives every number in the claims table from the
 stored logs (it only reads them).
 
-Stored size of the 247,249,096 lines:
+Stored size of the 247,249,096 lines (raw text is 23.5 GB; "vs Cartridge" is relative to the 2.98 GB total):
 
-| System and setting | Bytes | Result file (`size/`) |
-|---|---:|---|
-| Elasticsearch 9.5.4, standard index, merged to one segment per shard | 22,547,013,768 | `es-standard-and-press-r7i-4xlarge-2026-10-21.log` |
-| Elasticsearch 9.5.4, standard index, restored from the snapshot the speed runs used (hot restore; cost-model default) | 18,656,019,625 | `es-hot-restore-c7i-4xlarge-2026-10-07.log` |
-| OpenSearch 3.9.0, default settings | 19,456,920,952 | `opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log` |
-| Elasticsearch 9.5.4 logsdb, free licence | 10,567,779,983 | `es-logsdb-r7i-4xlarge-2026-10-25.log` |
-| Elasticsearch 9.5.4 logsdb, Enterprise licence (synthetic source) | 6,485,137,851 | `es-logsdb-r7i-4xlarge-2026-10-25.log` |
-| Cartridge, default flags (cart) | 2,118,597,954 | `../verify/httplogs-verify-r7i-4xlarge-2026-10-26.log` |
-| Cartridge field index (extra file, used by the faster rows above) | 859,679,545 | same file |
-| **Cartridge total, cart + field index** | **2,978,277,499** | same file (0.127× the 23,475,280,341 raw bytes) |
+| System and setting | Size | vs Cartridge |
+|---|---:|---:|
+| Elasticsearch 9.5.4, standard, merged to one segment per shard | 22.5 GB | 7.6× |
+| Elasticsearch 9.5.4, standard, restored from the speed-run snapshot (hot restore; cost-model default) | 18.7 GB | 6.3× |
+| OpenSearch 3.9.0, default settings | 19.5 GB | 6.5× |
+| Elasticsearch 9.5.4 logsdb, free licence | 10.6 GB | 3.5× |
+| Elasticsearch 9.5.4 logsdb, Enterprise licence (synthetic source) | 6.49 GB | 2.2× |
+| Cartridge, default flags (cart) | 2.12 GB | 0.71× |
+| Cartridge field index (extra file, used by the faster rows above) | 0.860 GB | 0.29× |
+| **Cartridge total, cart + field index** | **2.98 GB** | **1.0× (0.127× of raw)** |
 
-The published Cartridge size is the total: it includes the field index. It comes from the verification run of
-2026-10-26 (`../../../results/speed/http_logs/verify/`): the default-flag press took 564 s, the field index build
-191 s, and all 48 search runs matched the answers computed from the raw text (see below). The earlier stored
-Cartridge sizes (3,237,744,683 bytes for the cart, 859,679,538 for the field index; `size/cartpress-…` and
-`size/field-index-build-…`) are superseded by it.
+Result files, all under `size/`:
+
+| Row | File |
+|---|---|
+| Elasticsearch standard, merged | `es-standard-and-press-r7i-4xlarge-2026-10-21.log` |
+| Elasticsearch standard, hot restore | `es-hot-restore-c7i-4xlarge-2026-10-07.log` |
+| OpenSearch default | `opensearch-3.9.0-default-r7i-4xlarge-2026-10-25.log` |
+| Elasticsearch logsdb (free and Enterprise) | `es-logsdb-r7i-4xlarge-2026-10-25.log` |
+| Cartridge cart, field index, total | `../verify/httplogs-verify-r7i-4xlarge-2026-10-26.log` |
+
+Exact byte counts are in those logs.
+
+About the Cartridge size:
+
+- The published size is the total, including the field index.
+- It comes from the verification run of 2026-10-26 (`../../../results/speed/http_logs/verify/`).
+- In that run the default-flag press took 564 s and the field index build 191 s.
+- All 48 search runs matched the answers computed from the raw text (see below).
+- It supersedes the earlier stored sizes: 3.24 GB for the cart (3,237,744,683 bytes) and 0.860 GB for the field index (859,679,538 bytes); `size/cartpress-…` and `size/field-index-build-…`.
 
 ## What to run
 
@@ -50,14 +77,21 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
 ./20-speed.sh all                        # or one arm: hot-es hot-cart warm-es-restore warm-es-fullcopy warm-cart cold-es cold-cart
 ```
 
-- Machine: AWS in one region, Ubuntu with Docker, `uv`, `jq`, `lbzip2`, the AWS CLI v2, and an instance role with
-  access to `$BUCKET` (Elasticsearch reaches S3 through the instance metadata service; set the metadata hop limit
-  to 2 so containers can). We used c7i.4xlarge (16 vCPU, 32 GiB, gp3 volume at 16,000 IOPS and 1,000 MB/s) for the
-  speed runs and r7i.4xlarge for loading and pressing.
-- Cartridge: `curl -sSf https://cartridge.app/install | sh`, which installs `cartridge` and `cartpress`.
-  **Pressing uses your account's pressing credit and asks you to confirm.** Our runs used the same release built
-  without the licence check, so they drew no pressing credit. Download the public release at [cartridge.app](https://cartridge.app).
-- Nothing here is meant to run on a laptop. The scripts start Docker containers, move about 100 GB and take hours.
+**Machine**
+
+- AWS in one region, Ubuntu with Docker, `uv`, `jq`, `lbzip2`, the AWS CLI v2.
+- An instance role with access to `$BUCKET`. Elasticsearch reaches S3 through the instance metadata service; set the metadata hop limit to 2 so containers can.
+- Speed runs: c7i.4xlarge (16 vCPU, 32 GiB, gp3 volume at 16,000 IOPS and 1,000 MB/s).
+- Loading and pressing: r7i.4xlarge.
+
+**Cartridge**
+
+- Install: `curl -sSf https://cartridge.app/install | sh` (installs `cartridge` and `cartpress`).
+- **Pressing uses your account's pressing credit and asks you to confirm.**
+- Our runs used the same release built without the licence check, so they drew no pressing credit.
+- Download the public release at [cartridge.app](https://cartridge.app).
+
+**Not for a laptop.** The scripts start Docker containers, move about 100 GB and take hours.
 
 ## The scripts
 
@@ -76,19 +110,23 @@ export BUCKET=<your-s3-bucket>           # snapshots and the cart live here; you
 
 ## The tiers in plain words
 
-- **Hot.** The data is on the server's local disk, the server is running, and the machine's file cache is dropped
-  before each chain. For Elasticsearch: the indices are restored from a snapshot to local disk, with no replicas.
-  For Cartridge: the cart (and its field index) is copied from S3 to local disk once.
-- **Warm.** The data is in S3 and the server is fresh. The clock starts when the server is up and holds nothing.
-  *Elasticsearch*: either a restore of the snapshot to local disk (searches begin when it finishes: first answer
-  64 to 71 s) or a fully mounted searchable snapshot that answers while it is copied (first answer 30 to 47 s);
-  the claim's 30 to 71 s spans both. After the copy finishes the script checks that the bytes on disk and the
-  index store size both cover the snapshot's size. *Cartridge*: copy the cart and field index from S3 to local disk,
-  then search; the first answer includes the copy. "All 39 once local" is the sum of the 39 search times when the
-  data is local.
-- **Cold.** The data stays in S3 and every search reads what it needs from there. *Elasticsearch*: searchable
-  snapshots in Elasticsearch's frozen tier, with a cache one twentieth the size of the data. *Cartridge*: the
-  server opens `s3://` directly; the field index is never read from S3.
+**Hot.** Data on local disk, server running, file cache dropped before each chain.
+
+- Elasticsearch: indices restored from a snapshot to local disk, no replicas.
+- Cartridge: the cart (and its field index) is copied from S3 to local disk once.
+
+**Warm.** Data in S3, fresh server. The clock starts when the server is up and holds nothing.
+
+- Elasticsearch, restore: restore the snapshot to local disk; searches begin when it finishes (first answer 64–71 s).
+- Elasticsearch, full copy: a fully mounted searchable snapshot answers while it is copied (first answer 30–47 s).
+- The claim's 30–71 s spans both. After the copy finishes the script checks that the bytes on disk and the index store size both cover the snapshot's size.
+- Cartridge: copy the cart and field index from S3 to local disk, then search. The first answer includes the copy.
+- "All 39 once local" is the sum of the 39 search times when the data is local.
+
+**Cold.** Data stays in S3; every search reads what it needs from there.
+
+- Elasticsearch: searchable snapshots in the frozen tier, with a cache one twentieth the size of the data.
+- Cartridge: the server opens `s3://` directly; the field index is never read from S3.
 
 ## How exactness was checked
 
@@ -105,20 +143,24 @@ canonical text per kind of answer and compares it:
 Both systems' canonical texts for every search that both answered are byte-identical (`out_sha` in the logs;
 `summarize.py` reports any mismatch and finds none).
 
-**Where the expected answers come from.** `reference.py` reads the raw log text (one streaming pass, standard library
-only, no Cartridge or Elasticsearch involved) and computes the answer to each search from the lines themselves,
-using the pattern, time window and grouping of the search's Cartridge command. It writes `reference-answers.json`
-(one entry per search: the answer, the sha256 of the canonical text, and for `lines` searches the full match set).
-`verify_cart.py` runs the 39 searches on a local cart and compares each with that file.
+**Where the expected answers come from**
 
-"Exact" means "matched `reference.py`'s answer from the raw file" only for the searches that have a computed
-entry in `reference-answers.json` and a recorded `match`; a search that `reference.py` cannot compute without
-guessing is marked "not computable" with the reason, and is not claimed exact on this basis.
-The verification run of 2026-10-26 (`../../results/speed/http_logs/verify/`) did this on a fresh press with the default
-flags: `reference.py` took 4 min 16 s over the 23,475,280,341 raw bytes (247,249,096 lines), then `verify_cart.py` ran the
-39 searches (48 runs, since the nine searches that have a field-index form ran in both forms): **48 matches, 0
-mismatches**. This supersedes the earlier practice of taking the expected answers from Cartridge's own earlier run; the
-`want` values in `searches.json` that came from there agree with `reference-answers.json`.
+- `reference.py` reads the raw log text: one streaming pass, standard library only, no Cartridge or Elasticsearch involved.
+- It computes each search's answer from the lines themselves, using the pattern, time window and grouping of the search's Cartridge command.
+- It writes `reference-answers.json`: per search, the answer, the sha256 of the canonical text, and for `lines` searches the full match set.
+- `verify_cart.py` runs the 39 searches on a local cart and compares each with that file.
+
+**What "exact" means**
+
+- "Exact" means "matched `reference.py`'s answer from the raw file", and only for searches that have a computed entry in `reference-answers.json` and a recorded `match`.
+- A search that `reference.py` cannot compute without guessing is marked "not computable" with the reason, and is not claimed exact on this basis.
+
+**Verification run of 2026-10-26** (`../../results/speed/http_logs/verify/`), on a fresh press with the default flags:
+
+- `reference.py` took 4 min 16 s over the 23,475,280,341 raw bytes (247,249,096 lines).
+- `verify_cart.py` ran the 39 searches as 48 runs (the nine searches that have a field-index form ran in both forms).
+- Result: **48 matches, 0 mismatches**.
+- This supersedes the earlier practice of taking the expected answers from Cartridge's own earlier run; the `want` values in `searches.json` that came from there agree with `reference-answers.json`.
 
 ## Fairness notes
 
@@ -144,15 +186,16 @@ mismatches**. This supersedes the earlier practice of taking the expected answer
   Set `SIDECAR=0` to run `20-speed.sh` without it. Warm first answers include copying it. The published size
   includes the field index.
 - **Press flags (superseded).** The earlier stored press runs used one more press option than the
-  command shown in `10-size.sh`, and their cart sizes (3,237,744,683 bytes) are superseded by the 2026-10-26
-  verification run: default flags, cart 2,118,597,954 bytes, plus field index 859,679,545, total 2,978,277,499.
-  The stored logs are kept as they were.
+  command shown in `10-size.sh`. Their cart size (3.24 GB, 3,237,744,683 bytes) is superseded by the 2026-10-26
+  verification run: default flags, cart 2.12 GB (2,118,597,954 bytes) plus field index 0.860 GB (859,679,545 bytes),
+  total 2.98 GB (2,978,277,499 bytes). The stored logs are kept as they were.
 - **Expected answers (superseded).** The earlier expected answers were Cartridge's own answers on a local copy
   (only the 403/404/500 totals and the line-search match sets came from the raw file). The 2026-10-26 run replaces
   that: every expected answer is computed from the raw text by `reference.py` (48 of 48 runs matched).
-- **Two Elasticsearch standard sizes.** The 22.5 GB figure is from an r7i load on 2026-10-21; the 18.7 GB figure
-  is a restore of the snapshot the speed runs used (loaded on a c7i on 2026-10-05, 19.1 GB stored). The cause of
-  the difference is not recorded.
+- **Two Elasticsearch standard sizes.**
+  - 22.5 GB: an r7i load on 2026-10-21.
+  - 18.7 GB: a restore of the snapshot the speed runs used (loaded on a c7i on 2026-10-05, 19.1 GB stored).
+  - The cause of the difference is not recorded.
 - **What the harness did differently.** `run_searches.py` is a condensed Python port of the shell harness that
   produced the stored logs (same canonical forms, caps, cache settings and cold start per chain), so a rerun is
   not byte-identical to the stored runs.

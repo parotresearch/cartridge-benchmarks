@@ -1,9 +1,11 @@
 # Cost model
 
-Turns **measured stored sizes** into a **yearly AWS bill** for Cartridge, Elasticsearch, OpenSearch and Elastic
-Serverless, at 10 TB of raw logs per day with 30 days searchable (plus 365-day and tiered variants). Every price,
-sizing rule and measured coefficient is a plain JSON file with its source next to it; the arithmetic is in
-`src/cost_model/model.py` (one function per system).
+Turns **measured stored sizes** into a **yearly AWS bill**.
+
+- **Systems:** Cartridge, Elasticsearch, OpenSearch and Elastic Serverless.
+- **Scale:** 10 TB of raw logs per day, 30 days searchable (plus 365-day and tiered variants).
+- **Inputs:** every price, sizing rule and measured coefficient is a plain JSON file with its source next to it.
+- **Arithmetic:** `src/cost_model/model.py`, one function per system.
 
 ```sh
 cd cost
@@ -14,19 +16,28 @@ uv run cost-tiered          # Elasticsearch tiered setups vs Cartridge, 5 datase
 uv run cost-lines scenarios/10tb-30d.yaml   # every priced line item with its formula -> ../results/cost/lines-10tb-30d.md
 ```
 
-Each command is deterministic: same files in, byte-identical tables out. The measured sizes it prices are listed in
-`src/cost_model/matrix.py` (`DATASETS`), each with the result file it came from under `../results/storage` or
-`../results/speed`.
+- Each command is deterministic: same files in, byte-identical tables out.
+- The measured sizes it prices are listed in `src/cost_model/matrix.py` (`DATASETS`), each with the result file it came
+  from under `../results/storage` or `../results/speed`.
 
 ## How a number is made
 
 1. **Measure** (elsewhere in this repo): load the same raw data into each system on AWS and record the bytes it stores.
-2. **Price** (here): put the measured bytes-per-raw-byte into the model, size each system by its vendor's rules, and
-   multiply by AWS list prices. Only the stored size changes from one dataset to the next; build and search cost per GB
-   are the web server log (`http_logs`) measurements, reused for every dataset.
+2. **Price** (here):
+   - put the measured bytes-per-raw-byte into the model;
+   - size each system by its vendor's rules;
+   - multiply by AWS list prices.
 
-The scenario for every headline figure: **10 TB/day, 30 days searchable, 1 replica for Elasticsearch/OpenSearch,
-100,000 searches a day each over the last hour, AWS us-east-2 on-demand list prices, October 2026.**
+Only the stored size changes from one dataset to the next. Build and search cost per GB are the web server log
+(`http_logs`) measurements, reused for every dataset.
+
+**Scenario for every headline figure:**
+
+- 10 TB/day, 30 days searchable
+- 1 replica for Elasticsearch/OpenSearch
+- 100,000 searches a day each, over the last hour
+- AWS us-east-2, on-demand list prices, October 2026
+
 Dollar figures are model output, not invoices.
 
 ## Sizing rules
@@ -47,9 +58,11 @@ OpenSearch is priced by the same rules with its own measured size and no licence
 | Replica traffic | `raw GB/day × 365 × replicas × 2 directions × $0.01` | AWS cross-zone price |
 | Frozen cache | 10% of the S3 snapshot size on gp3, plus S3 GETs per search | Elastic frozen-tier docs |
 
-Variants: **logsdb, free licence** = the measured logsdb size. **logsdb, Enterprise** = synthetic `_source`, which
-needs an Enterprise licence; where not measured, Elastic's published retained fraction (39.4/162.7) is applied. The
-frozen tier (searchable snapshots) also needs Enterprise, so those setups carry the licence estimate below.
+Variants:
+
+- **logsdb, free licence:** the measured logsdb size.
+- **logsdb, Enterprise:** synthetic `_source`, which needs an Enterprise licence. Where not measured, Elastic's published retained fraction (39.4/162.7) is applied.
+- **Frozen tier** (searchable snapshots): also needs Enterprise, so those setups carry the licence estimate below.
 
 ### Cartridge
 
@@ -82,14 +95,18 @@ only link between the model and those rows; a mapped row that is missing or has 
 | S3 GET | $0.0004 per 1,000 | AWS S3 price list | 2026-10-23 |
 | Cross-zone transfer | $0.01/GB each direction | AWS EC2 on-demand pricing page, "Data Transfer within the same AWS Region" | 2026-10-23 |
 | Elastic Serverless, Observability "Logs Essentials" | graduated ingest and retention tiers (16 rows) | Elastic public price API, `cloud.elastic.co/api/v1/prices/base_prices` (SKUs `observability.logs-essentials-ingested_aws-us-east-2`, `...-retained_aws-us-east-2`), list | 2026-10-23 |
-| Elasticsearch Enterprise subscription | $150,000/yr per cluster, **estimate** | Vendr (`vendr.com/marketplace/elastic`, page dated February 2026): "Self-managed Enterprise subscriptions commonly start at $150,000+ annually and can exceed $500,000 for large-scale deployments." Elastic publishes no self-managed price. The $150,000 floor favours Elasticsearch. | 2026-10-24 |
+| Elasticsearch Enterprise subscription | $150K/yr per cluster, **estimate** | Vendr (`vendr.com/marketplace/elastic`, page dated February 2026): "Self-managed Enterprise subscriptions commonly start at $150,000+ annually and can exceed $500,000 for large-scale deployments." Elastic publishes no self-managed price. The $150,000 floor favours Elasticsearch. | 2026-10-24 |
 
-Serverless is billed on gigabytes ingested and retained (measured before compression), so it is the same dollar figure
-for every dataset: 304,167 GB ingested a month and 300,000 GB-months retained gives $344,151 a year.
-Logs Essentials is Elastic's cheapest published logs option, which favours Elastic.
+**Elastic Serverless**
 
-Sizing rules and instance specs, with their sources, are in `data/sizing.json` and `data/instances.json`. Measured
-coefficients (with derivation and source) are in `data/coefficients.json`.
+- Billed on gigabytes ingested and retained (measured before compression), so the dollar figure is the same for every dataset.
+- 304,167 GB ingested a month and 300,000 GB-months retained gives $344,151 a year (about $344K).
+- Logs Essentials is Elastic's cheapest published logs option, which favours Elastic.
+
+**Other data files**
+
+- Sizing rules and instance specs, with sources: `data/sizing.json`, `data/instances.json`.
+- Measured coefficients, with derivation and source: `data/coefficients.json`.
 
 ## Scenarios
 
